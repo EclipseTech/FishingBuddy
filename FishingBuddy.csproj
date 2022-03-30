@@ -136,6 +136,7 @@
     <Compile Include="MyContainer.cs" />
     <Compile Include="Utils\AsyncCache.cs" />
     <Compile Include="Utils\Fish.cs" />
+    <Compile Include="Utils\FishingMaps.cs" />
     <Compile Include="Utils\RetryHelper.cs" />
     <Compile Include="Utils\TyriaTime.cs" />
   </ItemGroup>
