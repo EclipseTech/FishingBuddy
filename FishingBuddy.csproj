@@ -135,6 +135,8 @@
     <Compile Include="FishingBuddyModule.cs" />
     <Compile Include="MyContainer.cs" />
     <Compile Include="Utils\AsyncCache.cs" />
+    <Compile Include="Utils\ClickThroughImage.cs" />
+    <Compile Include="Utils\ClickThroughPanel.cs" />
     <Compile Include="Utils\Fish.cs" />
     <Compile Include="Utils\FishingMaps.cs" />
     <Compile Include="Utils\RetryHelper.cs" />
@@ -287,6 +289,8 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <None Include="ref\fish_test.json" />
+    <None Include="ref\fish.json" />
     <None Include="ref\_instructions.txt" />
   </ItemGroup>
   <ItemGroup>

@@ -1,6 +1,6 @@
 {
   "name": "FishingBuddy",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "namespace": "Eclipse1807.BlishHUD.FishingBuddy",
   "package": "FishingBuddy.dll",
   "manifest_version": 1,
@@ -16,27 +16,19 @@
       "url": "https://github.com/EclipseTech/FishingBuddy.git"
     }
   ],
-  "description": "Display fishing info.",
+  "description": "Display fishing info: time of day, list of catchable fish in the zone. Currently no way to display equipped bait & lure :(",
   "dependencies": {
-    "bh.blishhud": ">=0.5.2"
+    "bh.blishhud": ">=0.7.1"
   },
   "url": "https://github.com/EclipseTech/FishingBuddy",
   "api_permissions": {
     "account": {
-      "optional": true,
-      "details": "This will be shown as tooltip in the module settings for the api permissions"
-    },
-    "inventories": {
-      "optional": true,
-      "details": "TODO remove."
-    },
-    "characters": {
-      "optional": true,
-      "details": "TODO remove."
+      "optional": false,
+      "details": "Required to check for fishing achievements."
     },
     "progression": {
-      "optional": true,
-      "details": "TODO remove."
+      "optional": false,
+      "details": "Required to check for fishing achievements."
     }
   }
 }
