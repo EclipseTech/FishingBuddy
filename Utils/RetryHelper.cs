@@ -8,7 +8,7 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
 {
     public static class RetryHelper
     {
-        private static readonly Logger Logger = Logger.GetLogger(typeof(FishingBuddyModule));
+        private static readonly Logger Logger = Logger.GetLogger(typeof(RetryHelper));
 
         //
         // Summary:

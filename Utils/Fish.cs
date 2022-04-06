@@ -1,4 +1,5 @@
-﻿using Gw2Sharp.WebApi;
+﻿using Blish_HUD;
+using Gw2Sharp.WebApi;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System;
@@ -7,6 +8,8 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
 {
     class Fish
     {
+        private static readonly Logger Logger = Logger.GetLogger(typeof(Fish));
+
         [Flags]
         [JsonConverter(typeof(StringEnumConverter))]
         public enum TimeOfDay
@@ -16,6 +19,7 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
             Day = 2,
             Dusk = 4,
             Night = 8,
+            // Fishing will treat dawn and dusk as both day and night at the same time https://wiki.guildwars2.com/wiki/Day_and_night
             DawnDusk = Dawn | Dusk,
             DuskDawn = Dusk | Dawn,
             Any = Dawn | Day | Dusk | Night,

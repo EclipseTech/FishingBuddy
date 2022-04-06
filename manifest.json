@@ -23,11 +23,11 @@
   "url": "https://github.com/EclipseTech/FishingBuddy",
   "api_permissions": {
     "account": {
-      "optional": false,
+      "optional": true,
       "details": "Required to check for fishing achievements."
     },
     "progression": {
-      "optional": false,
+      "optional": true,
       "details": "Required to check for fishing achievements."
     }
   }
