@@ -47,7 +47,15 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
         private Texture2D _imgDay;
         private Texture2D _imgDusk;
         private Texture2D _imgNight;
-        private Texture2D _imgBorder;
+        private Texture2D _imgBorderBlack;
+        private Texture2D _imgBorderJunk;
+        private Texture2D _imgBorderBasic;
+        private Texture2D _imgBorderFine;
+        private Texture2D _imgBorderMasterwork;
+        private Texture2D _imgBorderRare;
+        private Texture2D _imgBorderExotic;
+        private Texture2D _imgBorderAscended;
+        private Texture2D _imgBorderLegendary;
 
         // Turned off until can get character fishing details
         //private ClickThroughImage _lure;
@@ -79,6 +87,7 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
         private List<Fish> catchableFish;
         private FishingMaps fishingMaps;
         private IEnumerable<AccountAchievement> accountFishingAchievements;
+        public static SettingEntry<bool> _showRarityBorder;
 
         private List<Fish> _allFishList;
         private Map _currentMap;
@@ -117,6 +126,8 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
             _timeOfDayImgWidth = settings.DefineSetting("TimeImgWidth", 64, () => "Time of Day Size", () => "");
             _timeOfDayImgWidth.SetRange(16, 96);
             _timeOfDayImgWidth.SettingChanged += OnUpdateSettings;
+            _showRarityBorder = settings.DefineSetting("ShowRarityBorder", true, () => "Show Fish Rarity", () => "");
+            _showRarityBorder.SettingChanged += OnUpdateFish;
         }
 
         protected override void Initialize()
@@ -133,7 +144,15 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
             _imgDay = ContentsManager.GetTexture(@"day.png");
             _imgDusk = ContentsManager.GetTexture(@"dusk.png");
             _imgNight = ContentsManager.GetTexture(@"night.png");
-            _imgBorder = ContentsManager.GetTexture(@"border.png");
+            _imgBorderBlack = ContentsManager.GetTexture(@"border_black.png");
+            _imgBorderJunk = ContentsManager.GetTexture(@"border_junk.png");
+            _imgBorderBasic = ContentsManager.GetTexture(@"border_basic.png");
+            _imgBorderFine = ContentsManager.GetTexture(@"border_fine.png");
+            _imgBorderMasterwork = ContentsManager.GetTexture(@"border_masterwork.png");
+            _imgBorderRare = ContentsManager.GetTexture(@"border_rare.png");
+            _imgBorderExotic = ContentsManager.GetTexture(@"border_exotic.png");
+            _imgBorderAscended = ContentsManager.GetTexture(@"border_ascended.png");
+            _imgBorderLegendary = ContentsManager.GetTexture(@"border_legendary.png");
 
             _dawn = new ClickThroughImage();
             _day = new ClickThroughImage();
@@ -216,6 +235,7 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
             _ignoreCaughtFish.SettingChanged -= OnUpdateFish;
             _includeSaltwater.SettingChanged -= OnUpdateFish;
             _includeWorldClass.SettingChanged -= OnUpdateFish;
+            _showRarityBorder.SettingChanged -= OnUpdateFish;
 
             Gw2ApiManager.SubtokenUpdated -= OnApiSubTokenUpdated;
 
@@ -257,7 +277,6 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
                 Size = new Point(_timeOfDayImgWidth.Value),
                 capture = _dragTimeOfDayPanel.Value
             };
-            int imgPadding = 3;
             int fishPanelRows = Clamp((int)Math.Ceiling((double)catchableFish.Count() / 2), 1, 7);
             int fishPanelColumns = Clamp((int)Math.Ceiling((double)catchableFish.Count() / fishPanelRows), 1, 7);
             // swap row column if necessary
@@ -266,7 +285,7 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
             {
                 Parent = GameService.Graphics.SpriteScreen,
                 Location = _fishPanelLoc.Value,
-                Size = new Point(fishPanelColumns * (_fishImgWidth.Value + imgPadding * 2), fishPanelRows * (_fishImgWidth.Value + imgPadding * 2)),
+                Size = new Point(fishPanelColumns * (_fishImgWidth.Value), fishPanelRows * (_fishImgWidth.Value)),
                 capture = _dragFishPanel.Value
             };
             Logger.Debug($"Fish Panel Size; Rows: {fishPanelRows} Columns: {fishPanelColumns}, {_fishPanel.Size}");
@@ -339,7 +358,7 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
                 capture = _dragTimeOfDayPanel.Value
             };
 
-            int x = imgPadding; int y = imgPadding; int count = 1;
+            int x = 0; int y = 0; int count = 1;
             foreach (Fish fish in catchableFish)
             {
                 string openWater = fish.openWater ? ", Open Water" : "";
@@ -349,26 +368,27 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
                     Texture = GameService.Content.GetRenderServiceTexture(fish.icon),
                     Size = new Point(_fishImgWidth.Value),
                     Location = new Point(x, y),
+                    ZIndex = 0,
+                    capture = _dragFishPanel.Value
+                };
+                new ClickThroughImage
+                {
+                    Parent = _fishPanel,
+                    Texture = _showRarityBorder.Value ? GetImageBorder(fish.rarity) : _imgBorderBlack,
+                    Size = new Point(_fishImgWidth.Value),
+                    Opacity = 0.8f,
+                    Location = new Point(x, y),
                     BasicTooltipText = $"{fish.name}\n" +
                                        $"Fishing Hole: {fish.fishingHole}{openWater}\n" +
                                        $"Favored Bait: {fish.bait}\n" +
                                        $"Time of Day: {(fish.timeOfDay == Fish.TimeOfDay.DuskDawn ? "Dusk/Dawn" : fish.timeOfDay.ToString())}\n" +
-                                       $"Achievement: {fish.achievement}",
+                                       $"Achievement: {fish.achievement}\n" +
+                                       $"Rarity: {fish.rarity}",
                     ZIndex = 1,
                     capture = _dragFishPanel.Value
                 };
-                // TODO color border or tooltip text based on rarity
-                new ClickThroughImage
-                {
-                    Parent = _fishPanel,
-                    Texture = GetImageBorder(fish.rarity),
-                    Size = new Point(_fishImgWidth.Value + imgPadding * 2),
-                    Location = new Point(x - imgPadding, y - imgPadding),
-                    ZIndex = 0,
-                    capture = _dragFishPanel.Value
-                };
-                x += _fishImgWidth.Value + imgPadding;
-                if (count == fishPanelColumns) { x = imgPadding; y += _fishImgWidth.Value + imgPadding; count = 0; }
+                x += _fishImgWidth.Value;
+                if (count == fishPanelColumns) { x = 0; y += _fishImgWidth.Value; count = 0; }
                 count++;
             }
 
@@ -406,9 +426,30 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
             }
         }
 
-        private AsyncTexture2D GetImageBorder(string rarity)
+        private Texture2D GetImageBorder(string rarity)
         {
-            return _imgBorder;
+            Logger.Debug($"Rarity {rarity}");
+            switch (rarity)
+            {
+                case "Junk":
+                    return _imgBorderJunk;
+                case "Basic":
+                    return _imgBorderBasic;
+                case "Fine":
+                    return _imgBorderFine;
+                case "Masterwork":
+                    return _imgBorderMasterwork;
+                case "Rare":
+                    return _imgBorderRare;
+                case "Exotic":
+                    return _imgBorderExotic;
+                case "Ascended":
+                    return _imgBorderAscended;
+                case "Legendary":
+                    return _imgBorderLegendary;
+                default:
+                    return _imgBorderBlack;
+            }
         }
 
         public static int Clamp(int n, int min, int max)
