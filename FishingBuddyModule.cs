@@ -428,7 +428,6 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
 
         private Texture2D GetImageBorder(string rarity)
         {
-            Logger.Debug($"Rarity {rarity}");
             switch (rarity)
             {
                 case "Junk":
