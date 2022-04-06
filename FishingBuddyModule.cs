@@ -16,6 +16,21 @@ using System.Threading;
 using System.Threading.Tasks;
 using Blish_HUD.Content;
 
+
+// TODO display timeofday countdown timer
+// TODO should other map Ids not show any fishing info, or show open water info? or saltwater/world class info? hide in instances?
+// TODO cache fishing images from api, save / download icons to directory cache & get from cache before web, Download / Use Icon w/ GetRenderServiceTexture ex: GameService.Content.GetRenderServiceTexture(fish.Icon);
+// TODO should be caching map info too
+// TODO in bounds checking for UI elemends, ex: https://github.com/manlaan/BlishHud-Clock/blob/main/Control/DrawClock.cs#L64
+// TODO notifications? on dawn https://github.com/agaertner/Blish-HUD-Modules-Releases/blob/main/Regions%20Of%20Tyria%20Module/RegionsOfTyriaModule.cs#L108 ?15 sec til?
+// TODO add item id to fish.json
+// TODO add achievement id to fish.json
+// TODO (inventory permissions required) Add caught fish counter (count per rarity & ? count per type of fish ? per zone ? per session ? per hour ?)
+// TODO BLOCKED get/display equipped lure & bait w/ #s (optional w/ mouseover info)
+// TODO BLOCKED bait & lure icons via api... get bait & lure type/count from api? is this even detailed anywhere? or no api yet for this?
+// TODO add option to ignore time of day
+
+
 namespace Eclipse1807.BlishHUD.FishingBuddy
 {
     [Export(typeof(Blish_HUD.Modules.Module))]
@@ -42,7 +57,6 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
         private ClickThroughImage _dusk;
         private ClickThroughImage _night;
 
-        //https://github.com/agaertner/Blish-HUD-Modules-Releases/blob/main/Regions%20Of%20Tyria%20Module/Utils/AsyncCache.cs
         private AsyncCache<int, Map> _mapRepository;
         //private AsyncCache<int, Achievement> _achievementRepository;
         //private AsyncCache<int, Item> _itemRepository;
@@ -70,21 +84,6 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
         private Map _currentMap;
         private bool _useAPIToken;
         private readonly SemaphoreSlim _updateFishSemaphore = new SemaphoreSlim(1, 1);
-
-
-        // TODO display timeofday countdown timer
-        // TODO should other map Ids not show any fishing info, or show open water info? or saltwater/world class info? hide in instances?
-        // TODO cache fishing images from api
-        // TODO should be caching map info too
-        // TODO in bounds checking for UI elemends, ex: https://github.com/manlaan/BlishHud-Clock/blob/main/Control/DrawClock.cs#L64
-        // TODO notifications? on dawn https://github.com/agaertner/Blish-HUD-Modules-Releases/blob/main/Regions%20Of%20Tyria%20Module/RegionsOfTyriaModule.cs#L108 ?15 sec til?
-        // TODO add item id to fish.json
-        // TODO add achievement id to fish.json
-        // TODO (inventory permissions required) Add caught fish counter (count per rarity & ? count per type of fish ? per zone ? per session ? per hour ?)
-        // TODO BLOCKED get/display equipped lure & bait w/ #s (optional w/ mouseover info)
-        // TODO BLOCKED bait & lure icons via api... get bait & lure type/count from api? is this even detailed anywhere? or no api yet for this?
-        // TODO add option to ignore time of day
-
 
         #region Service Managers
         internal Gw2ApiManager Gw2ApiManager => this.ModuleParameters.Gw2ApiManager;
@@ -150,14 +149,13 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
                 Logger.Debug("fish list: " + string.Join(", ", _allFishList.Select(fish => fish.name)));
             }
             _useAPIToken = true;
-            Logger.Debug($"Use API Token: {_useAPIToken}");
         }
 
         protected override void OnModuleLoaded(EventArgs e)
         {
             // Base handler must be called
             base.OnModuleLoaded(e);
-            
+
             GetCurrentMapTime();
             GameService.Gw2Mumble.CurrentMap.MapChanged += OnMapChanged;
             DrawIcons();
@@ -167,10 +165,10 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
         protected override async void Update(GameTime gameTime)
         {
             _runningTime += gameTime.ElapsedGameTime.TotalMilliseconds;
-            if (_runningTime > 3*60000)
+            if (_runningTime > 3 * 60000)
             {
                 // 3 min timer
-                _runningTime -= 3*60000;
+                _runningTime -= 3 * 60000;
                 //ScreenNotification.ShowNotification("The examples module shows this message every 3 min!", ScreenNotification.NotificationType.Warning);
                 await getCurrentMapsFish();
                 DrawIcons();
@@ -191,7 +189,7 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
             {
                 var nOffset = InputService.Input.Mouse.Position - _dragTimeOfDayPanelStart;
                 _timeOfDayPanel.Location += nOffset;
-            
+
                 _dragTimeOfDayPanelStart = InputService.Input.Mouse.Position;
             }
             if (_draggingFishPanel)
@@ -201,7 +199,6 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
 
                 _dragFishPanelStart = InputService.Input.Mouse.Position;
             }
-
         }
 
         /// <inheritdoc />
@@ -222,6 +219,7 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
 
             Gw2ApiManager.SubtokenUpdated -= OnApiSubTokenUpdated;
 
+            ModuleInstance = null;
             // All static members must be manually unset
         }
 
@@ -364,7 +362,7 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
                 {
                     Parent = _fishPanel,
                     Texture = GetImageBorder(fish.rarity),
-                    Size = new Point(_fishImgWidth.Value + imgPadding*2),
+                    Size = new Point(_fishImgWidth.Value + imgPadding * 2),
                     Location = new Point(x - imgPadding, y - imgPadding),
                     ZIndex = 0,
                     capture = _dragFishPanel.Value
@@ -377,12 +375,14 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
             if (_dragTimeOfDayPanel.Value)
             {
                 _timeOfDayPanel.capture = true;
-                _timeOfDayPanel.LeftMouseButtonPressed += delegate {
+                _timeOfDayPanel.LeftMouseButtonPressed += delegate
+                {
                     _draggingTimeOfDayPanel = true;
                     _dragTimeOfDayPanelStart = InputService.Input.Mouse.Position;
                     _timeOfDayPanel.ShowTint = true;
                 };
-                _timeOfDayPanel.LeftMouseButtonReleased += delegate {
+                _timeOfDayPanel.LeftMouseButtonReleased += delegate
+                {
                     _draggingTimeOfDayPanel = false;
                     _timeOfDayPanelLoc.Value = _timeOfDayPanel.Location;
                     _timeOfDayPanel.ShowTint = false;
@@ -391,12 +391,14 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
             if (_dragFishPanel.Value)
             {
                 _fishPanel.capture = true;
-                _fishPanel.LeftMouseButtonPressed += delegate {
+                _fishPanel.LeftMouseButtonPressed += delegate
+                {
                     _draggingFishPanel = true;
                     _dragFishPanelStart = InputService.Input.Mouse.Position;
                     _fishPanel.ShowTint = true;
                 };
-                _fishPanel.LeftMouseButtonReleased += delegate {
+                _fishPanel.LeftMouseButtonReleased += delegate
+                {
                     _draggingFishPanel = false;
                     _fishPanelLoc.Value = _fishPanel.Location;
                     _fishPanel.ShowTint = false;
@@ -475,13 +477,10 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
 
         private async void OnApiSubTokenUpdated(object sender, ValueEventArgs<IEnumerable<TokenPermission>> e)
         {
-            //if (Gw2ApiManager.HasPermissions(new[] { TokenPermission.Account, TokenPermission.Progression }))
-            //TODO turn off permission required API calls
             if (Gw2ApiManager.HasPermissions(Gw2ApiManager.Permissions) == false)
             {
                 Logger.Debug("API permissions are missing");
                 _useAPIToken = false;
-                Logger.Debug($"Use API Token: {_useAPIToken}");
                 return;
             }
 
@@ -490,7 +489,6 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
                 await getCurrentMapsFish();
                 DrawIcons();
                 _useAPIToken = true;
-                Logger.Debug($"Use API Token: {_useAPIToken}");
             }
             catch (Exception)
             {
@@ -509,11 +507,9 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
                     {
                         // Get all account achievements
                         Gw2Sharp.WebApi.V2.IApiV2ObjectList<AccountAchievement> accountAchievements = await Gw2ApiManager.Gw2ApiClient.V2.Account.Achievements.GetAsync();
-                        // TODO if a fish is caught or an achievement finishes, need to refresh lists
                         // Get just the not done fishing achievements
                         accountFishingAchievements = from achievement in accountAchievements where FishingMaps.FISHER_ACHIEVEMENT_IDS.Contains(achievement.Id) && !achievement.Done select achievement;
                         _useAPIToken = true;
-                        Logger.Debug($"Use API Token: {_useAPIToken}");
 
                         // Extra info, probably remove this later
                         var currentAchievementIds = accountFishingAchievements.Select(achievement => achievement.Id);
@@ -528,14 +524,12 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
                     {
                         Logger.Debug("API permissions are missing");
                         _useAPIToken = false;
-                        Logger.Debug($"Use API Token: {_useAPIToken}");
                     }
                 }
                 catch (Exception ex)
                 {
                     Logger.Debug(ex, "Failed to query Guild Wars 2 API.");
                     _useAPIToken = false;
-                    Logger.Debug($"Use API Token: {_useAPIToken}");
                 }
 
                 // Refresh catchable fish
@@ -572,7 +566,6 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
                     foreach (AccountAchievement accountAchievement in currentMapAchievable)
                     {
                         Achievement currentAchievement = await RequestAchievement(accountAchievement.Id);
-                        // TODO fix bug when currentAchievement is null... RequestAchievement doesn't seem to be retrying...
                         if (currentAchievement == null) continue;
                         foreach (AchievementBit bit in currentAchievement.Bits)
                         {
@@ -604,7 +597,6 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
                     foreach (int achievementId in currentMapAchievableIds)
                     {
                         Achievement currentAchievement = await RequestAchievement(achievementId);
-                        // TODO fix bug when currentAchievement is null... RequestAchievement doesn't seem to be retrying...
                         if (currentAchievement == null) continue;
                         foreach (AchievementBit bit in currentAchievement.Bits)
                         {
@@ -628,15 +620,8 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
                     }
                 }
                 Logger.Debug("Shown catchable fish in current map count: " + catchableFish.Count());
-
-                // TODO save / download icons to directory cache & get from cache before web
-                // TODO Download / Use Icon w/ GetRenderServiceTexture ex: GameService.Content.GetRenderServiceTexture(fish.Icon);
-                //foreach (Fish fish in catchableFish)
-                //{
-                //    if (fish == null) continue;
-                //    Logger.Debug("    icon: " + fish.Icon);
-                //}
-            } catch (Exception ex) { throw; }
+            }
+            catch (Exception ex) { throw; }
             finally { _updateFishSemaphore.Release(); }
         }
 
@@ -656,6 +641,7 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
             }
         }
 
+        // TODO Add retry to Request...
         private async Task<Achievement> RequestAchievement(int id)
         {
             // TODO instead of await each call. queue/addtolist each task, Task.WaitAll(queue/list), requeue nulls/failures/errors?

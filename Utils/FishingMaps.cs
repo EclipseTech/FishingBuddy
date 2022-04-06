@@ -1,12 +1,13 @@
 ﻿using Blish_HUD;
 using System.Collections.Generic;
 
+//TODO split out special case of desert isles & ring of fire achievements fish per zone
+
 namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
 {
     class FishingMaps
     {
         private static readonly Logger Logger = Logger.GetLogger(typeof(FishingMaps));
-        //TODO split out special case of desert isles & ring of fire achievements fish per zone
 
         public Dictionary<int, List<int>> mapAchievements { get { return _mapAchievements; } }
         private Dictionary<int, List<int>> _mapAchievements; //mapId int, achievementIds List<int>

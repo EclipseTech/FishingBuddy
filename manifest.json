@@ -18,9 +18,9 @@
   ],
   "description": "Display fishing info: time of day, list of catchable fish in the zone. Currently no way to display equipped bait & lure :(",
   "dependencies": {
-    "bh.blishhud": ">=0.7.1"
+    "bh.blishhud": ">=0.11.4"
   },
-  "url": "https://github.com/EclipseTech/FishingBuddy",
+  "url": "https://github.com/EclipseTech/FishingBuddy/releases",
   "api_permissions": {
     "account": {
       "optional": true,

@@ -2,6 +2,8 @@
 using System.Collections.Concurrent;
 using System.Threading.Tasks;
 
+// Based on https://github.com/agaertner/Blish-HUD-Modules-Releases/blob/main/Regions%20Of%20Tyria%20Module/Utils/AsyncCache.cs
+
 namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
 {
     public class AsyncCache<TKey, TValue>
