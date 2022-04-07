@@ -21,7 +21,7 @@ using Blish_HUD.Content;
 // TODO should other map Ids not show any fishing info, or show open water info? or saltwater/world class info? hide in instances?
 // TODO cache fishing images from api, save / download icons to directory cache & get from cache before web, Download / Use Icon w/ GetRenderServiceTexture ex: GameService.Content.GetRenderServiceTexture(fish.Icon);
 // TODO should be caching map info too
-// TODO in bounds checking for UI elemends, ex: https://github.com/manlaan/BlishHud-Clock/blob/main/Control/DrawClock.cs#L64
+// TODO in bounds checking for UI elements, ex: https://github.com/manlaan/BlishHud-Clock/blob/main/Control/DrawClock.cs#L64
 // TODO notifications? on dawn https://github.com/agaertner/Blish-HUD-Modules-Releases/blob/main/Regions%20Of%20Tyria%20Module/RegionsOfTyriaModule.cs#L108 ?15 sec til?
 // TODO add item id to fish.json
 // TODO add achievement id to fish.json
@@ -93,6 +93,8 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
         private Map _currentMap;
         private bool _useAPIToken;
         private readonly SemaphoreSlim _updateFishSemaphore = new SemaphoreSlim(1, 1);
+        private bool MumbleIsAvailable => GameService.Gw2Mumble.IsAvailable && GameService.GameIntegration.Gw2Instance.IsInGame;
+        private bool uiIsAvailable => MumbleIsAvailable && !GameService.Gw2Mumble.UI.IsMapOpen;
 
         #region Service Managers
         internal Gw2ApiManager Gw2ApiManager => this.ModuleParameters.Gw2ApiManager;
@@ -193,9 +195,9 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
                 DrawIcons();
             }
 
-            GetCurrentMapTime();
-            if (GameService.GameIntegration.Gw2Instance.IsInGame && !GameService.Gw2Mumble.UI.IsMapOpen)
+            if (uiIsAvailable)
             {
+                GetCurrentMapTime();
                 _timeOfDayPanel.Show();
                 _fishPanel.Show();
             }
@@ -237,6 +239,8 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
             _includeWorldClass.SettingChanged -= OnUpdateFish;
             _showRarityBorder.SettingChanged -= OnUpdateFish;
 
+            GameService.Gw2Mumble.CurrentMap.MapChanged -= OnMapChanged;
+
             Gw2ApiManager.SubtokenUpdated -= OnApiSubTokenUpdated;
 
             ModuleInstance = null;
@@ -245,24 +249,29 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
 
         protected virtual void OnUpdateSettings(object sender = null, ValueChangedEventArgs<Point> e = null)
         {
+            Logger.Debug("Settings updated");
             GetCurrentMapTime();
             DrawIcons();
         }
         protected virtual void OnUpdateSettings(object sender = null, ValueChangedEventArgs<bool> e = null)
         {
+            Logger.Debug("Settings updated");
             GetCurrentMapTime();
             DrawIcons();
         }
         protected virtual void OnUpdateSettings(object sender = null, ValueChangedEventArgs<int> e = null)
         {
+            Logger.Debug("Settings updated");
             GetCurrentMapTime();
             DrawIcons();
         }
 
         protected virtual async void OnUpdateFish(object sender = null, ValueChangedEventArgs<bool> e = null)
         {
+            Logger.Debug("Fish settings updated");
+            GetCurrentMapTime();
             await getCurrentMapsFish();
-            OnUpdateSettings(sender, e);
+            DrawIcons();
         }
 
         protected void DrawIcons()
@@ -512,7 +521,8 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
 
         private void GetCurrentMapTime()
         {
-            timeOfDay = TyriaTime.CurrentMapTime(GameService.Gw2Mumble.CurrentMap.Id);
+            //TODO add retry a few times waiting a few seconds in between if (!MumbleIsAvailable)
+            if (MumbleIsAvailable) timeOfDay = TyriaTime.CurrentMapTime(GameService.Gw2Mumble.CurrentMap.Id);
         }
 
         private async void OnApiSubTokenUpdated(object sender, ValueEventArgs<IEnumerable<TokenPermission>> e)
@@ -548,7 +558,7 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
                         // Get all account achievements
                         Gw2Sharp.WebApi.V2.IApiV2ObjectList<AccountAchievement> accountAchievements = await Gw2ApiManager.Gw2ApiClient.V2.Account.Achievements.GetAsync();
                         // Get just the not done fishing achievements
-                        accountFishingAchievements = from achievement in accountAchievements where FishingMaps.FISHER_ACHIEVEMENT_IDS.Contains(achievement.Id) && !achievement.Done select achievement;
+                        accountFishingAchievements = from achievement in accountAchievements where FishingMaps.FISHER_ACHIEVEMENT_IDS.Contains(achievement.Id) && (!achievement.Done || achievement.Repeated != null) select achievement;
                         _useAPIToken = true;
 
                         // Extra info, probably remove this later
@@ -556,8 +566,8 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
                         var currentProgress = accountFishingAchievements.Select(achievement => achievement.Current);
                         var progressMax = accountFishingAchievements.Select(achievement => achievement.Max);
                         var currentOfMax = currentProgress.Zip(progressMax, (current, max) => current + "/" + max);
-                        Logger.Debug("Fishing achievement Ids: " + string.Join(", ", currentAchievementIds));
-                        Logger.Debug("Fishing achievement progress: " + string.Join(", ", currentOfMax));
+                        Logger.Debug("All account fishing achievement Ids: " + string.Join(", ", currentAchievementIds));
+                        Logger.Debug("Account fishing achievement progress: " + string.Join(", ", currentOfMax));
                         // End Extra info
                     }
                     else
@@ -577,24 +587,22 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
                 // Achievement Ids from current map
                 List<int> achievementsInMap = new List<int>();
 
-                // Get palyer's current map
+                // Get player's current map if necessary
                 if (_currentMap == null)
                 {
-                    try
-                    {
+                    try {
                         _currentMap = await _mapRepository.GetItem(GameService.Gw2Mumble.CurrentMap.Id);
-                    }
-                    catch (Exception ex)
-                    {
+                    } catch (Exception ex) {
                         Logger.Debug(ex, "Couldn't get player's current map.");
-                        return;
                     }
                 }
-                if (!fishingMaps.mapAchievements.ContainsKey(_currentMap.Id)) return;
-
-                achievementsInMap.AddRange(fishingMaps.mapAchievements[_currentMap.Id]);
+                if (_currentMap != null && fishingMaps.mapAchievements.ContainsKey(_currentMap.Id))
+                {
+                    achievementsInMap.AddRange(fishingMaps.mapAchievements[_currentMap.Id]);
+                } else { Logger.Debug("Couldn't get player's current map, skipping current map fish."); }
                 if (_includeSaltwater.Value) achievementsInMap.AddRange(FishingMaps.SaltwaterFisher);
                 if (_includeWorldClass.Value) achievementsInMap.AddRange(FishingMaps.WorldClassFisher);
+                if (achievementsInMap.Count == 0) { Logger.Debug("No achieveable fish in map."); return; }
                 Logger.Debug($"All map achievements: {string.Join(", ", achievementsInMap)}");
 
                 if (_ignoreCaughtFish.Value && _useAPIToken)
@@ -647,7 +655,7 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
                             // Get first fish in all fish list that matches name
                             var fishNameMatch = _allFishList.Where(phish => phish.name == fish.Name);
                             Fish ghoti = fishNameMatch.Count() != 0 ? fishNameMatch.First() : null;
-                            if (ghoti == null) { Logger.Debug($"Missing fish from all fish list: {fish.Name}"); continue; }
+                            if (ghoti == null) { Logger.Warn($"Missing fish from all fish list: {fish.Name}"); continue; }
                             // TODO option to fade (opacity) as well as remove
                             // Filter by time of day if fish's time of day == tyria's time of day. Dawn & Dusk count as Any
                             if (ghoti.timeOfDay != Fish.TimeOfDay.Any &&
@@ -661,7 +669,7 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
                 }
                 Logger.Debug("Shown catchable fish in current map count: " + catchableFish.Count());
             }
-            catch (Exception ex) { throw; }
+            catch (Exception ex) { Logger.Error(ex, "Unknown exception getting current map fish"); }
             finally { _updateFishSemaphore.Release(); }
         }
 

@@ -48,7 +48,6 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
         // Can this fish be caught in open water?
         public bool openWater { get; set; }
         // Map region location ie Seitung Province.. should this be map id? list? Or even more specific, just the map this fish is found in? Saltwater, Anywhere/Any?
-        // List<int> location = ...mapIds
         public string location { get; set; }
         // Achievement Name
         public string achievement { get; set; }

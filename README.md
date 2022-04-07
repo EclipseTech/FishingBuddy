@@ -25,7 +25,10 @@ Settings:<div style="width:512; height:256px">
 
 ## Notes
 
-Currently no API available to display equipped bait & lure :(
+* Currently no API available to display equipped bait & lure :(
+* [Feature enhancement requests](https://github.com/EclipseTech/FishingBuddy/issues/new?assignees=&labels=&template=feature_request.md&title=)
+  * First check current [issues](https://github.com/EclipseTech/FishingBuddy/issues)
+* If there is a fish missing please report it as [bug](https://github.com/EclipseTech/FishingBuddy/issues/new?assignees=&labels=&template=bug_report.md&title=)
 
 ## Authors
 
