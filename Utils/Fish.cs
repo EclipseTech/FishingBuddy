@@ -1,4 +1,5 @@
 ﻿using Blish_HUD;
+using Blish_HUD.Content;
 using Gw2Sharp.WebApi;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
@@ -57,5 +58,7 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
         public string notes { get; set; }
         // Url item icon
         public RenderUrl icon { get; set; }
+        public bool Visible { get; set; }
+        public AsyncTexture2D iconImg { get; set; }
     }
 }

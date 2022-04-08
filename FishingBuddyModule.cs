@@ -43,36 +43,37 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
 
         //private Texture2D _imgLure;
         //private Texture2D _imgBait;
-        private Texture2D _imgDawn;
-        private Texture2D _imgDay;
-        private Texture2D _imgDusk;
-        private Texture2D _imgNight;
-        private Texture2D _imgBorderBlack;
-        private Texture2D _imgBorderJunk;
-        private Texture2D _imgBorderBasic;
-        private Texture2D _imgBorderFine;
-        private Texture2D _imgBorderMasterwork;
-        private Texture2D _imgBorderRare;
-        private Texture2D _imgBorderExotic;
-        private Texture2D _imgBorderAscended;
-        private Texture2D _imgBorderLegendary;
+        private static Texture2D _imgDawn;
+        private static Texture2D _imgDay;
+        private static Texture2D _imgDusk;
+        private static Texture2D _imgNight;
+        private static Texture2D _imgBorderBlack;
+        private static Texture2D _imgBorderJunk;
+        private static Texture2D _imgBorderBasic;
+        private static Texture2D _imgBorderFine;
+        private static Texture2D _imgBorderMasterwork;
+        private static Texture2D _imgBorderRare;
+        private static Texture2D _imgBorderExotic;
+        private static Texture2D _imgBorderAscended;
+        private static Texture2D _imgBorderLegendary;
+        private static Texture2D _imgBorderX;
 
         // Turned off until can get character fishing details
         //private ClickThroughImage _lure;
         //private ClickThroughImage _bait;
-        private ClickThroughImage _dawn;
-        private ClickThroughImage _day;
-        private ClickThroughImage _dusk;
-        private ClickThroughImage _night;
+        private static ClickThroughImage _dawn;
+        private static ClickThroughImage _day;
+        private static ClickThroughImage _dusk;
+        private static ClickThroughImage _night;
 
         private AsyncCache<int, Map> _mapRepository;
         //private AsyncCache<int, Achievement> _achievementRepository;
         //private AsyncCache<int, Item> _itemRepository;
 
-        private ClickThroughPanel _fishPanel;
+        private static ClickThroughPanel _fishPanel;
         private bool _draggingFishPanel;
         private Point _dragFishPanelStart = Point.Zero;
-        private ClickThroughPanel _timeOfDayPanel;
+        private static ClickThroughPanel _timeOfDayPanel;
         private bool _draggingTimeOfDayPanel;
         private Point _dragTimeOfDayPanelStart = Point.Zero;
         public static SettingEntry<bool> _dragFishPanel;
@@ -84,6 +85,8 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
         public static SettingEntry<bool> _ignoreCaughtFish;
         public static SettingEntry<bool> _includeWorldClass;
         public static SettingEntry<bool> _includeSaltwater;
+        public static SettingEntry<bool> _displayUncatchableFish;
+        public static SettingEntry<bool> _hideInCombat;
         private List<Fish> catchableFish;
         private FishingMaps fishingMaps;
         private IEnumerable<AccountAchievement> accountFishingAchievements;
@@ -95,6 +98,7 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
         private readonly SemaphoreSlim _updateFishSemaphore = new SemaphoreSlim(1, 1);
         private bool MumbleIsAvailable => GameService.Gw2Mumble.IsAvailable && GameService.GameIntegration.Gw2Instance.IsInGame;
         private bool uiIsAvailable => MumbleIsAvailable && !GameService.Gw2Mumble.UI.IsMapOpen;
+        private bool hidingInCombat => MumbleIsAvailable && _hideInCombat.Value && GameService.Gw2Mumble.PlayerCharacter.IsInCombat;
 
         #region Service Managers
         internal Gw2ApiManager Gw2ApiManager => this.ModuleParameters.Gw2ApiManager;
@@ -114,6 +118,8 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
             _includeSaltwater.SettingChanged += OnUpdateFish;
             _includeWorldClass = settings.DefineSetting("IncludeWorldClass", false, () => "Include World Class Fish", () => "Include World Class Fisher fish");
             _includeWorldClass.SettingChanged += OnUpdateFish;
+            _displayUncatchableFish = settings.DefineSetting("DisplayUncatchable", false, () => "Display uncatchable", () => "Display fish that cannot be caught at this time of day");
+            _displayUncatchableFish.SettingChanged += OnUpdateFish;
             _fishPanelLoc = settings.DefineSetting("FishPanelLoc", new Point(160, 100), () => "Fish Location", () => "");
             _fishPanelLoc.SettingChanged += OnUpdateSettings;
             _dragFishPanel = settings.DefineSetting("FishPanelDrag", false, () => "Drag Fish", () => "");
@@ -130,6 +136,8 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
             _timeOfDayImgWidth.SettingChanged += OnUpdateSettings;
             _showRarityBorder = settings.DefineSetting("ShowRarityBorder", true, () => "Show Fish Rarity", () => "");
             _showRarityBorder.SettingChanged += OnUpdateFish;
+            _hideInCombat = settings.DefineSetting("HideInCombat", false, () => "Hide in combat", () => "Hide all fishing info in combat");
+            _hideInCombat.SettingChanged += OnUpdateFish;
         }
 
         protected override void Initialize()
@@ -155,6 +163,7 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
             _imgBorderExotic = ContentsManager.GetTexture(@"border_exotic.png");
             _imgBorderAscended = ContentsManager.GetTexture(@"border_ascended.png");
             _imgBorderLegendary = ContentsManager.GetTexture(@"border_legendary.png");
+            _imgBorderX = ContentsManager.GetTexture(@"border_x.png");
 
             _dawn = new ClickThroughImage();
             _day = new ClickThroughImage();
@@ -182,20 +191,20 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
             DrawIcons();
         }
 
-        private double _runningTime;
-        protected override async void Update(GameTime gameTime)
+        //private double _runningTime;
+        protected override void Update(GameTime gameTime)
         {
-            _runningTime += gameTime.ElapsedGameTime.TotalMilliseconds;
-            if (_runningTime > 3 * 60000)
-            {
-                // 3 min timer
-                _runningTime -= 3 * 60000;
-                //ScreenNotification.ShowNotification("The examples module shows this message every 3 min!", ScreenNotification.NotificationType.Warning);
-                await getCurrentMapsFish();
-                DrawIcons();
-            }
+            // Refresh on 3 min timer
+            //_runningTime += gameTime.ElapsedGameTime.TotalMilliseconds;
+            //if (_runningTime > (3 * 60000))
+            //{
+            //    //Blish_HUD.Controls.ScreenNotification.ShowNotification("The examples module shows this message every 3 min!", Blish_HUD.Controls.ScreenNotification.NotificationType.Warning);
+            //    await getCurrentMapsFish();
+            //    DrawIcons();
+            //    _runningTime -= (3 * 60000);
+            //}
 
-            if (uiIsAvailable)
+            if (uiIsAvailable && !hidingInCombat)
             {
                 GetCurrentMapTime();
                 _timeOfDayPanel.Show();
@@ -222,6 +231,8 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
             }
         }
 
+        //TODO BUG! enable disable, leaves around images...
+
         /// <inheritdoc />
         protected override void Unload()
         {
@@ -238,12 +249,34 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
             _includeSaltwater.SettingChanged -= OnUpdateFish;
             _includeWorldClass.SettingChanged -= OnUpdateFish;
             _showRarityBorder.SettingChanged -= OnUpdateFish;
+            _displayUncatchableFish.SettingChanged -= OnUpdateFish;
+            _hideInCombat.SettingChanged -= OnUpdateFish;
 
             GameService.Gw2Mumble.CurrentMap.MapChanged -= OnMapChanged;
 
             Gw2ApiManager.SubtokenUpdated -= OnApiSubTokenUpdated;
 
-            ModuleInstance = null;
+            _imgDawn?.Dispose();
+            _imgDay?.Dispose();
+            _imgDusk?.Dispose();
+            _imgNight?.Dispose();
+            _imgBorderBlack?.Dispose();
+            _imgBorderJunk?.Dispose();
+            _imgBorderBasic?.Dispose();
+            _imgBorderFine?.Dispose();
+            _imgBorderMasterwork?.Dispose();
+            _imgBorderRare?.Dispose();
+            _imgBorderExotic?.Dispose();
+            _imgBorderAscended?.Dispose();
+            _imgBorderLegendary?.Dispose();
+            _imgBorderX?.Dispose();
+
+            _dawn?.Dispose();
+            _day?.Dispose();
+            _dusk?.Dispose();
+            _night?.Dispose();
+
+            ModuleInstance?.Dispose(); ModuleInstance = null;
             // All static members must be manually unset
         }
 
@@ -374,12 +407,25 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
                 new ClickThroughImage
                 {
                     Parent = _fishPanel,
-                    Texture = GameService.Content.GetRenderServiceTexture(fish.icon),
+                    Texture = fish.iconImg, //TODO can't use render service here... causes issues if module loaded and unloaded to quickly
                     Size = new Point(_fishImgWidth.Value),
                     Location = new Point(x, y),
                     ZIndex = 0,
-                    capture = _dragFishPanel.Value
+                    capture = _dragFishPanel.Value,
+                    Opacity = (fish.Visible ? 1.0f : 0.5f)
                 };
+                if (_displayUncatchableFish.Value && !fish.Visible)
+                {
+                    new ClickThroughImage
+                    {
+                        Parent = _fishPanel,
+                        Texture = _imgBorderX,
+                        Size = new Point(_fishImgWidth.Value),
+                        Location = new Point(x, y),
+                        ZIndex = 1,
+                        capture = _dragFishPanel.Value
+                    };
+                }
                 new ClickThroughImage
                 {
                     Parent = _fishPanel,
@@ -393,7 +439,7 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
                                        $"Time of Day: {(fish.timeOfDay == Fish.TimeOfDay.DuskDawn ? "Dusk/Dawn" : fish.timeOfDay.ToString())}\n" +
                                        $"Achievement: {fish.achievement}\n" +
                                        $"Rarity: {fish.rarity}",
-                    ZIndex = 1,
+                    ZIndex = 2,
                     capture = _dragFishPanel.Value
                 };
                 x += _fishImgWidth.Value;
@@ -558,7 +604,7 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
                         // Get all account achievements
                         Gw2Sharp.WebApi.V2.IApiV2ObjectList<AccountAchievement> accountAchievements = await Gw2ApiManager.Gw2ApiClient.V2.Account.Achievements.GetAsync();
                         // Get just the not done fishing achievements
-                        accountFishingAchievements = from achievement in accountAchievements where FishingMaps.FISHER_ACHIEVEMENT_IDS.Contains(achievement.Id) && (!achievement.Done || achievement.Repeated != null) select achievement;
+                        accountFishingAchievements = from achievement in accountAchievements where FishingMaps.FISHER_ACHIEVEMENT_IDS.Contains(achievement.Id) && (achievement.Current != achievement.Max) select achievement;
                         _useAPIToken = true;
 
                         // Extra info, probably remove this later
@@ -596,8 +642,7 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
                         Logger.Debug(ex, "Couldn't get player's current map.");
                     }
                 }
-                if (_currentMap != null && fishingMaps.mapAchievements.ContainsKey(_currentMap.Id))
-                {
+                if (_currentMap != null && fishingMaps.mapAchievements.ContainsKey(_currentMap.Id)) {
                     achievementsInMap.AddRange(fishingMaps.mapAchievements[_currentMap.Id]);
                 } else { Logger.Debug("Couldn't get player's current map, skipping current map fish."); }
                 if (_includeSaltwater.Value) achievementsInMap.AddRange(FishingMaps.SaltwaterFisher);
@@ -608,16 +653,17 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
                 if (_ignoreCaughtFish.Value && _useAPIToken)
                 {
                     var currentMapAchievable = from achievement in accountFishingAchievements where achievementsInMap.Contains(achievement.Id) select achievement;
-                    Logger.Debug($"Current map achieveable: {string.Join(", ", currentMapAchievable.Select(achievement => achievement.Id))}");
+                    Logger.Debug($"Current map achieveable: {string.Join(", ", currentMapAchievable.Select(achievement => $"id: {achievement.Id} current: {achievement.Current} done: {achievement.Done}"))}");
                     // Counter to help facilitate ignoring already caught fish
                     int bitsCounter = 0;
                     foreach (AccountAchievement accountAchievement in currentMapAchievable)
                     {
-                        Achievement currentAchievement = await RequestAchievement(accountAchievement.Id);
-                        if (currentAchievement == null) continue;
-                        foreach (AchievementBit bit in currentAchievement.Bits)
+                        Achievement currentAccountAchievement = await RequestAchievement(accountAchievement.Id);
+                        if (currentAccountAchievement == null) continue;
+                        if (currentAccountAchievement.Bits == null) continue;
+                        foreach (AchievementBit bit in currentAccountAchievement.Bits)
                         {
-                            if (bit == null) { Logger.Debug($"Bit in {currentAchievement.Id} is null"); continue; }
+                            if (bit == null) { Logger.Debug($"Bit in {currentAccountAchievement.Id} is null"); continue; }
                             if (accountAchievement.Bits != null && accountAchievement.Bits.Contains(bitsCounter)) { bitsCounter++; continue; }
                             int itemId = ((AchievementItemBit)bit).Id;
                             Item fish = await RequestItem(itemId);
@@ -625,13 +671,14 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
                             var fishNameMatch = _allFishList.Where(phish => phish.name == fish.Name);
                             Fish ghoti = fishNameMatch.Count() != 0 ? fishNameMatch.First() : null;
                             if (ghoti == null) { Logger.Debug($"Missing fish from all fish list: {fish.Name}"); continue; }
-                            // TODO option to fade (opacity) as well as remove
                             // Filter by time of day if fish's time of day == tyria's time of day. Dawn & Dusk count as Any
                             if (ghoti.timeOfDay != Fish.TimeOfDay.Any &&
                                 !(timeOfDay.Equals("Dawn") || timeOfDay.Equals("Dusk")) &&
                                 !Equals(ghoti.timeOfDay.ToString(), timeOfDay))
-                            { bitsCounter++; continue; }
-                            ghoti.icon = fish.Icon; ghoti.itemId = fish.Id; ghoti.achievementId = currentAchievement.Id;
+                                 ghoti.Visible = false; 
+                            else ghoti.Visible = true;
+                            ghoti.icon = fish.Icon; ghoti.itemId = fish.Id; ghoti.achievementId = currentAccountAchievement.Id;
+                            ghoti.iconImg = RequestItemIcon(fish);
                             catchableFish.Add(ghoti);
                             bitsCounter++;
                         }
@@ -661,13 +708,16 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
                             if (ghoti.timeOfDay != Fish.TimeOfDay.Any &&
                                 !(timeOfDay.Equals("Dawn") || timeOfDay.Equals("Dusk")) &&
                                 !Equals(ghoti.timeOfDay.ToString(), timeOfDay))
-                            { continue; }
+                                ghoti.Visible = false;
+                            else ghoti.Visible = true;
                             ghoti.icon = fish.Icon; ghoti.itemId = fish.Id; ghoti.achievementId = currentAchievement.Id;
+                            ghoti.iconImg = RequestItemIcon(fish);
                             catchableFish.Add(ghoti);
                         }
                     }
                 }
-                Logger.Debug("Shown catchable fish in current map count: " + catchableFish.Count());
+                if (!_displayUncatchableFish.Value) catchableFish = catchableFish.Where(phish => phish.Visible).ToList();
+                Logger.Debug("Shown fish in current map count: " + catchableFish.Count());
             }
             catch (Exception ex) { Logger.Error(ex, "Unknown exception getting current map fish"); }
             finally { _updateFishSemaphore.Release(); }
@@ -676,6 +726,7 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
         // based on https://github.com/agaertner/Blish-HUD-Modules-Releases/blob/main/Regions%20Of%20Tyria%20Module/RegionsOfTyriaModule.cs
         private async Task<Map> RequestMap(int id)
         {
+            Logger.Debug($"Requested map id: {id}");
             try
             {
                 Task<Map> mapTask = Gw2ApiManager.Gw2ApiClient.V2.Maps.GetAsync(id);
@@ -692,6 +743,7 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
         // TODO Add retry to Request...
         private async Task<Achievement> RequestAchievement(int id)
         {
+            Logger.Debug($"Requested achievement id: {id}");
             // TODO instead of await each call. queue/addtolist each task, Task.WaitAll(queue/list), requeue nulls/failures/errors?
             try
             {
@@ -708,6 +760,7 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
 
         private async Task<Item> RequestItem(int id)
         {
+            Logger.Debug($"Requested item id: {id}");
             try
             {
                 Task<Item> itemTask = Gw2ApiManager.Gw2ApiClient.V2.Items.GetAsync(id);
@@ -719,6 +772,12 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
                 Logger.Debug(ex, "Failed to query Guild Wars 2 API.");
                 return null;
             }
+        }
+
+        // TODO find a way to wait on texture finished loading
+        private AsyncTexture2D RequestItemIcon(Item item)
+        {
+            return GameService.Content.GetRenderServiceTexture(item.Icon);
         }
     }
 }

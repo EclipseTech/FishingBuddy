@@ -5,7 +5,7 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
     class ClickThroughImage : Image
     {
         public bool capture { get; set; }
-        public ClickThroughImage (bool captureInput = false)
+        public ClickThroughImage (bool captureInput = false) : base()
         {
             capture = captureInput;
         }
