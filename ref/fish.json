@@ -1633,7 +1633,7 @@
     "fishingHole": "Any",
     "openWater": true,
     "bait": "Any",
-    "timeOfDay": "Any",
+    "timeOfDay": "Night",
     "notes": "",
     "location": "Kryta",
     "achievement": "Krytan Fisher",

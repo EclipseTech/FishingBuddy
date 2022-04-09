@@ -4,15 +4,16 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
 {
     class ClickThroughImage : Image
     {
-        public bool capture { get; set; }
+        public bool Capture { get; set; }
         public ClickThroughImage (bool captureInput = false) : base()
         {
-            capture = captureInput;
+            Capture = captureInput;
         }
 
+        // TODO change this to delegate or add delegate for this
         protected override CaptureType CapturesInput()
         {
-            return capture ? CaptureType.Mouse : CaptureType.DoNotBlock;
+            return Capture ? CaptureType.Mouse : CaptureType.DoNotBlock;
         }
     }
 }

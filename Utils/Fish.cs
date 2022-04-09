@@ -60,5 +60,6 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
         public RenderUrl icon { get; set; }
         public bool Visible { get; set; }
         public AsyncTexture2D iconImg { get; set; }
+        //TODO can save item code to clipboard on click
     }
 }

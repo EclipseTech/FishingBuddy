@@ -5,6 +5,7 @@ using System.Collections.Generic;
 namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
 {
     // https://wiki.guildwars2.com/wiki/Day_and_night
+    // Based on https://github.com/manlaan/BlishHud-Clock/
     class TyriaTime
     {
         private static readonly Logger Logger = Logger.GetLogger(typeof(TyriaTime));
@@ -18,13 +19,18 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
         public static readonly DateTime centralDuskStart = new DateTime(2000, 1, 1, 20, 0, 0);
         public static readonly DateTime centralNightStart = new DateTime(2000, 1, 1, 21, 0, 0);
         public static readonly List<int> CanthaMaps = new List<int> { 1442, 1419, 1444, 1462, 1438, 1452, 1428, 1422 };
+        // Draconis Mons 1195 Always 9:00am, Thousand Seas Pavilion 1465 Day 12:00pm noon
+        public static readonly List<int> AlwaysDayMaps = new List<int> { 1195, 1465 }; //TODO finish filling these out
+        public static readonly List<int> AlwaysNightMaps = new List<int> { 0 }; //TODO finish filling these out https://wiki.guildwars2.com/wiki/Day_and_night#List_of_locations_with_day-night_cycle
 
         //  TODO display time https://github.com/manlaan/BlishHud-Clock/blob/main/Control/DrawClock.cs#L86
-        public static string CurrentMapTime(int MapId)
+        public static string CurrentMapPhase(int MapId)
         {
             DateTime TyriaTime = CalcTyriaTime();
 
-            if (CanthaMaps.Contains(MapId))
+            if (AlwaysDayMaps.Contains(MapId)) return "Day";
+            else if (AlwaysDayMaps.Contains(MapId)) return "Night";
+            else if (CanthaMaps.Contains(MapId))
             {   // Cantha Maps
                 if (TyriaTime >= canthaDawnStart && TyriaTime < canthaDayStart)
                 {
@@ -83,6 +89,54 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
                 return new DateTime(2000, 1, 1, 0, 0, 0);
             }
 
+        }
+
+        public static TimeSpan CalcTimeTilNextPhase(int MapId)
+        {
+            //DateTime UTC = DateTime.UtcNow;
+            //DateTime currentTime = new DateTime(2000, 1, 1, UTC.Hour, UTC.Minute, UTC.Second);
+            DateTime TyriaTime = CalcTyriaTime();
+
+            if (AlwaysDayMaps.Contains(MapId)) return TimeSpan.Zero;
+            else if (AlwaysDayMaps.Contains(MapId)) return TimeSpan.Zero;
+            else if (CanthaMaps.Contains(MapId))
+            {   // Cantha Maps
+                if (TyriaTime >= canthaDawnStart && TyriaTime < canthaDayStart)
+                {
+                    return canthaDayStart - TyriaTime;
+                }
+                else if (TyriaTime >= canthaDayStart && TyriaTime < canthaDuskStart)
+                {
+                    return canthaDuskStart - TyriaTime;
+                }
+                else if (TyriaTime >= canthaDuskStart && TyriaTime < canthaNightStart)
+                {
+                    return canthaNightStart - TyriaTime;
+                }
+                else
+                {
+                    return canthaDawnStart - TyriaTime;
+                }
+            }
+            else
+            {   // Central Tyria Maps
+                if (TyriaTime >= centralDawnStart && TyriaTime < centralDayStart)
+                {
+                    return centralDayStart - TyriaTime;
+                }
+                else if (TyriaTime >= centralDayStart && TyriaTime < centralDuskStart)
+                {
+                    return centralDuskStart - TyriaTime;
+                }
+                else if (TyriaTime >= centralDuskStart && TyriaTime < centralNightStart)
+                {
+                    return centralNightStart - TyriaTime;
+                }
+                else
+                {
+                    return centralDawnStart - TyriaTime;
+                }
+            }
         }
     }
 }

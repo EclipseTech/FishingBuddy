@@ -27,6 +27,7 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
             foreach (int mapId in KainengMaps) _mapAchievements.Add(mapId, KainengFisher);
             foreach (int mapId in EchovaldWildsMaps) _mapAchievements.Add(mapId, EchovaldWildsFisher);
             foreach (int mapId in DragonsEndMaps) _mapAchievements.Add(mapId, DragonsEndFisher);
+            //foreach (int mapId in ThousandSeasPavilion) _mapAchievements.Add(mapId, ThousandSeasPavilionFisher);
         }
 
         // All from fishing achievement category 317 https://api.guildwars2.com/v2/achievements/categories/317
@@ -63,11 +64,11 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
         public readonly static List<int> RingOfFireFisher = new List<int> { 6489, 6339 };
         // Ring of Fire Maps: Ember Bay 1175 & Draconis Mons 1195
         public readonly static List<int> RingOfFireMaps = new List<int> { 1175, 1195 };
-        // Seitung Province Fisher 6336 Avid Seitung Province Fisher 6264
-        public readonly static List<int> SeitungProvinceFisher = new List<int> { 6336, 6264 };
 
         // Cantha EoD Maps
         public readonly static List<int> CanthaMaps = new List<int> { 1442, 1419, 1444, 1462, 1438, 1452, 1428, 1422 };
+        // Seitung Province Fisher 6336 Avid Seitung Province Fisher 6264
+        public readonly static List<int> SeitungProvinceFisher = new List<int> { 6336, 6264 };
         // Seitung Province Maps: Seitung Province 1442 & Isle of Reflection 1419, 1444, 1462
         public readonly static List<int> SeitungProvinceMaps = new List<int> { 1442, 1419, 1444, 1462 };
         // Kaineng Fisher 6342 Avid Kaineng Fisher 6192
@@ -82,6 +83,10 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
         public readonly static List<int> DragonsEndFisher = new List<int> { 6506, 6402 };
         // Dragon's End Maps: Dragon's End 1422
         public readonly static List<int> DragonsEndMaps = new List<int> { 1422 };
+        //TODO finish filling out special case
+        // Thousand Seas Pavilion 1465 Day 12:00 noon https://wiki.guildwars2.com/wiki/Mysterious_Waters_Fish contains Seitung Province & Kaineng daytime non-Ascended and non-Legendary fish
+        //public readonly static List<int> ThousandSeasPavilionFisher = new List<int> { 6336, 6264, 6342, 6192 };
+        //public readonly static List<int> ThousandSeasPavilion = new List<int> { 1465 };
 
         // World Class Fisher 6224 Avid World Class Fisher 6110
         public readonly static List<int> WorldClassFisher = new List<int> { 6224, 6110 };
