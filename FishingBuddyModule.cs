@@ -1,21 +1,21 @@
 ﻿using Blish_HUD;
+using Blish_HUD.Content;
+using Blish_HUD.Graphics.UI;
 using Blish_HUD.Modules;
 using Blish_HUD.Modules.Managers;
 using Blish_HUD.Settings;
 using Gw2Sharp.WebApi.V2.Models;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Newtonsoft.Json;
 using System;
 using System.ComponentModel.Composition;
-using Eclipse1807.BlishHUD.FishingBuddy.Utils;
 using System.Collections.Generic;
 using System.Linq;
-using Newtonsoft.Json;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Blish_HUD.Content;
-using Blish_HUD.Controls;
+using Eclipse1807.BlishHUD.FishingBuddy.Utils;
 
 
 // TODO display timeofday countdown timer
@@ -65,10 +65,10 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
         private bool _draggingFishPanel;
         private Point _dragFishPanelStart = Point.Zero;
         public static SettingEntry<bool> _dragFishPanel;
-        public static SettingEntry<int> _fishImgWidth;
+        public static SettingEntry<int> _fishImgSize;
         public static SettingEntry<Point> _fishPanelLoc;
         public static SettingEntry<bool> _dragTimeOfDayClock;
-        public static SettingEntry<int> _timeOfDayImgWidth;
+        public static SettingEntry<int> _timeOfDayImgSize;
         public static SettingEntry<Point> _timeOfDayPanelLoc;
         public static SettingEntry<bool> _ignoreCaughtFish;
         public static SettingEntry<bool> _includeWorldClass;
@@ -106,12 +106,12 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
         {
             // Fish Settings
             _ignoreCaughtFish = settings.DefineSetting("IgnoreCaughtFish", true, () => "Ignore Caught", () => "Ignore fish already counted towards achievements");
-            _includeSaltwater = settings.DefineSetting("IncludeSaltwater", false, () => "Include Saltwater", () => "Include Saltwater Fisher fish");
-            _includeWorldClass = settings.DefineSetting("IncludeWorldClass", false, () => "Include World Class", () => "Include World Class Fisher fish");
+            _includeSaltwater = settings.DefineSetting("IncludeSaltwater", false, () => "Display Saltwater", () => "Include Saltwater Fisher fish");
+            _includeWorldClass = settings.DefineSetting("IncludeWorldClass", false, () => "Display World Class", () => "Include World Class Fisher fish");
             _displayUncatchableFish = settings.DefineSetting("DisplayUncatchable", false, () => "Display Uncatchable", () => "Display fish that cannot be caught at this time of day");
-            _fishPanelLoc = settings.DefineSetting("FishPanelLoc", new Point(160, 100), () => "Fish Location", () => "");
+            _fishPanelLoc = settings.DefineSetting("FishPanelLoc", new Point(160, 100), () => "Fish Panel Location", () => "");
             _dragFishPanel = settings.DefineSetting("FishPanelDrag", false, () => "Drag Fish", () => "");
-            _fishImgWidth = settings.DefineSetting("FishImgWidth", 30, () => "Fish Size", () => "");
+            _fishImgSize = settings.DefineSetting("FishImgWidth", 30, () => "Fish Size", () => "");
             _showRarityBorder = settings.DefineSetting("ShowRarityBorder", true, () => "Show Rarity", () => "Display fish rarity border");
             _ignoreCaughtFish.SettingChanged += OnUpdateFishSettings;
             _includeSaltwater.SettingChanged += OnUpdateFishSettings;
@@ -120,19 +120,19 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
             _fishPanelLoc.SettingChanged += OnUpdateSettings;
             _dragFishPanel.SettingChanged += OnUpdateSettings;
             _showRarityBorder.SettingChanged += OnUpdateFishSettings;
-            _fishImgWidth.SettingChanged += OnUpdateSettings;
-            _fishImgWidth.SetRange(16, 96);
+            _fishImgSize.SettingChanged += OnUpdateSettings;
+            _fishImgSize.SetRange(16, 96);
             // Time of Day Settings
             _timeOfDayPanelLoc = settings.DefineSetting("TimeOfDayPanelLoc", new Point(100, 100), () => "Time of Day Details Location", () => "");
             _dragTimeOfDayClock = settings.DefineSetting("TimeOfDayPanelDrag", false, () => "Drag Time Display", () => "Drag time of day display");
-            _timeOfDayImgWidth = settings.DefineSetting("TimeImgWidth", 64, () => "Time of Day Size", () => "");
+            _timeOfDayImgSize = settings.DefineSetting("TimeImgWidth", 64, () => "Time of Day Size", () => "");
             //_settingClockAlign = settings.DefineSetting("ClockTimeAlign", "Bottom", () => "Clock Position", () => "Clock display alignment");
             //TODO should this be _showTimeOfDay?
             _hideTimeOfDay = settings.DefineSetting("HideTimeOfDay", false, () => "Hide Time Display", () => "Opption to hide time display");
             _timeOfDayPanelLoc.SettingChanged += OnUpdateClockLocation;
             _dragTimeOfDayClock.SettingChanged += OnUpdateClockSettings;
-            _timeOfDayImgWidth.SetRange(16, 96);
-            _timeOfDayImgWidth.SettingChanged += OnUpdateClockSize;
+            _timeOfDayImgSize.SetRange(16, 96);
+            _timeOfDayImgSize.SettingChanged += OnUpdateClockSize;
             _dragTimeOfDayClock.SettingChanged += OnUpdateClockSettings;
             _hideTimeOfDay.SettingChanged += OnUpdateClockSettings;
             //_settingClockAlign.SettingChanged += OnUpdateClockLabel;
@@ -183,7 +183,7 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
             _timeOfDayClock = new Clock();
             _timeOfDayClock.Parent = GameService.Graphics.SpriteScreen;
             OnUpdateClockSettings();
-            OnUpdateClockLabel();
+            //OnUpdateClockLabel();
             OnUpdateClockLocation();
             OnUpdateClockSize();
 
@@ -192,11 +192,10 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
             DrawIcons();
         }
 
-        //TODO settings view
-        //public override IView GetSettingsView()
-        //{
-        //    return new FishingBuddy.Views.SettingsView();
-        //}
+        public override IView GetSettingsView()
+        {
+            return new FishingBuddy.Views.SettingsView();
+        }
 
         //private double _runningTime;
         protected override void Update(GameTime gameTime)
@@ -244,12 +243,12 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
             _fishPanelLoc.SettingChanged -= OnUpdateSettings;
             _dragFishPanel.SettingChanged -= OnUpdateSettings;
             _showRarityBorder.SettingChanged -= OnUpdateFishSettings;
-            _fishImgWidth.SettingChanged -= OnUpdateSettings;
+            _fishImgSize.SettingChanged -= OnUpdateSettings;
             _fishPanel?.Dispose();
             // Time of Day Settings
             _timeOfDayPanelLoc.SettingChanged -= OnUpdateClockLocation;
             _dragTimeOfDayClock.SettingChanged -= OnUpdateClockSettings;
-            _timeOfDayImgWidth.SettingChanged -= OnUpdateClockSize;
+            _timeOfDayImgSize.SettingChanged -= OnUpdateClockSize;
             //_settingClockAlign.SettingChanged -= OnUpdateClockLabel;
             _hideTimeOfDay.SettingChanged -= OnUpdateClockSettings;
             _timeOfDayClock?.Dispose();
@@ -334,7 +333,7 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
 
         private void OnUpdateClockSize(object sender = null, ValueChangedEventArgs<int> e = null)
         {
-            _timeOfDayClock.Size = new Point(_timeOfDayImgWidth.Value);
+            _timeOfDayClock.Size = new Point(_timeOfDayImgSize.Value);
         }
 
         protected void DrawIcons()
@@ -349,7 +348,7 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
             {
                 Parent = GameService.Graphics.SpriteScreen,
                 Location = _fishPanelLoc.Value,
-                Size = new Point(fishPanelColumns * (_fishImgWidth.Value), fishPanelRows * (_fishImgWidth.Value)),
+                Size = new Point(fishPanelColumns * (_fishImgSize.Value), fishPanelRows * (_fishImgSize.Value)),
                 capture = _dragFishPanel.Value
             };
             Logger.Debug($"Fish Panel Size; Rows: {fishPanelRows} Columns: {fishPanelColumns}, {_fishPanel.Size}");
@@ -362,7 +361,7 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
                 {
                     Parent = _fishPanel,
                     Texture = fish.iconImg, //TODO can't use render service here... causes issues if module loaded and unloaded to quickly
-                    Size = new Point(_fishImgWidth.Value),
+                    Size = new Point(_fishImgSize.Value),
                     Location = new Point(x, y),
                     ZIndex = 0,
                     Capture = _dragFishPanel.Value,
@@ -374,7 +373,7 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
                     {
                         Parent = _fishPanel,
                         Texture = _imgBorderX,
-                        Size = new Point(_fishImgWidth.Value),
+                        Size = new Point(_fishImgSize.Value),
                         Location = new Point(x, y),
                         ZIndex = 1,
                         Capture = _dragFishPanel.Value
@@ -384,7 +383,7 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
                 {
                     Parent = _fishPanel,
                     Texture = _showRarityBorder.Value ? GetImageBorder(fish.rarity) : _imgBorderBlack,
-                    Size = new Point(_fishImgWidth.Value),
+                    Size = new Point(_fishImgSize.Value),
                     Opacity = 0.8f,
                     Location = new Point(x, y),
                     BasicTooltipText = $"{fish.name}\n" +
@@ -396,8 +395,8 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
                     ZIndex = 2,
                     Capture = _dragFishPanel.Value
                 };
-                x += _fishImgWidth.Value;
-                if (count == fishPanelColumns) { x = 0; y += _fishImgWidth.Value; count = 0; }
+                x += _fishImgSize.Value;
+                if (count == fishPanelColumns) { x = 0; y += _fishImgSize.Value; count = 0; }
                 count++;
             }
 

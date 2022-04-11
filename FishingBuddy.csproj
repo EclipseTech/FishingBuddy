@@ -143,6 +143,7 @@
     <Compile Include="Utils\FishingMaps.cs" />
     <Compile Include="Utils\RetryHelper.cs" />
     <Compile Include="Utils\TyriaTime.cs" />
+    <Compile Include="Views\SettingsView.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="AsyncClipboardService, Version=1.7.1.0, Culture=neutral, processorArchitecture=MSIL">

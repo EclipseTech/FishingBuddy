@@ -23,7 +23,6 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
         public static readonly List<int> AlwaysDayMaps = new List<int> { 1195, 1465 }; //TODO finish filling these out
         public static readonly List<int> AlwaysNightMaps = new List<int> { 0 }; //TODO finish filling these out https://wiki.guildwars2.com/wiki/Day_and_night#List_of_locations_with_day-night_cycle
 
-        //  TODO display time https://github.com/manlaan/BlishHud-Clock/blob/main/Control/DrawClock.cs#L86
         public static string CurrentMapPhase(int MapId)
         {
             DateTime TyriaTime = CalcTyriaTime();
@@ -93,8 +92,6 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
 
         public static TimeSpan CalcTimeTilNextPhase(int MapId)
         {
-            //DateTime UTC = DateTime.UtcNow;
-            //DateTime currentTime = new DateTime(2000, 1, 1, UTC.Hour, UTC.Minute, UTC.Second);
             DateTime TyriaTime = CalcTyriaTime();
 
             if (AlwaysDayMaps.Contains(MapId)) return TimeSpan.Zero;

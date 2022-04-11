@@ -90,46 +90,53 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
             {
                 Parent = this,
                 Texture = FishingBuddyModule._imgDawn,
-                Size = new Point(FishingBuddyModule._timeOfDayImgWidth.Value),
+                Size = new Point(FishingBuddyModule._timeOfDayImgSize.Value),
                 Location = new Point(0),
                 Opacity = 1.0f,
                 BasicTooltipText = "Dawn",
                 Visible = TimePhase == "Dawn",
                 Capture = this.Drag
             };
+            this.Resized += delegate {this._dawn.Size = new Point(this.Size.X); };
+
             this._day = new ClickThroughImage
             {
                 Parent = this,
                 Texture = FishingBuddyModule._imgDay,
-                Size = new Point(FishingBuddyModule._timeOfDayImgWidth.Value),
+                Size = new Point(FishingBuddyModule._timeOfDayImgSize.Value),
                 Location = new Point(0),
                 Opacity = 1.0f,
                 BasicTooltipText = "Day",
                 Visible = TimePhase == "Day",
                 Capture = this.Drag
             };
+            this.Resized += delegate { this._day.Size = new Point(this.Size.X); };
+
             this._dusk = new ClickThroughImage
             {
                 Parent = this,
                 Texture = FishingBuddyModule._imgDusk,
-                Size = new Point(FishingBuddyModule._timeOfDayImgWidth.Value),
+                Size = new Point(FishingBuddyModule._timeOfDayImgSize.Value),
                 Location = new Point(0),
                 Opacity = 1.0f,
                 BasicTooltipText = "Dusk",
                 Visible = TimePhase == "Dusk",
                 Capture = this.Drag
             };
+            this.Resized += delegate { this._dusk.Size = new Point(this.Size.X); };
+
             this._night = new ClickThroughImage
             {
                 Parent = this,
                 Texture = FishingBuddyModule._imgNight,
-                Size = new Point(FishingBuddyModule._timeOfDayImgWidth.Value),
+                Size = new Point(FishingBuddyModule._timeOfDayImgSize.Value),
                 Location = new Point(0),
                 Opacity = 1.0f,
                 BasicTooltipText = "Night",
                 Visible = TimePhase == "Night",
                 Capture = this.Drag
             };
+            this.Resized += delegate { this._night.Size = new Point(this.Size.X); };
             this._currentTime = this._day;
         }
 
