@@ -1,8 +1,6 @@
 ﻿using Blish_HUD;
 using System;
-using System.Linq;
 using System.Threading.Tasks;
-using System.Collections.Generic;
 
 namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
 {
@@ -29,7 +27,7 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
         {
             if (maxAttempts <= 0)
                 throw new ArgumentOutOfRangeException(nameof(maxAttempts));
-        
+
             int attempt = 1;
             do
             {
@@ -39,7 +37,7 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
                     await operation();
                     if (resultExpression()) break;
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     if (attempt == maxAttempts)
                         throw;
@@ -52,7 +50,7 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
 
         private static Task CreateDelay(int attempt, int maxAttempts)
         {
-            var delaytime = IncreasingDelayInSeconds(attempt);
+            int delaytime = IncreasingDelayInSeconds(attempt);
             Logger.Debug($"Failed result expression on attempt {attempt} of {maxAttempts}. Will retry after sleeping for {delaytime}.");
             return Task.Delay(delaytime);
         }
@@ -88,7 +86,7 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
 
         private static Task CreateDelayForException(int attemptNumber, int maxAttempts, Exception ex)
         {
-            var delaytime = IncreasingDelayInSeconds(attemptNumber);
+            int delaytime = IncreasingDelayInSeconds(attemptNumber);
             Logger.Debug($"Exception on attempt {attemptNumber} of {maxAttempts}. Will retry after sleeping for {delaytime}.", ex);
             return Task.Delay(delaytime);
         }

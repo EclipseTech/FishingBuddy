@@ -33,33 +33,33 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
         }
 
         // Fish Item Name
-        public string name { get; set; }
+        public string Name { get; set; }
         // Item Id
-        public int itemId { get; set; }
+        public int ItemId { get; set; }
         // Junk, Basic, Fine, Rare, Masterwork, Exotic, Ascended, Legendary
-        public string rarity { get; set; }
+        public string Rarity { get; set; }
         // Fishing holes: Any, None, Boreal Fish, Cavern Fish, Channel Fish, Coastal Fish, Deep Fishing Hole, Desert Fish, Freshwater Fish, Grotto Fish, Lake Fish, Noxious Water Fish,
         // Offshore Fish, Polluted Lake Fish, Quarry Fish, Rare Fish, River Fish, Saltwater Fish, Special Fishing Hole, Shore Fish, Volcanic Fish, Wreckage Site
-        public string fishingHole { get; set; }
+        public string FishingHole { get; set; }
         // https://wiki.guildwars2.com/wiki/Bait
         // Any, Fish Egg, Freshwater Minnow, Glow Worm, Lava Beetle, Leech, Lightning Bug, Mackerel, Nightcrawler, Ramshorn Snail, Sardine, Scorpion, Shrimpling, Sparkfly Nymph, Haiju Minnows
-        public string bait { get; set; }
+        public string Bait { get; set; }
         // Time of day fish can be caught
-        public TimeOfDay timeOfDay { get; set; }
+        public TimeOfDay Time { get; set; }
         // Can this fish be caught in open water?
-        public bool openWater { get; set; }
+        public bool OpenWater { get; set; }
         // Map region location ie Seitung Province.. should this be map id? list? Or even more specific, just the map this fish is found in? Saltwater, Anywhere/Any?
-        public string location { get; set; }
+        public string Location { get; set; }
         // Achievement Name
-        public string achievement { get; set; }
+        public string Achievement { get; set; }
         // Id of related fishing achievement
-        public int achievementId { get; set; }
+        public int AchievementId { get; set; }
         // Ex: Used for _ achievement or part of _ collection
-        public string notes { get; set; }
+        public string Notes { get; set; }
         // Url item icon
-        public RenderUrl icon { get; set; }
+        public RenderUrl Icon { get; set; }
         public bool Visible { get; set; }
-        public AsyncTexture2D iconImg { get; set; }
+        public AsyncTexture2D IconImg { get; set; }
         //TODO can save item code to clipboard on click
     }
 }

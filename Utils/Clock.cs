@@ -1,10 +1,10 @@
-﻿using System;
-using Blish_HUD;
+﻿using Blish_HUD;
 using Blish_HUD.Controls;
 using Blish_HUD.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended.BitmapFonts;
+using System;
 
 namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
 {
@@ -94,10 +94,10 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
                 Location = new Point(0),
                 Opacity = 1.0f,
                 BasicTooltipText = "Dawn",
-                Visible = TimePhase == "Dawn",
-                Capture = this.Drag
+                Visible = this.TimePhase == "Dawn",
+                Capture = Drag
             };
-            this.Resized += delegate {this._dawn.Size = new Point(this.Size.X); };
+            Resized += delegate { this._dawn.Size = new Point(this.Size.X); };
 
             this._day = new ClickThroughImage
             {
@@ -107,10 +107,10 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
                 Location = new Point(0),
                 Opacity = 1.0f,
                 BasicTooltipText = "Day",
-                Visible = TimePhase == "Day",
-                Capture = this.Drag
+                Visible = this.TimePhase == "Day",
+                Capture = Drag
             };
-            this.Resized += delegate { this._day.Size = new Point(this.Size.X); };
+            Resized += delegate { this._day.Size = new Point(this.Size.X); };
 
             this._dusk = new ClickThroughImage
             {
@@ -120,10 +120,10 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
                 Location = new Point(0),
                 Opacity = 1.0f,
                 BasicTooltipText = "Dusk",
-                Visible = TimePhase == "Dusk",
-                Capture = this.Drag
+                Visible = this.TimePhase == "Dusk",
+                Capture = Drag
             };
-            this.Resized += delegate { this._dusk.Size = new Point(this.Size.X); };
+            Resized += delegate { this._dusk.Size = new Point(this.Size.X); };
 
             this._night = new ClickThroughImage
             {
@@ -133,24 +133,21 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
                 Location = new Point(0),
                 Opacity = 1.0f,
                 BasicTooltipText = "Night",
-                Visible = TimePhase == "Night",
-                Capture = this.Drag
+                Visible = this.TimePhase == "Night",
+                Capture = Drag
             };
-            this.Resized += delegate { this._night.Size = new Point(this.Size.X); };
+            Resized += delegate { this._night.Size = new Point(this.Size.X); };
             this._currentTime = this._day;
         }
 
-        protected override CaptureType CapturesInput()
-        {
-            return this.Drag ? CaptureType.Mouse : CaptureType.Filter;
-        }
+        protected override CaptureType CapturesInput() => this.Drag ? CaptureType.Mouse : CaptureType.Filter;
 
         protected override void OnLeftMouseButtonPressed(MouseEventArgs e)
         {
             if (this.Drag)
             {
-                _dragging = true;
-                _dragStart = Input.Mouse.Position;
+                this._dragging = true;
+                this._dragStart = Input.Mouse.Position;
             }
             base.OnLeftMouseButtonPressed(e);
         }
@@ -159,7 +156,7 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
         {
             if (this.Drag)
             {
-                _dragging = false;
+                this._dragging = false;
                 FishingBuddyModule._timeOfDayPanelLoc.Value = this.Location;
             }
             base.OnLeftMouseButtonReleased(e);
@@ -176,25 +173,26 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
                     point.Y < windowSize.Y;
         }
 
+        //TODO fix mouse, see: https://discord.com/channels/531175899588984842/534492173362528287/962805066673299457
         public override void UpdateContainer(GameTime gameTime)
         {
-            if (_dragging)
+            if (this._dragging)
             {
                 this._dawn.Capture = this.Drag;
                 this._day.Capture = this.Drag;
                 this._dusk.Capture = this.Drag;
                 this._night.Capture = this.Drag;
-                if (IsPointInBounds(Input.Mouse.Position))
+                if (this.IsPointInBounds(Input.Mouse.Position))
                 {
-                    Point nOffset = Input.Mouse.Position - _dragStart;
-                    Location += nOffset;
+                    Point nOffset = Input.Mouse.Position - this._dragStart;
+                    this.Location += nOffset;
                 }
                 else
                 {
-                    _dragging = false;
+                    this._dragging = false;
                     FishingBuddyModule._timeOfDayPanelLoc.Value = this.Location;
                 }
-                _dragStart = Input.Mouse.Position;
+                this._dragStart = Input.Mouse.Position;
             }
             else
             {
@@ -207,9 +205,9 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
 
         public override void PaintAfterChildren(SpriteBatch spriteBatch, Rectangle bounds)
         {
-            if (!HideLabel)
+            if (!this.HideLabel)
             {
-                _font = GameService.Content.GetFont(ContentService.FontFace.Menomonia, Font_Size, ContentService.FontStyle.Regular);
+                _font = GameService.Content.GetFont(ContentService.FontFace.Menomonia, this.Font_Size, ContentService.FontStyle.Regular);
 
                 //TODO recalc size if needed taking > of size vs label size
                 //TODO resize so that time shows above or below img

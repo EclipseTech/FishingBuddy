@@ -77,9 +77,9 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
                 int utcsec = utcsec = (UTC.Hour * 3600) + (UTC.Minute * 60) + UTC.Second;
                 int tyriasec = (utcsec * 12) - 60;
                 tyriasec %= (3600 * 24);
-                int tyrianhour = (int)(tyriasec / 3600);
+                int tyrianhour = tyriasec / 3600;
                 tyriasec %= 3600;
-                int tyrianmin = (int)(tyriasec / 60);
+                int tyrianmin = tyriasec / 60;
                 tyriasec %= 60;
                 return new DateTime(2000, 1, 1, tyrianhour, tyrianmin, tyriasec);
             }

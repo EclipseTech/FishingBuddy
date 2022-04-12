@@ -9,24 +9,24 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
     {
         private static readonly Logger Logger = Logger.GetLogger(typeof(FishingMaps));
 
-        public Dictionary<int, List<int>> mapAchievements { get { return _mapAchievements; } }
-        private Dictionary<int, List<int>> _mapAchievements; //mapId int, achievementIds List<int>
+        public Dictionary<int, List<int>> mapAchievements { get { return this._mapAchievements; } }
+        private readonly Dictionary<int, List<int>> _mapAchievements; //mapId int, achievementIds List<int>
 
         public FishingMaps()
         {
             this._mapAchievements = new Dictionary<int, List<int>>();
-            foreach (int mapId in AscalonianMaps) _mapAchievements.Add(mapId, AscalonianFisher);
-            foreach (int mapId in KrytanMaps) _mapAchievements.Add(mapId, KrytanFisher);
-            foreach (int mapId in MaguumaMaps) _mapAchievements.Add(mapId, MaguumaFisher);
-            foreach (int mapId in ShiverpeaksMaps) _mapAchievements.Add(mapId, ShiverpeaksFisher);
-            foreach (int mapId in OrrianMaps) _mapAchievements.Add(mapId, OrrianFisher);
-            foreach (int mapId in DesertMaps) _mapAchievements.Add(mapId, DesertFisher);
-            foreach (int mapId in DesertIslesMaps) _mapAchievements.Add(mapId, DesertIslesFisher);
-            foreach (int mapId in RingOfFireMaps) _mapAchievements.Add(mapId, RingOfFireFisher);
-            foreach (int mapId in SeitungProvinceMaps) _mapAchievements.Add(mapId, SeitungProvinceFisher);
-            foreach (int mapId in KainengMaps) _mapAchievements.Add(mapId, KainengFisher);
-            foreach (int mapId in EchovaldWildsMaps) _mapAchievements.Add(mapId, EchovaldWildsFisher);
-            foreach (int mapId in DragonsEndMaps) _mapAchievements.Add(mapId, DragonsEndFisher);
+            foreach (int mapId in AscalonianMaps) this._mapAchievements.Add(mapId, AscalonianFisher);
+            foreach (int mapId in KrytanMaps) this._mapAchievements.Add(mapId, KrytanFisher);
+            foreach (int mapId in MaguumaMaps) this._mapAchievements.Add(mapId, MaguumaFisher);
+            foreach (int mapId in ShiverpeaksMaps) this._mapAchievements.Add(mapId, ShiverpeaksFisher);
+            foreach (int mapId in OrrianMaps) this._mapAchievements.Add(mapId, OrrianFisher);
+            foreach (int mapId in DesertMaps) this._mapAchievements.Add(mapId, DesertFisher);
+            foreach (int mapId in DesertIslesMaps) this._mapAchievements.Add(mapId, DesertIslesFisher);
+            foreach (int mapId in RingOfFireMaps) this._mapAchievements.Add(mapId, RingOfFireFisher);
+            foreach (int mapId in SeitungProvinceMaps) this._mapAchievements.Add(mapId, SeitungProvinceFisher);
+            foreach (int mapId in KainengMaps) this._mapAchievements.Add(mapId, KainengFisher);
+            foreach (int mapId in EchovaldWildsMaps) this._mapAchievements.Add(mapId, EchovaldWildsFisher);
+            foreach (int mapId in DragonsEndMaps) this._mapAchievements.Add(mapId, DragonsEndFisher);
             //foreach (int mapId in ThousandSeasPavilion) _mapAchievements.Add(mapId, ThousandSeasPavilionFisher);
         }
 
@@ -77,7 +77,7 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
         public readonly static List<int> KainengMaps = new List<int> { 1438 };
         // Echovald Wilds Fisher 6258 Avid Echovald Wilds Fisher 6466
         public readonly static List<int> EchovaldWildsFisher = new List<int> { 6258, 6466 };
-        // Echovald Wilds Maps: The Echovald Wilds 1452 & Arborstone 1428
+        // Echovald Wilds Maps: The Echovald Wilds 1452 & Arborstone 1428 ** TODO split Arborstone into special case https://wiki.guildwars2.com/wiki/Deep_Fishing_Hole & open water
         public readonly static List<int> EchovaldWildsMaps = new List<int> { 1452, 1428 };
         // Dragon's End Fisher 6506 Avid Dragon's End Fisher 6402
         public readonly static List<int> DragonsEndFisher = new List<int> { 6506, 6402 };

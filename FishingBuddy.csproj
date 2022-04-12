@@ -126,14 +126,10 @@
     <None Include="manifest.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="mgfxc.deps.json" />
-    <None Include="mgfxc.runtimeconfig.dev.json" />
-    <None Include="mgfxc.runtimeconfig.json" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FishingBuddyModule.cs" />
-    <Compile Include="MyContainer.cs" />
     <Compile Include="Utils\AsyncCache.cs" />
     <Compile Include="Utils\ClickThroughImage.cs" />
     <Compile Include="Utils\ClickThroughPanel.cs" />
@@ -143,6 +139,7 @@
     <Compile Include="Utils\FishingMaps.cs" />
     <Compile Include="Utils\RetryHelper.cs" />
     <Compile Include="Utils\TyriaTime.cs" />
+    <Compile Include="Utils\UpdateCadenceUtil.cs" />
     <Compile Include="Views\SettingsView.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -328,20 +325,11 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <None Include="ref\fish_test.json" />
     <None Include="ref\fish.json" />
     <None Include="ref\_instructions.txt" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="CppNet.dll" />
-    <Content Include="libmojoshader_64.dll" />
-    <Content Include="mgfxc.dll" />
-    <Content Include="mgfxc.exe" />
-    <Content Include="mgfxc.pdb" />
-    <Content Include="SharpDX.D3DCompiler.dll" />
-    <Content Include="SharpDX.D3DCompiler.xml" />
-    <Content Include="SharpDX.dll" />
-    <Content Include="SharpDX.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

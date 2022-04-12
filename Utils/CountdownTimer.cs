@@ -12,100 +12,94 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
         public Action TimeChanged;
         public Action CountdownFinished;
 
-        public bool IsRunning => timer.Enabled;
+        public bool IsRunning => this.timer.Enabled;
 
         public int StepMs
         {
-            get => timer.Interval;
-            set => timer.Interval = value;
+            get => this.timer.Interval;
+            set => this.timer.Interval = value;
         }
 
-        private Timer timer = new Timer();
+        private readonly Timer timer = new Timer();
 
         private TimeSpan _max = TimeSpan.FromMilliseconds(30000);
 
-        public TimeSpan TimeLeft => (_max.TotalMilliseconds - _stopWatch.ElapsedMilliseconds) > 0 ? TimeSpan.FromMilliseconds(_max.TotalMilliseconds - _stopWatch.ElapsedMilliseconds) : TimeSpan.FromMilliseconds(0);
+        public TimeSpan TimeLeft => (this._max.TotalMilliseconds - this._stopWatch.ElapsedMilliseconds) > 0 ? TimeSpan.FromMilliseconds(this._max.TotalMilliseconds - this._stopWatch.ElapsedMilliseconds) : TimeSpan.FromMilliseconds(0);
 
-        private bool _mustStop => (_max.TotalMilliseconds - _stopWatch.ElapsedMilliseconds) < 0;
+        private bool _mustStop => (this._max.TotalMilliseconds - this._stopWatch.ElapsedMilliseconds) < 0;
 
-        public string TimeLeftStr => TimeLeft.ToString("mm':'ss");
+        public string TimeLeftStr => this.TimeLeft.ToString("mm':'ss");
 
-        public string TimeLeftMsStr => TimeLeft.ToString("mm':'ss'.'fff");
+        public string TimeLeftMsStr => this.TimeLeft.ToString("mm':'ss'.'fff");
 
         private void TimerTick(object sender, EventArgs e)
         {
-            TimeChanged?.Invoke();
+            this.TimeChanged?.Invoke();
 
-            if (_mustStop)
+            if (this._mustStop)
             {
-                CountdownFinished?.Invoke();
-                _stopWatch.Stop();
-                timer.Enabled = false;
+                this.CountdownFinished?.Invoke();
+                this._stopWatch.Stop();
+                this.timer.Enabled = false;
             }
         }
 
         public CountdownTimer(int min, int sec)
         {
-            SetTime(min, sec);
-            Init();
+            this.SetTime(min, sec);
+            this.Init();
         }
 
         public CountdownTimer(TimeSpan ts)
         {
             if (ts == TimeSpan.Zero) return;
-            SetTime(ts);
-            Init();
+            this.SetTime(ts);
+            this.Init();
         }
 
-        public CountdownTimer()
-        {
-            Init();
-        }
+        public CountdownTimer() => this.Init();
 
         private void Init()
         {
-            StepMs = 1000;
-            timer.Tick += new EventHandler(TimerTick);
+            this.StepMs = 1000;
+            this.timer.Tick += new EventHandler(this.TimerTick);
         }
 
         public void SetTime(TimeSpan ts)
         {
-            _max = ts;
-            TimeChanged?.Invoke();
+            this._max = ts;
+            this.TimeChanged?.Invoke();
         }
 
-        public void SetTime(int min, int sec = 0) => SetTime(TimeSpan.FromSeconds(min * 60 + sec));
+        public void SetTime(int min, int sec = 0) => this.SetTime(TimeSpan.FromSeconds((min * 60) + sec));
 
         public void Start()
         {
-            timer.Start();
-            _stopWatch.Start();
+            this.timer.Start();
+            this._stopWatch.Start();
         }
 
         public void Pause()
         {
-            timer.Stop();
-            _stopWatch.Stop();
+            this.timer.Stop();
+            this._stopWatch.Stop();
         }
 
         public void Stop()
         {
-            Reset();
-            Pause();
+            this.Reset();
+            this.Pause();
         }
 
-        public void Reset()
-        {
-            _stopWatch.Reset();
-        }
+        public void Reset() => this._stopWatch.Reset();
 
         public void Restart()
         {
-            _stopWatch.Reset();
-            timer.Start();
+            this._stopWatch.Reset();
+            this.timer.Start();
         }
 
-        public void Dispose() => timer.Dispose();
+        public void Dispose() => this.timer.Dispose();
     }
 }
 // Example usage:

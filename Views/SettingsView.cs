@@ -1,7 +1,7 @@
 ﻿using Blish_HUD.Controls;
-using Microsoft.Xna.Framework;
-using Blish_HUD.Settings.UI.Views;
 using Blish_HUD.Graphics.UI;
+using Blish_HUD.Settings.UI.Views;
+using Microsoft.Xna.Framework;
 
 
 namespace Eclipse1807.BlishHUD.FishingBuddy.Views
@@ -46,6 +46,31 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Views
             };
             settingFishSaltwater_Container.Show(settingFishSaltwater_View);
 
+            Label settingFishPanelOrientation_Label = new Label()
+            {
+                Location = new Point(470, settingFishCaught_Container.Location.Y),
+                Width = 75,
+                AutoSizeHeight = false,
+                WrapText = false,
+                Parent = parentPanel,
+                Text = "Orientation: ",
+            };
+            Dropdown settingFishPanelOrientation_Dropdown = new Dropdown()
+            {
+                Location = new Point(settingFishPanelOrientation_Label.Right + 8, settingFishPanelOrientation_Label.Top - 4),
+                Width = 100,
+                Parent = parentPanel,
+            };
+            foreach (string s in FishingBuddyModule._fishPanelOrientations)
+            {
+                settingFishPanelOrientation_Dropdown.Items.Add(s);
+            }
+            settingFishPanelOrientation_Dropdown.SelectedItem = FishingBuddyModule._fishPanelOrientation.Value;
+            settingFishPanelOrientation_Dropdown.ValueChanged += delegate
+            {
+                FishingBuddyModule._fishPanelOrientation.Value = settingFishPanelOrientation_Dropdown.SelectedItem;
+            };
+
             IView settingFishDrag_View = SettingView.FromType(FishingBuddyModule._dragFishPanel, buildPanel.Width);
             ViewContainer settingFishDrag_Container = new ViewContainer()
             {
@@ -72,6 +97,31 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Views
                 Parent = parentPanel
             };
             settingFishUncatchable_Container.Show(settingFishUncatchable_View);
+
+            Label settingFishPanelDirection_Label = new Label()
+            {
+                Location = new Point(470, settingFishCaught_Container.Bottom + 5),
+                Width = 75,
+                AutoSizeHeight = false,
+                WrapText = false,
+                Parent = parentPanel,
+                Text = "Direction: ",
+            };
+            Dropdown settingFishPanelDirection_Dropdown = new Dropdown()
+            {
+                Location = new Point(settingFishPanelDirection_Label.Right + 8, settingFishPanelDirection_Label.Top - 4),
+                Width = 100,
+                Parent = parentPanel,
+            };
+            foreach (string s in FishingBuddyModule._fishPanelDirections)
+            {
+                settingFishPanelDirection_Dropdown.Items.Add(s);
+            }
+            settingFishPanelDirection_Dropdown.SelectedItem = FishingBuddyModule._fishPanelDirection.Value;
+            settingFishPanelDirection_Dropdown.ValueChanged += delegate
+            {
+                FishingBuddyModule._fishPanelDirection.Value = settingFishPanelDirection_Dropdown.SelectedItem;
+            };
 
             IView settingFishSize_View = SettingView.FromType(FishingBuddyModule._fishImgSize, buildPanel.Width);
             ViewContainer settingFishSize_Container = new ViewContainer()
@@ -117,128 +167,6 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Views
                 Parent = parentPanel
             };
             settingCombat_Container.Show(settingCombat_View);
-
-            //IView settingClockServer_View = SettingView.FromType(FishingBuddyModule._settingClockServer, buildPanel.Width);
-            //ViewContainer settingClockServer_Container = new ViewContainer()
-            //{
-            //    WidthSizingMode = SizingMode.Fill,
-            //    Location = new Point(310, settingClockLocal_Container.Location.Y),
-            //    Parent = parentPanel
-            //};
-            //settingClockServer_Container.Show(settingClockServer_View);
-            //
-            //IView settingClockDayNight_View = SettingView.FromType(FishingBuddyModule._settingClockDayNight, buildPanel.Width);
-            //ViewContainer settingClockDayNight_Container = new ViewContainer()
-            //{
-            //    WidthSizingMode = SizingMode.Fill,
-            //    Location = new Point(460, settingClockLocal_Container.Location.Y),
-            //    Parent = parentPanel
-            //};
-            //settingClockDayNight_Container.Show(settingClockDayNight_View);
-            //
-            //IView settingClock24H_View = SettingView.FromType(FishingBuddyModule._settingClock24H, buildPanel.Width);
-            //ViewContainer settingClock24H_Container = new ViewContainer()
-            //{
-            //    WidthSizingMode = SizingMode.Fill,
-            //    Location = new Point(10, settingClockLocal_Container.Bottom + 5),
-            //    Parent = parentPanel
-            //};
-            //settingClock24H_Container.Show(settingClock24H_View);
-            //
-            //IView settingClockHideLabel_View = SettingView.FromType(FishingBuddyModule._settingClockHideLabel, buildPanel.Width);
-            //ViewContainer settingClockHideLabel_Container = new ViewContainer()
-            //{
-            //    WidthSizingMode = SizingMode.Fill,
-            //    Location = new Point(160, settingClock24H_Container.Location.Y),
-            //    Parent = parentPanel
-            //};
-            //settingClockHideLabel_Container.Show(settingClockHideLabel_View);
-            //
-            //
-            //Label settingClockFontSize_Label = new Label()
-            //{
-            //    Location = new Point(10, settingClock24H_Container.Bottom + 10),
-            //    Width = 75,
-            //    AutoSizeHeight = false,
-            //    WrapText = false,
-            //    Parent = parentPanel,
-            //    Text = "Font Size: ",
-            //};
-            //Dropdown settingClockFontSize_Select = new Dropdown()
-            //{
-            //    Location = new Point(settingClockFontSize_Label.Right + 8, settingClockFontSize_Label.Top - 4),
-            //    Width = 50,
-            //    Parent = parentPanel,
-            //};
-            //foreach (var s in FishingBuddyModule._fontSizes)
-            //{
-            //    settingClockFontSize_Select.Items.Add(s);
-            //}
-            //settingClockFontSize_Select.SelectedItem = FishingBuddyModule._settingClockFontSize.Value;
-            //settingClockFontSize_Select.ValueChanged += delegate
-            //{
-            //    FishingBuddyModule._settingClockFontSize.Value = settingClockFontSize_Select.SelectedItem;
-            //};
-            //
-            //Label settingClockLabelAlign_Label = new Label()
-            //{
-            //    Location = new Point(10, settingClockFontSize_Label.Bottom + 10),
-            //    Width = 75,
-            //    AutoSizeHeight = false,
-            //    WrapText = false,
-            //    Parent = parentPanel,
-            //    Text = "Label Align: ",
-            //};
-            //Dropdown settingClockLabelAlign_Select = new Dropdown()
-            //{
-            //    Location = new Point(settingClockLabelAlign_Label.Right + 8, settingClockLabelAlign_Label.Top - 4),
-            //    Width = 75,
-            //    Parent = parentPanel,
-            //};
-            //foreach (var s in FishingBuddyModule._fontAlign)
-            //{
-            //    settingClockLabelAlign_Select.Items.Add(s);
-            //}
-            //settingClockLabelAlign_Select.SelectedItem = FishingBuddyModule._settingClockLabelAlign.Value;
-            //settingClockLabelAlign_Select.ValueChanged += delegate
-            //{
-            //    FishingBuddyModule._settingClockLabelAlign.Value = settingClockLabelAlign_Select.SelectedItem;
-            //};
-            //
-            //
-            //Label settingClockTimeAlign_Label = new Label()
-            //{
-            //    Location = new Point(settingClockLabelAlign_Select.Right + 20, settingClockLabelAlign_Label.Top),
-            //    Width = 75,
-            //    AutoSizeHeight = false,
-            //    WrapText = false,
-            //    Parent = parentPanel,
-            //    Text = "Time Align: ",
-            //};
-            //Dropdown settingClockTimeAlign_Select = new Dropdown()
-            //{
-            //    Location = new Point(settingClockTimeAlign_Label.Right + 8, settingClockTimeAlign_Label.Top - 4),
-            //    Width = 75,
-            //    Parent = parentPanel,
-            //};
-            //foreach (var s in FishingBuddyModule._fontAlign)
-            //{
-            //    settingClockTimeAlign_Select.Items.Add(s);
-            //}
-            //settingClockTimeAlign_Select.SelectedItem = FishingBuddyModule._settingClockTimeAlign.Value;
-            //settingClockTimeAlign_Select.ValueChanged += delegate
-            //{
-            //    FishingBuddyModule._settingClockTimeAlign.Value = settingClockTimeAlign_Select.SelectedItem;
-            //};
-            //
-            //IView settingClockDrag_View = SettingView.FromType(FishingBuddyModule._settingClockDrag, buildPanel.Width);
-            //ViewContainer settingClockDrag_Container = new ViewContainer()
-            //{
-            //    WidthSizingMode = SizingMode.Fill,
-            //    Location = new Point(10, settingClockTimeAlign_Label.Bottom + 6),
-            //    Parent = parentPanel
-            //};
-            //settingClockDrag_Container.Show(settingClockDrag_View);
         }
     }
 }
