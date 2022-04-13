@@ -37,7 +37,6 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
     [Export(typeof(Blish_HUD.Modules.Module))]
     public class FishingBuddyModule : Blish_HUD.Modules.Module
     {
-
         private static readonly Logger Logger = Logger.GetLogger(typeof(FishingBuddyModule));
 
         internal static FishingBuddyModule ModuleInstance;
@@ -95,6 +94,10 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
         private bool MumbleIsAvailable => GameService.Gw2Mumble.IsAvailable && GameService.GameIntegration.Gw2Instance.IsInGame;
         private bool UiIsAvailable => this.MumbleIsAvailable && !GameService.Gw2Mumble.UI.IsMapOpen;
         private bool HidingInCombat => this.MumbleIsAvailable && _hideInCombat.Value && GameService.Gw2Mumble.PlayerCharacter.IsInCombat;
+        //TODO make this random from 3-6 minutes to try to not overlap with other timers
+        private Random rand = new Random();
+        private double INTERVAL_UPDATE_FISH = 5 * 60 * 1000; // 5 minutes
+        private double _lastUpdateFish = 0;
 
         #region Service Managers
         internal Gw2ApiManager Gw2ApiManager => this.ModuleParameters.Gw2ApiManager;
@@ -180,6 +183,8 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
                 Logger.Debug("fish list: " + string.Join(", ", this._allFishList.Select(fish => fish.Name)));
             }
             this._useAPIToken = true;
+
+            INTERVAL_UPDATE_FISH = rand.Next(3 * 60 * 1000, 6 * 60 * 1000);
         }
 
         protected override void OnModuleLoaded(EventArgs e)
@@ -200,6 +205,8 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
             this.GetCurrentMapTime();
             GameService.Gw2Mumble.CurrentMap.MapChanged += this.OnMapChanged;
             this.DrawIcons();
+
+            this._timeOfDayClock.TimeOfDayChanged += this.OnTimeOfDayChanged;
         }
 
         public override IView GetSettingsView() => new FishingBuddy.Views.SettingsView();
@@ -216,7 +223,7 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
             //    this.DrawIcons();
             //    this._runningTime -= (3 * 60);
             //}
-            //UpdateCadenceUtil.UpdateAsyncWithCadence(SaveStates, gameTime, INTERVAL_SAVESTATE, ref _lastSaveState);
+            UpdateCadenceUtil.UpdateAsyncWithCadence(GetCurrentMapsFish, gameTime, INTERVAL_UPDATE_FISH, ref _lastUpdateFish);
 
             if (this.UiIsAvailable && !this.HidingInCombat)
             {
@@ -237,8 +244,6 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
                 this._dragFishPanelStart = InputService.Input.Mouse.Position;
             }
         }
-
-        //TODO BUG! enable disable, leaves around images...
 
         /// <inheritdoc />
         protected override void Unload() // Unload here
@@ -366,6 +371,7 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
                 new ClickThroughImage
                 {
                     Parent = _fishPanel,
+                    //TODO BUG! enable disable module too quickly, leaves around images...
                     Texture = fish.IconImg, //TODO shouldn't use render service here... causes issues if module loaded and unloaded to quickly
                     Size = new Point(_fishImgSize.Value),
                     Location = new Point(x, y),
@@ -482,11 +488,13 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
             this.DrawIcons();
         }
 
-        // TODO move to event thing so this gets called
-        private async void TimeOfDayChanged()
+        private async void OnTimeOfDayChanged(object sender = null, ValueChangedEventArgs<string> e = null)
         {
             await this.GetCurrentMapsFish();
             this.DrawIcons();
+            // reset update timer
+            _lastUpdateFish = 0;
+            INTERVAL_UPDATE_FISH = rand.Next(3 * 60 * 1000, 6 * 60 * 1000);
         }
 
         // TODO move this to clock update
@@ -520,6 +528,12 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
             }
         }
 
+        // TODO probably move this to Fish or FishingMaps?
+        private async Task GetCurrentMapsFish(GameTime gameTime)
+        {
+            await GetCurrentMapsFish();
+            this.DrawIcons();
+        }
         private async Task GetCurrentMapsFish(CancellationToken cancellationToken = default)
         {
             await this._updateFishSemaphore.WaitAsync(cancellationToken);
@@ -672,7 +686,7 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
             }
         }
 
-        // TODO Add retry to Request...
+        // TODO Add retry to Request(s)...
         private async Task<Achievement> RequestAchievement(int id)
         {
             Logger.Debug($"Requested achievement id: {id}");

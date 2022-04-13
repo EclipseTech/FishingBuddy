@@ -19,9 +19,12 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
         public static readonly DateTime centralDuskStart = new DateTime(2000, 1, 1, 20, 0, 0);
         public static readonly DateTime centralNightStart = new DateTime(2000, 1, 1, 21, 0, 0);
         public static readonly List<int> CanthaMaps = new List<int> { 1442, 1419, 1444, 1462, 1438, 1452, 1428, 1422 };
-        // Draconis Mons 1195 Always 9:00am, Thousand Seas Pavilion 1465 Day 12:00pm noon
-        public static readonly List<int> AlwaysDayMaps = new List<int> { 1195, 1465 }; //TODO finish filling these out
-        public static readonly List<int> AlwaysNightMaps = new List<int> { 0 }; //TODO finish filling these out https://wiki.guildwars2.com/wiki/Day_and_night#List_of_locations_with_day-night_cycle
+        //TODO finish filling these out
+        // https://wiki.guildwars2.com/wiki/Day_and_night#List_of_locations_with_day-night_cycle
+        // Draconis Mons 1195 Always 9:00am, Thousand Seas Pavilion 1465 Day 12:00pm noon, Mistlock Sanctuary 1206 11:00am, Edge of the Mists 968 7:00am
+        public static readonly List<int> AlwaysDayMaps = new List<int> { 1195, 1465, 1206, 968 };
+        // The Nightmare Incarnate 1361 1:00am, The Twisted Marionette (Public/Private) 1413/1414 0:00am, Mad King's Realm 862/863/864/865/866/1304/1316, 
+        public static readonly List<int> AlwaysNightMaps = new List<int> { 1361, 1413, 1414, 862, 863, 864, 865, 866, 1304, 1316 };
 
         public static string CurrentMapPhase(int MapId)
         {

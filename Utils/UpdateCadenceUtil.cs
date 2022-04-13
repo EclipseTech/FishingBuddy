@@ -10,7 +10,7 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
     {
         private static readonly Logger Logger = Logger.GetLogger(typeof(UpdateCadenceUtil));
 
-        private static readonly HashSet<IntPtr> _asyncStateMonitor = new();
+        private static readonly HashSet<IntPtr> _asyncStateMonitor = new HashSet<IntPtr>();
 
         public static void UpdateWithCadence(Action<GameTime> call, GameTime gameTime, double cadence, ref double lastCheck)
         {
@@ -47,6 +47,5 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
                 lastCheck = 0;
             }
         }
-
     }
 }

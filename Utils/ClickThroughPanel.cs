@@ -11,9 +11,6 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
         }
 
         // TODO change this to delegate or add delegate for this
-        protected override CaptureType CapturesInput()
-        {
-            return this.Capture ? CaptureType.Mouse : CaptureType.None;
-        }
+        protected override CaptureType CapturesInput() => this.Capture ? CaptureType.Mouse : CaptureType.None;
     }
 }

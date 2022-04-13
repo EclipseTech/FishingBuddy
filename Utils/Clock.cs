@@ -8,7 +8,6 @@ using System;
 
 namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
 {
-    // TODO should this be Panel type? or should the panels I'm using be Containers?
     // Based on https://github.com/manlaan/BlishHud-Clock/
     class Clock : Container
     {
@@ -26,42 +25,14 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
                 if (!Equals(this.TimePhase, value))
                 {
                     Logger.Debug($"Time of day changed {this.TimePhase} -> {value}");
-                    this._timePhase = value;
-                    //TODO Calc & set _timeTilNextPhase
-                    //TimeTilNextPhase = TyriaTime.CalcTimeTilNextPhase(GameService.Gw2Mumble.CurrentMap.Id);
-                    //TODO make this an event
-                    //TimeOfDayChanged();
-                    //TODO move to event
-                    switch (this.TimePhase)
-                    {
-                        case "Dawn":
-                            this._currentTime.Visible = false;
-                            this._currentTime = this._dawn;
-                            this._currentTime.Visible = true;
-                            break;
-                        case "Day":
-                            this._currentTime.Visible = false;
-                            this._currentTime = this._day;
-                            this._currentTime.Visible = true;
-                            break;
-                        case "Dusk":
-                            this._currentTime.Visible = false;
-                            this._currentTime = this._dusk;
-                            this._currentTime.Visible = true;
-                            break;
-                        case "Night":
-                            this._currentTime.Visible = false;
-                            this._currentTime = this._night;
-                            this._currentTime.Visible = true;
-                            break;
-                    }
+                    OnTimeOfDayChanged(new ValueChangedEventArgs<string>(this.TimePhase, value));
                 }
             }
         }
-        // TODO default to false & properly show label
+        // TODO default to false & properly show label BLOCKED on time til next phase
         public bool HideLabel = true;
         public bool Drag = false;
-        // TODO deal with resizing label/font on resize
+        // TODO deal with resizing label/font on resize based on time panel size
         public ContentService.FontSize Font_Size = ContentService.FontSize.Size14;
         public VerticalAlignment LabelAlign = VerticalAlignment.Top;
 
@@ -74,6 +45,8 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
         internal ClickThroughImage _dusk;
         internal ClickThroughImage _night;
         internal ClickThroughImage _currentTime;
+
+        public event EventHandler<ValueChangedEventArgs<string>> TimeOfDayChanged;
 
         public Clock()
         {
@@ -162,7 +135,7 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
             base.OnLeftMouseButtonReleased(e);
         }
 
-        // TODO in bounds should probably subtract panel position
+        // TODO in bounds should probably add/subtract panel position
         private Boolean IsPointInBounds(Point point)
         {
             Point windowSize = GameService.Graphics.SpriteScreen.Size;
@@ -231,5 +204,33 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
             }
         }
 
+        protected virtual void OnTimeOfDayChanged(ValueChangedEventArgs<string> e)
+        {
+            this._timePhase = e.NewValue;
+            switch (this.TimePhase)
+            {
+                case "Dawn":
+                    this._currentTime.Visible = false;
+                    this._currentTime = this._dawn;
+                    this._currentTime.Visible = true;
+                    break;
+                case "Day":
+                    this._currentTime.Visible = false;
+                    this._currentTime = this._day;
+                    this._currentTime.Visible = true;
+                    break;
+                case "Dusk":
+                    this._currentTime.Visible = false;
+                    this._currentTime = this._dusk;
+                    this._currentTime.Visible = true;
+                    break;
+                case "Night":
+                    this._currentTime.Visible = false;
+                    this._currentTime = this._night;
+                    this._currentTime.Visible = true;
+                    break;
+            }
+            TimeOfDayChanged?.Invoke(this, e);
+        }
     }
 }
