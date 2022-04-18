@@ -132,11 +132,20 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Views
             };
             settingFishSize_Container.Show(settingFishSize_View);
 
+            IView settingFishTooltip_View = SettingView.FromType(FishingBuddyModule._fishPanelTooltipDisplay, buildPanel.Width);
+            ViewContainer settingFishTooltip_Container = new ViewContainer()
+            {
+                Width = 180,
+                Location = new Point(10, settingFishSize_Container.Bottom + 5),
+                Parent = parentPanel
+            };
+            settingFishTooltip_Container.Show(settingFishTooltip_View);
+
             IView settingClockDrag_View = SettingView.FromType(FishingBuddyModule._dragTimeOfDayClock, buildPanel.Width);
             ViewContainer settingClock_Container = new ViewContainer()
             {
                 WidthSizingMode = SizingMode.Fill,
-                Location = new Point(10, settingFishSize_Container.Bottom + 5),
+                Location = new Point(10, settingFishTooltip_Container.Bottom + 5),
                 Parent = parentPanel
             };
             settingClock_Container.Show(settingClockDrag_View);
@@ -145,7 +154,7 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Views
             ViewContainer settingClockShow_Container = new ViewContainer()
             {
                 WidthSizingMode = SizingMode.Fill,
-                Location = new Point(160, settingFishSize_Container.Bottom + 5),
+                Location = new Point(160, settingFishTooltip_Container.Bottom + 5),
                 Parent = parentPanel
             };
             settingClockShow_Container.Show(settingClockShow_View);

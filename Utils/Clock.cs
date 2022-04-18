@@ -25,7 +25,7 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
                 if (!Equals(this.TimePhase, value))
                 {
                     Logger.Debug($"Time of day changed {this.TimePhase} -> {value}");
-                    OnTimeOfDayChanged(new ValueChangedEventArgs<string>(this.TimePhase, value));
+                    this.OnTimeOfDayChanged(new ValueChangedEventArgs<string>(this.TimePhase, value));
                 }
             }
         }

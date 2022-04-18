@@ -53,6 +53,7 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
         private static Texture2D _imgBorderAscended;
         private static Texture2D _imgBorderLegendary;
         private static Texture2D _imgBorderX;
+        private static Texture2D _imgBorderXY;
         internal static Texture2D _imgDawn;
         internal static Texture2D _imgDay;
         internal static Texture2D _imgDusk;
@@ -70,6 +71,7 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
         public static SettingEntry<string> _fishPanelOrientation;
         public static readonly string[] _fishPanelDirections = new string[] { "Top-left", "Top-right", "Bottom-left", "Bottom-right" };
         public static SettingEntry<string> _fishPanelDirection;
+        public static SettingEntry<string> _fishPanelTooltipDisplay;
         public static SettingEntry<bool> _dragTimeOfDayClock;
         public static SettingEntry<int> _timeOfDayImgSize;
         public static SettingEntry<Point> _timeOfDayPanelLoc;
@@ -94,9 +96,8 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
         private bool MumbleIsAvailable => GameService.Gw2Mumble.IsAvailable && GameService.GameIntegration.Gw2Instance.IsInGame;
         private bool UiIsAvailable => this.MumbleIsAvailable && !GameService.Gw2Mumble.UI.IsMapOpen;
         private bool HidingInCombat => this.MumbleIsAvailable && _hideInCombat.Value && GameService.Gw2Mumble.PlayerCharacter.IsInCombat;
-        //TODO make this random from 3-6 minutes to try to not overlap with other timers
-        private Random rand = new Random();
-        private double INTERVAL_UPDATE_FISH = 5 * 60 * 1000; // 5 minutes
+        // 5 minutes default
+        private double INTERVAL_UPDATE_FISH = 5 * 60 * 1000;
         private double _lastUpdateFish = 0;
 
         #region Service Managers
@@ -133,6 +134,17 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
             _fishImgSize.SetRange(16, 96);
             _fishPanelOrientation.SettingChanged += this.OnUpdateSettings;
             _fishPanelDirection.SettingChanged += this.OnUpdateSettings;
+            _fishPanelTooltipDisplay = settings.DefineSetting("FishPanelTooltipDisplay", "@1\n@2\n@3\n@4\n@5\n@6\n@7", () => "Tooltip Display", () =>
+                                                              "default: @1\\n@2\\n@3\\n@4\\n@5\\n@6\\n@7\n" +
+                                                              "suggested: @1\\n@2\\n@4\\n@7\n" +
+                                                              "@1: Name\n" +
+                                                              "@2: Favored Bait\n" +
+                                                              "@3: Time of Day\n" +
+                                                              "@4: Fishing Hole\n" +
+                                                              "@5: Achievement\n" +
+                                                              "@6: Rarity\n" +
+                                                              "@7: Reason for Hiding");
+            _fishPanelTooltipDisplay.SettingChanged += this.OnUpdateSettings;
             // Time of Day Settings
             _timeOfDayPanelLoc = settings.DefineSetting("TimeOfDayPanelLoc", new Point(100, 100), () => "Time of Day Details Location", () => "");
             _dragTimeOfDayClock = settings.DefineSetting("TimeOfDayPanelDrag", false, () => "Drag Time Display", () => "Drag time of day display");
@@ -168,6 +180,7 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
             _imgBorderAscended = this.ContentsManager.GetTexture(@"border_ascended.png");
             _imgBorderLegendary = this.ContentsManager.GetTexture(@"border_legendary.png");
             _imgBorderX = this.ContentsManager.GetTexture(@"border_x.png");
+            _imgBorderXY = this.ContentsManager.GetTexture(@"border_xy.png");
             _imgDawn = this.ContentsManager.GetTexture(@"dawn.png");
             _imgDay = this.ContentsManager.GetTexture(@"day.png");
             _imgDusk = this.ContentsManager.GetTexture(@"dusk.png");
@@ -184,7 +197,8 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
             }
             this._useAPIToken = true;
 
-            INTERVAL_UPDATE_FISH = rand.Next(3 * 60 * 1000, 6 * 60 * 1000);
+            // Random from 3-6 minutes to try to not overlap with other timers
+            this.INTERVAL_UPDATE_FISH = RandomUtil.GetRandom(3 * 60 * 1000, 6 * 60 * 1000);
         }
 
         protected override void OnModuleLoaded(EventArgs e)
@@ -211,19 +225,11 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
 
         public override IView GetSettingsView() => new FishingBuddy.Views.SettingsView();
 
-        //private double _runningTime;
         protected override void Update(GameTime gameTime)
         {
-            // Refresh on 3 min timer
-            //this._runningTime += gameTime.ElapsedGameTime.TotalSeconds;
-            //if (this._runningTime > (3 * 60))
-            //{
-            //    Blish_HUD.Controls.ScreenNotification.ShowNotification("The examples module shows this message every 3 min!", Blish_HUD.Controls.ScreenNotification.NotificationType.Info);
-            //    await this.getCurrentMapsFish();
-            //    this.DrawIcons();
-            //    this._runningTime -= (3 * 60);
-            //}
-            UpdateCadenceUtil.UpdateAsyncWithCadence(GetCurrentMapsFish, gameTime, INTERVAL_UPDATE_FISH, ref _lastUpdateFish);
+            // TODO display optional notification w/ options set time before time of day change (ie "15 seconds til Dawn")
+            // Blish_HUD.Controls.ScreenNotification.ShowNotification("The examples module shows this message every 3 min!", Blish_HUD.Controls.ScreenNotification.NotificationType.Info);
+            UpdateCadenceUtil.UpdateAsyncWithCadence(this.GetCurrentMapsFish, gameTime, this.INTERVAL_UPDATE_FISH, ref this._lastUpdateFish);
 
             if (this.UiIsAvailable && !this.HidingInCombat)
             {
@@ -259,6 +265,7 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
             _fishImgSize.SettingChanged -= this.OnUpdateSettings;
             _fishPanelOrientation.SettingChanged -= this.OnUpdateSettings;
             _fishPanelDirection.SettingChanged -= this.OnUpdateSettings;
+            _fishPanelTooltipDisplay.SettingChanged -= this.OnUpdateSettings;
             _fishPanel?.Dispose();
             // Time of Day Settings
             _timeOfDayPanelLoc.SettingChanged -= this.OnUpdateClockLocation;
@@ -284,6 +291,7 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
             _imgBorderAscended?.Dispose();
             _imgBorderLegendary?.Dispose();
             _imgBorderX?.Dispose();
+            _imgBorderXY?.Dispose();
 
             ModuleInstance?.Dispose(); ModuleInstance = null;
             // All static members must be manually unset
@@ -346,6 +354,7 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
             // swap row column if necessary
             if (fishPanelRows < fishPanelColumns) { int swap = fishPanelRows; fishPanelRows = fishPanelColumns; fishPanelColumns = swap; }
             if (Equals(_fishPanelOrientation.Value, "Horizontal")) { int swap = fishPanelRows; fishPanelRows = fishPanelColumns; fishPanelColumns = swap; }
+            //TODO make this a new container type for sizing/resizing easier... ?similar to FlowPanel?
             _fishPanel = new ClickThroughPanel()
             {
                 Parent = GameService.Graphics.SpriteScreen,
@@ -365,20 +374,50 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
                 x = _fishPanel.Size.X - _fishImgSize.Value; xStart = x;
                 y = _fishPanel.Size.Y - _fishImgSize.Value; yStart = y;
             }
-            foreach (Fish fish in this.catchableFish)
+            //TODO give setting options to sort fish
+            // For now sort uncaught -> caught -> uncatchable -> rarity
+            // Which one of these sorts is faster? this one is somehow easier to read/understand but more ugly
+            var catchable = this.catchableFish.OrderByDescending(f => f.Visible).ThenBy(f => f.Caught && f.Visible).ThenBy(f => f.Rarity);
+            //var catchable = from fish in this.catchableFish
+            //                orderby fish.Rarity ascending
+            //                orderby fish.Caught && fish.Visible ascending
+            //                orderby fish.Visible descending
+            //                select fish;
+            foreach (Fish fish in catchable)
             {
-                string openWater = fish.OpenWater ? ", Open Water" : "";
+                string fishTooltip = BuildTooltip(fish);
+                // Fish image
                 new ClickThroughImage
                 {
                     Parent = _fishPanel,
-                    //TODO BUG! enable disable module too quickly, leaves around images...
-                    Texture = fish.IconImg, //TODO shouldn't use render service here... causes issues if module loaded and unloaded to quickly
+                    //TODO BUG! enable -> disable module too quickly, leaves around images...
+                    // Workaround: re-enable module, wait til load, then disables
+                    // Seems to be caused by using render service here... causes issues if module loaded and unloaded to quickly
+                    // AnycTexture2D delayed render
+                    Texture = fish.IconImg,
                     Size = new Point(_fishImgSize.Value),
                     Location = new Point(x, y),
                     ZIndex = 0,
                     Capture = _dragFishPanel.Value,
-                    Opacity = (fish.Visible ? 1.0f : 0.5f)
+                    Opacity = ((fish.Visible && !fish.Caught) ? 1.0f : 0.5f)
                 };
+                // TODO maybe give Opacity Setting options dropdown of "Hide", 25%, 50%, 75%, 100%, X
+                // Display Uncaught
+                if (!_ignoreCaughtFish.Value && fish.Caught)
+                {
+                    new ClickThroughImage
+                    {
+                        Parent = _fishPanel,
+                        Texture = _imgBorderXY,
+                        Size = new Point(_fishImgSize.Value),
+                        Location = new Point(x, y),
+                        ZIndex = 1,
+                        Capture = _dragFishPanel.Value,
+                        Opacity = 0.75f
+                    };
+                }
+                // TODO maybe give Opacity Setting options dropdown of "Hide", 25%, 50%, 75%, 100%, X
+                // Display Uncatchables (time)
                 if (_displayUncatchableFish.Value && !fish.Visible)
                 {
                     new ClickThroughImage
@@ -387,10 +426,12 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
                         Texture = _imgBorderX,
                         Size = new Point(_fishImgSize.Value),
                         Location = new Point(x, y),
-                        ZIndex = 1,
-                        Capture = _dragFishPanel.Value
+                        ZIndex = 2,
+                        Capture = _dragFishPanel.Value,
+                        Opacity = 1.0f
                     };
                 }
+                // Rarity border (shows tooltip as this is the top and always exists)
                 new ClickThroughImage
                 {
                     Parent = _fishPanel,
@@ -398,13 +439,8 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
                     Size = new Point(_fishImgSize.Value),
                     Opacity = 0.8f,
                     Location = new Point(x, y),
-                    BasicTooltipText = $"{fish.Name}\n" +
-                                       $"Fishing Hole: {fish.FishingHole}{openWater}\n" +
-                                       $"Favored Bait: {fish.Bait}\n" +
-                                       $"Time of Day: {(fish.Time == Fish.TimeOfDay.DuskDawn ? "Dusk/Dawn" : fish.Time.ToString())}\n" +
-                                       $"Achievement: {fish.Achievement}\n" +
-                                       $"Rarity: {fish.Rarity}",
-                    ZIndex = 2,
+                    BasicTooltipText = fishTooltip,
+                    ZIndex = 3,
                     Capture = _dragFishPanel.Value
                 };
                 // Build Left -> Right
@@ -441,25 +477,53 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
             }
         }
 
-        private Texture2D GetImageBorder(string rarity)
+        private string BuildTooltip(Fish fish)
+        {
+            string name = $"{fish.Name}";
+            string bait = $"Favored Bait: {fish.Bait}";
+            string time = $"Time of Day: {(fish.Time == Fish.TimeOfDay.DuskDawn ? "Dusk/Dawn" : fish.Time.ToString())}";
+            string hole = $"Fishing Hole: {fish.FishingHole}{(fish.OpenWater ? $", Open Water" : "")}";
+            string achieve = $"Achievement: {fish.Achievement}";
+            string rarity = $"Rarity: {fish.Rarity}";
+            string hiddenReason = "";
+            if (_useAPIToken)
+            {
+                if (!fish.Visible && fish.Caught) hiddenReason = "Hidden: Time of Day, Already Caught";
+                else if (!fish.Visible) hiddenReason = "Hidden: Time of Day";
+                else if (fish.Caught) hiddenReason = "Hidden: Already Caught";
+
+            }
+            string tooltip = _fishPanelTooltipDisplay.Value;
+            tooltip = tooltip.Replace("@1", name);
+            tooltip = tooltip.Replace("@2", bait);
+            tooltip = tooltip.Replace("@3", time);
+            tooltip = tooltip.Replace("@4", hole);
+            tooltip = tooltip.Replace("@5", achieve);
+            tooltip = tooltip.Replace("@6", rarity);
+            tooltip = tooltip.Replace("@7", hiddenReason);
+            tooltip = tooltip.Replace("\\n", "\n");
+            return tooltip.Trim();
+        }
+
+        private Texture2D GetImageBorder(ItemRarity rarity)
         {
             switch (rarity)
             {
-                case "Junk":
+                case ItemRarity.Junk:
                     return _imgBorderJunk;
-                case "Basic":
+                case ItemRarity.Basic:
                     return _imgBorderBasic;
-                case "Fine":
+                case ItemRarity.Fine:
                     return _imgBorderFine;
-                case "Masterwork":
+                case ItemRarity.Masterwork:
                     return _imgBorderMasterwork;
-                case "Rare":
+                case ItemRarity.Rare:
                     return _imgBorderRare;
-                case "Exotic":
+                case ItemRarity.Exotic:
                     return _imgBorderExotic;
-                case "Ascended":
+                case ItemRarity.Ascended:
                     return _imgBorderAscended;
-                case "Legendary":
+                case ItemRarity.Legendary:
                     return _imgBorderLegendary;
                 default:
                     return _imgBorderBlack;
@@ -493,8 +557,9 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
             await this.GetCurrentMapsFish();
             this.DrawIcons();
             // reset update timer
-            _lastUpdateFish = 0;
-            INTERVAL_UPDATE_FISH = rand.Next(3 * 60 * 1000, 6 * 60 * 1000);
+            this._lastUpdateFish = 0;
+            // Random from 3-6 minutes to try to not overlap with other timers
+            this.INTERVAL_UPDATE_FISH = RandomUtil.GetRandom(3 * 60 * 1000, 6 * 60 * 1000);
         }
 
         // TODO move this to clock update
@@ -528,10 +593,10 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
             }
         }
 
-        // TODO probably move this to Fish or FishingMaps?
+        // TODO maybe move this to Fish or FishingMaps?
         private async Task GetCurrentMapsFish(GameTime gameTime)
         {
-            await GetCurrentMapsFish();
+            await this.GetCurrentMapsFish();
             this.DrawIcons();
         }
         private async Task GetCurrentMapsFish(CancellationToken cancellationToken = default)
@@ -597,7 +662,8 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
                 if (achievementsInMap.Count == 0) { Logger.Debug("No achieveable fish in map."); return; }
                 Logger.Debug($"All map achievements: {string.Join(", ", achievementsInMap)}");
 
-                if (_ignoreCaughtFish.Value && this._useAPIToken)
+                // TODO change from skipping caught to fish.Caught? w/ similar fade to time of day uncatchable
+                if (this._useAPIToken)
                 {
                     var currentMapAchievable = from achievement in this.accountFishingAchievements where achievementsInMap.Contains(achievement.Id) select achievement;
                     Logger.Debug($"Current map achieveable: {string.Join(", ", currentMapAchievable.Select(achievement => $"id: {achievement.Id} current: {achievement.Current} done: {achievement.Done}"))}");
@@ -611,19 +677,19 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
                         foreach (AchievementBit bit in currentAccountAchievement.Bits)
                         {
                             if (bit == null) { Logger.Debug($"Bit in {currentAccountAchievement.Id} is null"); continue; }
-                            if (accountAchievement.Bits != null && accountAchievement.Bits.Contains(bitsCounter)) { bitsCounter++; continue; }
+                            if (_ignoreCaughtFish.Value && accountAchievement.Bits != null && accountAchievement.Bits.Contains(bitsCounter)) { bitsCounter++; continue; }
                             int itemId = ((AchievementItemBit)bit).Id;
                             Item fish = await this.RequestItem(itemId);
                             // Get first fish in all fish list that matches name
                             var fishNameMatch = this._allFishList.Where(phish => phish.Name == fish.Name);
                             Fish ghoti = fishNameMatch.Count() != 0 ? fishNameMatch.First() : null;
-                            if (ghoti == null) { Logger.Debug($"Missing fish from all fish list: {fish.Name}"); continue; }
+                            if (ghoti == null) { Logger.Warn($"Missing fish from all fish list: {fish.Name}"); continue; }
+                            if (accountAchievement.Bits != null && accountAchievement.Bits.Contains(bitsCounter)) { ghoti.Caught = true; }
                             // Filter by time of day if fish's time of day == tyria's time of day. Dawn & Dusk count as Any
                             if (ghoti.Time != Fish.TimeOfDay.Any &&
                                 !(this._timeOfDayClock.TimePhase.Equals("Dawn") || this._timeOfDayClock.TimePhase.Equals("Dusk")) &&
                                 !Equals(ghoti.Time.ToString(), this._timeOfDayClock.TimePhase))
                                 ghoti.Visible = false;
-                            else ghoti.Visible = true;
                             ghoti.Icon = fish.Icon; ghoti.ItemId = fish.Id; ghoti.AchievementId = currentAccountAchievement.Id;
                             ghoti.IconImg = this.RequestItemIcon(fish);
                             this.catchableFish.Add(ghoti);

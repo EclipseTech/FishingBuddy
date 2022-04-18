@@ -1,6 +1,6 @@
 {
   "name": "Fishing Buddy",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "namespace": "Eclipse1807.BlishHUD.FishingBuddy",
   "package": "FishingBuddy.dll",
   "manifest_version": 1,
@@ -20,7 +20,7 @@
       "username": "Foe Fox.4671"
     }
   ],
-  "description": "Display fishing info: time of day, list of catchable fish in the zone. Currently no way to display equipped bait & lure :(",
+  "description": "Display fishing info: time of day, list of catchable fish in the zone. \nCurrently no way to display equipped bait & lure :( \nOnly shows fish in Zones with fishing holes & World Class/Saltwater everywhere if selected. \nThousand Seas Pavilion and other special case maps may list extra available fish. \nView future enhancements & current bugs @ https://github.com/EclipseTech/FishingBuddy/issues",
   "dependencies": {
     "bh.blishhud": ">=0.11.4"
   },

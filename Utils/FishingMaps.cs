@@ -46,8 +46,8 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
         public readonly static List<int> MaguumaMaps = new List<int> { 53, 39, 34, 35, 54, 1068, 1101, 1107, 1108, 1121, 1069, 1071, 1076, 1104, 1124 };
         // Shiverpeaks Fisher 6179 Avid Shiverpeaks Fisher 6153
         public readonly static List<int> ShiverpeaksFisher = new List<int> { 6179, 6153 };
-        // Shiverpeaks Maps: Frostgorge Sound 30, Drizzlewood Coast 1371, Thunderhead Peaks 1310, Timberline Falls 29, Lornar's Pass 27, Snowden Drifts 31, Wayfarer Foothills 28
-        public readonly static List<int> ShiverpeaksMaps = new List<int> { 30, 1371, 1310, 29, 27, 31, 28 };
+        // Shiverpeaks Maps: Frostgorge Sound 30, Drizzlewood Coast 1371, Thunderhead Peaks 1310, Timberline Falls 29, Lornar's Pass 27, Snowden Drifts 31, Wayfarer Foothills 28, Bitterfrost Frontier 1178
+        public readonly static List<int> ShiverpeaksMaps = new List<int> { 30, 1371, 1310, 29, 27, 31, 28, 1178 };
         // Orrian Fisher 6363 Avid Orrian Fisher 6227
         public readonly static List<int> OrrianFisher = new List<int> { 6363, 6227 };
         // Orrian Maps: Siren's Landing 1203, Straits of Devastation 51, Malchor's Leap 65, Cursed Shore 62
@@ -85,8 +85,8 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
         public readonly static List<int> DragonsEndMaps = new List<int> { 1422 };
         //TODO finish filling out special case
         // Thousand Seas Pavilion 1465 Day 12:00 noon https://wiki.guildwars2.com/wiki/Mysterious_Waters_Fish contains Seitung Province & Kaineng daytime non-Ascended and non-Legendary fish
-        //public readonly static List<int> ThousandSeasPavilionFisher = new List<int> { 6336, 6264, 6342, 6192 };
-        //public readonly static List<int> ThousandSeasPavilion = new List<int> { 1465 };
+        public readonly static List<int> ThousandSeasPavilionFisher = new List<int> { 6336, 6264, 6342, 6192 };
+        public readonly static List<int> ThousandSeasPavilion = new List<int> { 1465 };
 
         // World Class Fisher 6224 Avid World Class Fisher 6110
         public readonly static List<int> WorldClassFisher = new List<int> { 6224, 6110 };

@@ -1,6 +1,7 @@
 ﻿using Blish_HUD;
 using Blish_HUD.Content;
 using Gw2Sharp.WebApi;
+using Gw2Sharp.WebApi.V2.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System;
@@ -36,8 +37,10 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
         public string Name { get; set; }
         // Item Id
         public int ItemId { get; set; }
+        // TODO change this to enum?
         // Junk, Basic, Fine, Rare, Masterwork, Exotic, Ascended, Legendary
-        public string Rarity { get; set; }
+        [JsonConverter(typeof(StringEnumConverter))]
+        public ItemRarity Rarity { get; set; }
         // Fishing holes: Any, None, Boreal Fish, Cavern Fish, Channel Fish, Coastal Fish, Deep Fishing Hole, Desert Fish, Freshwater Fish, Grotto Fish, Lake Fish, Noxious Water Fish,
         // Offshore Fish, Polluted Lake Fish, Quarry Fish, Rare Fish, River Fish, Saltwater Fish, Special Fishing Hole, Shore Fish, Volcanic Fish, Wreckage Site
         public string FishingHole { get; set; }
@@ -58,7 +61,8 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
         public string Notes { get; set; }
         // Url item icon
         public RenderUrl Icon { get; set; }
-        public bool Visible { get; set; }
+        public bool Visible { get; set; } = true;
+        public bool Caught { get; set; } = false;
         public AsyncTexture2D IconImg { get; set; }
         //TODO can save item code to clipboard on click
     }
