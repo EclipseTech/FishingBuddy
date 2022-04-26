@@ -9,25 +9,24 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
     {
         private static readonly Logger Logger = Logger.GetLogger(typeof(FishingMaps));
 
-        public Dictionary<int, List<int>> mapAchievements { get { return this._mapAchievements; } }
-        private readonly Dictionary<int, List<int>> _mapAchievements; //mapId int, achievementIds List<int>
+        public Dictionary<int, List<int>> MapAchievements { get; }
 
         public FishingMaps()
         {
-            this._mapAchievements = new Dictionary<int, List<int>>();
-            foreach (int mapId in AscalonianMaps) this._mapAchievements.Add(mapId, AscalonianFisher);
-            foreach (int mapId in KrytanMaps) this._mapAchievements.Add(mapId, KrytanFisher);
-            foreach (int mapId in MaguumaMaps) this._mapAchievements.Add(mapId, MaguumaFisher);
-            foreach (int mapId in ShiverpeaksMaps) this._mapAchievements.Add(mapId, ShiverpeaksFisher);
-            foreach (int mapId in OrrianMaps) this._mapAchievements.Add(mapId, OrrianFisher);
-            foreach (int mapId in DesertMaps) this._mapAchievements.Add(mapId, DesertFisher);
-            foreach (int mapId in DesertIslesMaps) this._mapAchievements.Add(mapId, DesertIslesFisher);
-            foreach (int mapId in RingOfFireMaps) this._mapAchievements.Add(mapId, RingOfFireFisher);
-            foreach (int mapId in SeitungProvinceMaps) this._mapAchievements.Add(mapId, SeitungProvinceFisher);
-            foreach (int mapId in KainengMaps) this._mapAchievements.Add(mapId, KainengFisher);
-            foreach (int mapId in EchovaldWildsMaps) this._mapAchievements.Add(mapId, EchovaldWildsFisher);
-            foreach (int mapId in DragonsEndMaps) this._mapAchievements.Add(mapId, DragonsEndFisher);
-            //foreach (int mapId in ThousandSeasPavilion) _mapAchievements.Add(mapId, ThousandSeasPavilionFisher);
+            this.MapAchievements = new Dictionary<int, List<int>>();
+            foreach (int mapId in AscalonianMaps) this.MapAchievements.Add(mapId, AscalonianFisher);
+            foreach (int mapId in KrytanMaps) this.MapAchievements.Add(mapId, KrytanFisher);
+            foreach (int mapId in MaguumaMaps) this.MapAchievements.Add(mapId, MaguumaFisher);
+            foreach (int mapId in ShiverpeaksMaps) this.MapAchievements.Add(mapId, ShiverpeaksFisher);
+            foreach (int mapId in OrrianMaps) this.MapAchievements.Add(mapId, OrrianFisher);
+            foreach (int mapId in DesertMaps) this.MapAchievements.Add(mapId, DesertFisher);
+            foreach (int mapId in DesertIslesMaps) this.MapAchievements.Add(mapId, DesertIslesFisher);
+            foreach (int mapId in RingOfFireMaps) this.MapAchievements.Add(mapId, RingOfFireFisher);
+            foreach (int mapId in SeitungProvinceMaps) this.MapAchievements.Add(mapId, SeitungProvinceFisher);
+            foreach (int mapId in KainengMaps) this.MapAchievements.Add(mapId, KainengFisher);
+            foreach (int mapId in EchovaldWildsMaps) this.MapAchievements.Add(mapId, EchovaldWildsFisher);
+            foreach (int mapId in DragonsEndMaps) this.MapAchievements.Add(mapId, DragonsEndFisher);
+            foreach (int mapId in ThousandSeasPavilion) this.MapAchievements.Add(mapId, ThousandSeasPavilionFisher);
         }
 
         // All from fishing achievement category 317 https://api.guildwars2.com/v2/achievements/categories/317

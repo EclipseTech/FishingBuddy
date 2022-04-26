@@ -111,7 +111,7 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
         {
             string ret = value.GetType().GetMember(value.ToString()).FirstOrDefault()?
                         .GetCustomAttribute<EnumMemberAttribute>(false)?.Value;
-            return ret != null ? ret : value.ToString();
+            return ret ?? value.ToString();
         }
     }
 }
