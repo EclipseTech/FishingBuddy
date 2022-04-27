@@ -20,7 +20,7 @@
       "username": "Foe Fox.4671"
     }
   ],
-  "description": "Display fishing info: time of day, list of catchable fish in the zone. \nCurrently no way to display equipped bait & lure :( \nOnly shows fish in Zones with fishing holes & World Class/Saltwater everywhere if selected. \nThousand Seas Pavilion and other special case maps may list extra available fish. \nView future enhancements & current bugs @ https://github.com/EclipseTech/FishingBuddy/issues",
+  "description": "Display fishing info: time of day, list of catchable fish in the zone. \nCurrently no way to display equipped bait & lure :( \nOnly shows fish in Zones with fishing holes & World Class/Saltwater everywhere if selected. \nI don't have access to Thousand Seas Pavillion, so there may be bugs \nView future enhancements & current bugs @ https://github.com/EclipseTech/FishingBuddy/issues",
   "dependencies": {
     "bh.blishhud": ">=0.11.4"
   },

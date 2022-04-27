@@ -13,9 +13,6 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
     {
         private static readonly Logger Logger = Logger.GetLogger(typeof(Clock));
 
-        // TODO this time should be countdown til next
-        //private CountdownTimer _countdownTimer;
-        //public TimeSpan TimeTilNextPhase { get { return _countdownTimer.TimeLeft; } set { _countdownTimer.SetTime(value); this._countdownTimer.Start(); } }
         private string _timePhase = "";
         public string TimePhase
         {
@@ -29,12 +26,12 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
                 }
             }
         }
-        // TODO default to false & properly show label BLOCKED on time til next phase
-        public bool HideLabel = true;
+
+        public bool HideLabel = false;
         public bool Drag = false;
-        // TODO deal with resizing label/font on resize based on time panel size
+        // TODO deal with resizing label/font on resize based on time panel size ~12-16 size font
         public ContentService.FontSize Font_Size = ContentService.FontSize.Size14;
-        public VerticalAlignment LabelAlign = VerticalAlignment.Top;
+        public int LabelVerticalAlignment = 0;
 
         private static BitmapFont _font;
         private Point _dragStart = Point.Zero;
@@ -48,27 +45,29 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
 
         public event EventHandler<ValueChangedEventArgs<string>> TimeOfDayChanged;
 
+        public DateTime NextPhaseTime = DateTime.Now;
+        private readonly TimeSpan updateInterval = TimeSpan.FromMinutes(5);
+        private double timeSinceUpdate;
+
         public Clock()
         {
-            this.Location = new Point(50, 50);
-            this.Size = new Point(0, 0);
+            this.Location = new Point(50);
+            this.Size = new Point(0);
             this.Visible = true;
             this.Padding = Thickness.Zero;
-            //this._countdownTimer = new CountdownTimer();
-            //this._countdownTimer.Start();
-            // Problem, not fully up to date
-            //this._countdownTimer.TimeChanged += () => _currentTime.BasicTooltipText = $"{TimePhase}\n{_countdownTimer.TimeLeftStr}";
+
+            this.timeSinceUpdate = this.updateInterval.TotalMilliseconds;
 
             this._dawn = new ClickThroughImage
             {
                 Parent = this,
                 Texture = FishingBuddyModule._imgDawn,
                 Size = new Point(FishingBuddyModule._timeOfDayImgSize.Value),
-                Location = new Point(0),
+                Location = new Point(0, 20),
                 Opacity = 1.0f,
                 BasicTooltipText = "Dawn",
                 Visible = this.TimePhase == "Dawn",
-                Capture = Drag
+                Capture = Drag,
             };
             Resized += delegate { this._dawn.Size = new Point(this.Size.X); };
 
@@ -77,7 +76,7 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
                 Parent = this,
                 Texture = FishingBuddyModule._imgDay,
                 Size = new Point(FishingBuddyModule._timeOfDayImgSize.Value),
-                Location = new Point(0),
+                Location = new Point(0, 20),
                 Opacity = 1.0f,
                 BasicTooltipText = "Day",
                 Visible = this.TimePhase == "Day",
@@ -90,7 +89,7 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
                 Parent = this,
                 Texture = FishingBuddyModule._imgDusk,
                 Size = new Point(FishingBuddyModule._timeOfDayImgSize.Value),
-                Location = new Point(0),
+                Location = new Point(0, 20),
                 Opacity = 1.0f,
                 BasicTooltipText = "Dusk",
                 Visible = this.TimePhase == "Dusk",
@@ -103,7 +102,7 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
                 Parent = this,
                 Texture = FishingBuddyModule._imgNight,
                 Size = new Point(FishingBuddyModule._timeOfDayImgSize.Value),
-                Location = new Point(0),
+                Location = new Point(0, 20),
                 Opacity = 1.0f,
                 BasicTooltipText = "Night",
                 Visible = this.TimePhase == "Night",
@@ -111,6 +110,8 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
             };
             Resized += delegate { this._night.Size = new Point(this.Size.X); };
             this._currentTime = this._day;
+
+            this.CalcTimeTilNextPhase();
         }
 
         protected override CaptureType CapturesInput() => this.Drag ? CaptureType.Mouse : CaptureType.Filter;
@@ -135,7 +136,6 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
             base.OnLeftMouseButtonReleased(e);
         }
 
-        // TODO in bounds should probably add/subtract panel position
         private Boolean IsPointInBounds(Point point)
         {
             Point windowSize = GameService.Graphics.SpriteScreen.Size;
@@ -149,6 +149,7 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
         //TODO fix mouse, see: https://discord.com/channels/531175899588984842/534492173362528287/962805066673299457
         public override void UpdateContainer(GameTime gameTime)
         {
+            UpdateCadenceUtil.UpdateWithCadence(this.CalcTimeTilNextPhase, gameTime, this.updateInterval.TotalMilliseconds, ref this.timeSinceUpdate);
             if (this._dragging)
             {
                 this._dawn.Capture = this.Drag;
@@ -182,26 +183,33 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
             {
                 _font = GameService.Content.GetFont(ContentService.FontFace.Menomonia, this.Font_Size, ContentService.FontStyle.Regular);
 
-                //TODO recalc size if needed taking > of size vs label size
-                //TODO resize so that time shows above or below img
-                //TODO this isn't working... also not working for bottom
-                //this.Size = new Point(
-                //    Math.Max((int)_font.MeasureString(TimeTilNextPhase.TimeLeftStr).Width, this.Size.X),
-                //    (int)_font.MeasureString(TimeTilNextPhase.TimeLeftStr).Height + this.Size.Y
-                //    );
+                TimeSpan timeTilNextPhase = TyriaTime.TimeTilNextPhase(FishingBuddyModule._currentMap);
+                if (timeTilNextPhase <= TimeSpan.Zero) return;
+                string timeStr = $"{(int)timeTilNextPhase.TotalMinutes:D2}:{timeTilNextPhase:ss}";
+                this.Size = new Point(
+                    Math.Max((int)_font.MeasureString(timeStr).Width, this.Size.X),
+                    (int)_font.MeasureString(timeStr).Height + FishingBuddyModule._timeOfDayImgSize.Value + 40
+                    );
 
-                //spriteBatch.DrawStringOnCtrl(this,
-                //    _countdownTimer.IsRunning ? _countdownTimer.TimeLeftStr : "",
-                //    _font,
-                //    new Rectangle(0, 0, this.Size.X, this.Size.Y),
-                //    Color.White,
-                //    false,
-                //    true,
-                //    1,
-                //    HorizontalAlignment.Center,
-                //    LabelAlign
-                //    );
+                spriteBatch.DrawStringOnCtrl(this,
+                    timeStr,
+                    _font,
+                    new Rectangle(0, this.LabelVerticalAlignment, this.Width, this.Height),
+                    Color.White,
+                    false,
+                    true,
+                    1,
+                    HorizontalAlignment.Center,
+                    VerticalAlignment.Top
+                    );
             }
+        }
+
+        public void CalcTimeTilNextPhase(GameTime gameTime = default)
+        {
+            Logger.Debug($"Calculating time til next phase; currently: {this.TimePhase}");
+            this.NextPhaseTime = TyriaTime.NextPhaseTime(FishingBuddyModule._currentMap);
+            Logger.Debug($"Next phase time: {DateTime.Now}->{this.NextPhaseTime}");
         }
 
         protected virtual void OnTimeOfDayChanged(ValueChangedEventArgs<string> e)
@@ -230,6 +238,7 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
                     this._currentTime.Visible = true;
                     break;
             }
+            this.CalcTimeTilNextPhase();
             TimeOfDayChanged?.Invoke(this, e);
         }
     }

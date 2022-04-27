@@ -1,7 +1,6 @@
 ﻿using Blish_HUD;
 using System.Collections.Generic;
 
-//TODO split out special case of desert isles & ring of fire achievements fish per zone
 
 namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
 {
@@ -76,13 +75,12 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
         public readonly static List<int> KainengMaps = new List<int> { 1438 };
         // Echovald Wilds Fisher 6258 Avid Echovald Wilds Fisher 6466
         public readonly static List<int> EchovaldWildsFisher = new List<int> { 6258, 6466 };
-        // Echovald Wilds Maps: The Echovald Wilds 1452 & Arborstone 1428 ** TODO split Arborstone into special case https://wiki.guildwars2.com/wiki/Deep_Fishing_Hole & open water
+        // Echovald Wilds Maps: The Echovald Wilds 1452 & Arborstone 1428
         public readonly static List<int> EchovaldWildsMaps = new List<int> { 1452, 1428 };
         // Dragon's End Fisher 6506 Avid Dragon's End Fisher 6402
         public readonly static List<int> DragonsEndFisher = new List<int> { 6506, 6402 };
         // Dragon's End Maps: Dragon's End 1422
         public readonly static List<int> DragonsEndMaps = new List<int> { 1422 };
-        //TODO finish filling out special case
         // Thousand Seas Pavilion 1465 Day 12:00 noon https://wiki.guildwars2.com/wiki/Mysterious_Waters_Fish contains Seitung Province & Kaineng daytime non-Ascended and non-Legendary fish
         public readonly static List<int> ThousandSeasPavilionFisher = new List<int> { 6336, 6264, 6342, 6192 };
         public readonly static List<int> ThousandSeasPavilion = new List<int> { 1465 };

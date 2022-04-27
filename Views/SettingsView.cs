@@ -135,7 +135,7 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Views
             IView settingFishTooltip_View = SettingView.FromType(FishingBuddyModule._fishPanelTooltipDisplay, buildPanel.Width);
             ViewContainer settingFishTooltip_Container = new ViewContainer()
             {
-                Width = 180,
+                WidthSizingMode = SizingMode.Fill,
                 Location = new Point(10, settingFishSize_Container.Bottom + 5),
                 Parent = parentPanel
             };
@@ -145,7 +145,7 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Views
             ViewContainer settingClock_Container = new ViewContainer()
             {
                 WidthSizingMode = SizingMode.Fill,
-                Location = new Point(10, settingFishTooltip_Container.Bottom + 5),
+                Location = new Point(10, settingFishTooltip_Container.Bottom + 8),
                 Parent = parentPanel
             };
             settingClock_Container.Show(settingClockDrag_View);
@@ -154,25 +154,43 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Views
             ViewContainer settingClockShow_Container = new ViewContainer()
             {
                 WidthSizingMode = SizingMode.Fill,
-                Location = new Point(160, settingFishTooltip_Container.Bottom + 5),
+                Location = new Point(160, settingClock_Container.Top),
                 Parent = parentPanel
             };
             settingClockShow_Container.Show(settingClockShow_View);
+
+            IView settingTimeLabel_View = SettingView.FromType(FishingBuddyModule._settingClockLabel, buildPanel.Width);
+            ViewContainer settingTimeLabel_Container = new ViewContainer()
+            {
+                WidthSizingMode = SizingMode.Fill,
+                Location = new Point(310, settingClock_Container.Top),
+                Parent = parentPanel
+            };
+            settingTimeLabel_Container.Show(settingTimeLabel_View);
 
             IView settingClockSize_View = SettingView.FromType(FishingBuddyModule._timeOfDayImgSize, buildPanel.Width);
             ViewContainer settingClockSize_Container = new ViewContainer()
             {
                 WidthSizingMode = SizingMode.Fill,
-                Location = new Point(10, settingClock_Container.Bottom + 5),
-                Parent = parentPanel
+                Location = new Point(10, settingClock_Container.Bottom + 8),
+                Parent = parentPanel,
             };
             settingClockSize_Container.Show(settingClockSize_View);
+
+            IView settingTimeLabelAlign_View = SettingView.FromType(FishingBuddyModule._settingClockAlign, buildPanel.Width);
+            ViewContainer settingTimeLabelAlign_Container = new ViewContainer()
+            {
+                WidthSizingMode = SizingMode.Fill,
+                Location = new Point(10, settingClockSize_Container.Bottom + 8),
+                Parent = parentPanel
+            };
+            settingTimeLabelAlign_Container.Show(settingTimeLabelAlign_View);
 
             IView settingCombat_View = SettingView.FromType(FishingBuddyModule._hideInCombat, buildPanel.Width);
             ViewContainer settingCombat_Container = new ViewContainer()
             {
                 WidthSizingMode = SizingMode.Fill,
-                Location = new Point(10, settingClockSize_Container.Bottom + 5),
+                Location = new Point(10, settingTimeLabelAlign_Container.Bottom + 5),
                 Parent = parentPanel
             };
             settingCombat_Container.Show(settingCombat_View);

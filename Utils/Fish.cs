@@ -70,7 +70,6 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
         public string Name { get; set; }
         // Item Id
         public int ItemId { get; set; }
-        // TODO change this to enum?
         // Junk, Basic, Fine, Rare, Masterwork, Exotic, Ascended, Legendary
         [JsonConverter(typeof(StringEnumConverter))]
         public ItemRarity Rarity { get; set; }
