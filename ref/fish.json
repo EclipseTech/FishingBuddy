@@ -303,7 +303,7 @@
     "Time": "Any",
     "Notes": "",
     "Location": "New Kaineng City",
-    "Locations": [ 1442, 1419, 1444, 1462, 1465 ],
+    "Locations": [ 1438, 1465 ],
     "Achievement": "Kaineng Fisher",
     "AchievementIds": [ 6342, 6192 ]
   },
@@ -317,7 +317,7 @@
     "Time": "Night",
     "Notes": "",
     "Location": "New Kaineng City",
-    "Locations": [ 1442, 1419, 1444, 1462, 1465 ],
+    "Locations": [ 1438 ],
     "Achievement": "Kaineng Fisher",
     "AchievementIds": [ 6342, 6192 ]
   },
@@ -331,7 +331,7 @@
     "Time": "Any",
     "Notes": "",
     "Location": "New Kaineng City",
-    "Locations": [ 1442, 1419, 1444, 1462, 1465 ],
+    "Locations": [ 1438, 1465 ],
     "Achievement": "Kaineng Fisher",
     "AchievementIds": [ 6342, 6192 ]
   },
@@ -345,7 +345,7 @@
     "Time": "Day",
     "Notes": "",
     "Location": "New Kaineng City",
-    "Locations": [ 1442, 1419, 1444, 1462, 1465 ],
+    "Locations": [ 1438, 1465 ],
     "Achievement": "Kaineng Fisher",
     "AchievementIds": [ 6342, 6192 ]
   },
@@ -359,7 +359,7 @@
     "Time": "Night",
     "Notes": "Specialization Collection: Quietus",
     "Location": "New Kaineng City",
-    "Locations": [ 1442, 1419, 1444, 1462, 1465 ],
+    "Locations": [ 1438 ],
     "Achievement": "Kaineng Fisher",
     "AchievementIds": [ 6342, 6192 ]
   },
@@ -373,7 +373,7 @@
     "Time": "Any",
     "Notes": "",
     "Location": "New Kaineng City",
-    "Locations": [ 1442, 1419, 1444, 1462 ],
+    "Locations": [ 1438 ],
     "Achievement": "Kaineng Fisher",
     "AchievementIds": [ 6342, 6192 ]
   },
@@ -387,7 +387,7 @@
     "Time": "Any",
     "Notes": "Used as bait",
     "Location": "New Kaineng City",
-    "Locations": [ 1442, 1419, 1444, 1462 ],
+    "Locations": [ 1438 ],
     "Achievement": "Kaineng Fisher",
     "AchievementIds": [ 6342, 6192 ]
   },
@@ -401,7 +401,7 @@
     "Time": "Any",
     "Notes": "",
     "Location": "New Kaineng City",
-    "Locations": [ 1442, 1419, 1444, 1462, 1465 ],
+    "Locations": [ 1438, 1465 ],
     "Achievement": "Kaineng Fisher",
     "AchievementIds": [ 6342, 6192 ]
   },
@@ -415,7 +415,7 @@
     "Time": "Any",
     "Notes": "",
     "Location": "New Kaineng City",
-    "Locations": [ 1442, 1419, 1444, 1462, 1465 ],
+    "Locations": [ 1438, 1465 ],
     "Achievement": "Kaineng Fisher",
     "AchievementIds": [ 6342, 6192 ]
   },
@@ -429,7 +429,7 @@
     "Time": "Any",
     "Notes": "",
     "Location": "New Kaineng City",
-    "Locations": [ 1442, 1419, 1444, 1462, 1465 ],
+    "Locations": [ 1438, 1465 ],
     "Achievement": "Kaineng Fisher",
     "AchievementIds": [ 6342, 6192 ]
   },
@@ -443,7 +443,7 @@
     "Time": "Night",
     "Notes": "",
     "Location": "New Kaineng City",
-    "Locations": [ 1442, 1419, 1444, 1462, 1465 ],
+    "Locations": [ 1438 ],
     "Achievement": "Kaineng Fisher",
     "AchievementIds": [ 6342, 6192 ]
   },
@@ -457,7 +457,7 @@
     "Time": "Any",
     "Notes": "Specialization Collection: Possession",
     "Location": "New Kaineng City",
-    "Locations": [ 1442, 1419, 1444, 1462, 1465 ],
+    "Locations": [ 1438, 1465 ],
     "Achievement": "Kaineng Fisher",
     "AchievementIds": [ 6342, 6192 ]
   },
@@ -471,7 +471,7 @@
     "Time": "Any",
     "Notes": "",
     "Location": "New Kaineng City",
-    "Locations": [ 1442, 1419, 1444, 1462 ],
+    "Locations": [ 1438 ],
     "Achievement": "Kaineng Fisher",
     "AchievementIds": [ 6342, 6192 ]
   },
@@ -485,7 +485,7 @@
     "Time": "Day",
     "Notes": "",
     "Location": "New Kaineng City",
-    "Locations": [ 1442, 1419, 1444, 1462 ],
+    "Locations": [ 1438 ],
     "Achievement": "Kaineng Fisher",
     "AchievementIds": [ 6342, 6192 ]
   },
@@ -499,7 +499,7 @@
     "Time": "Any",
     "Notes": "",
     "Location": "New Kaineng City",
-    "Locations": [ 1442, 1419, 1444, 1462, 1465 ],
+    "Locations": [ 1438, 1465 ],
     "Achievement": "Kaineng Fisher",
     "AchievementIds": [ 6342, 6192 ]
   },
@@ -513,7 +513,7 @@
     "Time": "Any",
     "Notes": "",
     "Location": "New Kaineng City",
-    "Locations": [ 1442, 1419, 1444, 1462, 1465 ],
+    "Locations": [ 1438, 1465 ],
     "Achievement": "Kaineng Fisher",
     "AchievementIds": [ 6342, 6192 ]
   },
@@ -527,7 +527,7 @@
     "Time": "Day",
     "Notes": "",
     "Location": "New Kaineng City",
-    "Locations": [ 1442, 1419, 1444, 1462, 1465 ],
+    "Locations": [ 1438, 1465 ],
     "Achievement": "Kaineng Fisher",
     "AchievementIds": [ 6342, 6192 ]
   },
@@ -541,7 +541,7 @@
     "Time": "Any",
     "Notes": "",
     "Location": "New Kaineng City",
-    "Locations": [ 1442, 1419, 1444, 1462, 1465 ],
+    "Locations": [ 1438, 1465 ],
     "Achievement": "Kaineng Fisher",
     "AchievementIds": [ 6342, 6192 ]
   },
@@ -555,7 +555,7 @@
     "Time": "Dusk/Dawn",
     "Notes": "",
     "Location": "New Kaineng City",
-    "Locations": [ 1442, 1419, 1444, 1462, 1465 ],
+    "Locations": [ 1438, 1465 ],
     "Achievement": "Kaineng Fisher",
     "AchievementIds": [ 6342, 6192 ]
   },
@@ -569,7 +569,7 @@
     "Time": "Night",
     "Notes": "",
     "Location": "New Kaineng City",
-    "Locations": [ 1442, 1419, 1444, 1462 ],
+    "Locations": [ 1438 ],
     "Achievement": "Kaineng Fisher",
     "AchievementIds": [ 6342, 6192 ]
   },
@@ -583,7 +583,7 @@
     "Time": "Any",
     "Notes": "",
     "Location": "New Kaineng City",
-    "Locations": [ 1442, 1419, 1444, 1462 ],
+    "Locations": [ 1438 ],
     "Achievement": "Kaineng Fisher",
     "AchievementIds": [ 6342, 6192 ]
   },
