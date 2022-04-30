@@ -184,13 +184,13 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
                 _font = GameService.Content.GetFont(ContentService.FontFace.Menomonia, this.Font_Size, ContentService.FontStyle.Regular);
 
                 TimeSpan timeTilNextPhase = TyriaTime.TimeTilNextPhase(FishingBuddyModule._currentMap);
-                if (timeTilNextPhase <= TimeSpan.Zero) return;
                 string timeStr = $"{(int)timeTilNextPhase.TotalMinutes:D2}:{timeTilNextPhase:ss}";
                 this.Size = new Point(
                     Math.Max((int)_font.MeasureString(timeStr).Width, this.Size.X),
                     (int)_font.MeasureString(timeStr).Height + FishingBuddyModule._timeOfDayImgSize.Value + 40
                     );
 
+                if (timeTilNextPhase <= TimeSpan.Zero) return;
                 spriteBatch.DrawStringOnCtrl(this,
                     timeStr,
                     _font,

@@ -29,8 +29,6 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
         public static readonly DateTime centralDayStartUTC = new DateTime(2000, 1, 1, 0, 30, 0);
         public static readonly DateTime centralDuskStartUTC = new DateTime(2000, 1, 1, 0, 40, 0);
         public static readonly DateTime centralNightStartUTC = new DateTime(2000, 1, 1, 0, 45, 0);
-        public static readonly DateTime _0h = new DateTime(2000, 1, 1, 0, 0, 0);
-        public static readonly DateTime _1h = new DateTime(2000, 1, 1, 1, 0, 0);
         // Map time info
         public static readonly List<int> CanthaMaps = new List<int> { 1442, 1419, 1444, 1462, 1438, 1452, 1428, 1422 };
         public static readonly int CanthaRegionId = 37;
@@ -114,69 +112,54 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
         {
             DateTime TyriaTime = CalcTyriaTime();
             DateTime nowish = new DateTime(2000, 1, 1, 0, DateTime.Now.Minute, DateTime.Now.Second);
+
             TimeSpan timeTilNextPhase = TimeSpan.Zero;
 
             if (map is null || AlwaysDayMaps.Contains(map.Id) || AlwaysNightMaps.Contains(map.Id)) timeTilNextPhase = TimeSpan.Zero;
             else if (map.RegionId == CanthaRegionId)
             {   // Cantha Maps
                 if (TyriaTime >= canthaDawnStart && TyriaTime < canthaDayStart)
-                { // 5 min
+                { // 5 min x:35->x:40
                     timeTilNextPhase = canthaDayStartUTC.Subtract(nowish);
                 }
                 else if (TyriaTime >= canthaDayStart && TyriaTime < canthaDuskStart)
-                { // 55 min
-                    if (nowish >= canthaDayStartUTC && nowish < _1h)
-                    {
-                        timeTilNextPhase = _1h.Subtract(nowish);
-                        timeTilNextPhase += canthaDuskStartUTC.Subtract(_0h);
-                    }
-                    else
-                    { timeTilNextPhase = canthaDuskStartUTC.Subtract(nowish); }
+                { // 55 min x:40->y:35
+                    timeTilNextPhase = nowish >= canthaDayStartUTC && nowish < canthaDayStartUTC.AddMinutes(20)
+                        ? canthaDayStartUTC.AddMinutes(55).Subtract(nowish)
+                        : canthaDuskStartUTC.Subtract(nowish);
                 }
                 else if (TyriaTime >= canthaDuskStart && TyriaTime < canthaNightStart)
-                { // 5 min
+                { // 5 min x:35->x:40
                     timeTilNextPhase = canthaNightStartUTC.Subtract(nowish);
                 }
                 else
-                { // 55 min
-                    if (nowish >= canthaNightStartUTC && nowish < _1h)
-                    {
-                        timeTilNextPhase = _1h.Subtract(nowish);
-                        timeTilNextPhase += canthaDawnStartUTC.Subtract(_0h);
-                    }
-                    else
-                    { timeTilNextPhase = canthaDuskStartUTC.Subtract(nowish); }
+                { // 55 min x:40->y:35
+                    timeTilNextPhase = nowish >= canthaNightStartUTC && nowish < canthaNightStartUTC.AddMinutes(20)
+                        ? canthaNightStartUTC.AddMinutes(55).Subtract(nowish)
+                        : canthaDuskStartUTC.Subtract(nowish);
                 }
             }
             else
             {   // Central Tyria Maps
                 if (TyriaTime >= centralDawnStart && TyriaTime < centralDayStart)
-                { // 5 min
+                { // 5 min x:25->x:30
                     timeTilNextPhase = centralDayStartUTC.Subtract(nowish);
                 }
                 else if (TyriaTime >= centralDayStart && TyriaTime < centralDuskStart)
-                { // 70 min
-                    if (nowish >= centralDayStartUTC && nowish < _1h)
-                    {
-                        timeTilNextPhase = _1h.Subtract(nowish);
-                        timeTilNextPhase += centralDuskStartUTC.Subtract(_0h);
-                    }
-                    else
-                    { timeTilNextPhase = centralDuskStartUTC.Subtract(nowish); }
+                { // 70 min x:30->y:40
+                    timeTilNextPhase = nowish >= centralDayStartUTC && nowish < centralDayStartUTC.AddMinutes(30)
+                        ? centralDayStartUTC.AddMinutes(70).Subtract(nowish)
+                        : centralDuskStartUTC.Subtract(nowish);
                 }
                 else if (TyriaTime >= centralDuskStart && TyriaTime < centralNightStart)
-                { // 5 min
+                { // 5 min x:40->x:45
                     timeTilNextPhase = centralNightStartUTC.Subtract(nowish);
                 }
                 else
-                { // 40 min
-                    if (nowish >= centralNightStartUTC && nowish < _1h)
-                    {
-                        timeTilNextPhase = _1h.Subtract(nowish);
-                        timeTilNextPhase += centralDawnStartUTC.Subtract(_0h);
-                    }
-                    else
-                    { timeTilNextPhase = centralDawnStartUTC.Subtract(nowish); }
+                { // 40 min x:45->y:25
+                    timeTilNextPhase = nowish >= centralNightStartUTC && nowish < centralNightStartUTC.AddMinutes(15)
+                        ? centralNightStartUTC.AddMinutes(40).Subtract(nowish)
+                        : centralDawnStartUTC.Subtract(nowish);
                 }
             }
             return timeTilNextPhase;

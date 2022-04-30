@@ -331,17 +331,13 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
         }
 
         private void OnUpdateClockLabelAlign(object sender = null, ValueChangedEventArgs<int> e = null)
-        {
-            this._timeOfDayClock.LabelVerticalAlignment = _settingClockAlign.Value;
-        }
+            => this._timeOfDayClock.LabelVerticalAlignment = _settingClockAlign.Value;
 
         private void OnUpdateHideClockLabel(object sender = null, ValueChangedEventArgs<bool> e = null)
-        {
-            this._timeOfDayClock.HideLabel = _settingClockLabel.Value;
-        }
+            => this._timeOfDayClock.HideLabel = _settingClockLabel.Value;
 
 
-            private void OnUpdateClockLocation(object sender = null, ValueChangedEventArgs<Point> e = null)
+        private void OnUpdateClockLocation(object sender = null, ValueChangedEventArgs<Point> e = null)
         {
             // Offscreen reset
             if (_timeOfDayPanelLoc.Value.X < 0)
@@ -352,9 +348,7 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
         }
 
         private void OnUpdateClockSize(object sender = null, ValueChangedEventArgs<int> e = null)
-        {
-            this._timeOfDayClock.Size = new Point(_timeOfDayImgSize.Value);
-        }
+            => this._timeOfDayClock.Size = new Point(_timeOfDayImgSize.Value);
 
         protected void DrawIcons()
         {
@@ -760,7 +754,7 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
                 if (!_displayUncatchableFish.Value) this.catchableFish = this.catchableFish.Where(phish => phish.Visible).ToList();
                 Logger.Debug("Shown fish in current map count: " + this.catchableFish.Count());
             }
-            catch (Exception ex) { Logger.Error(ex, "Unknown exception getting current map fish"); }
+            catch (Exception ex) { Logger.Warn(ex, "Unknown exception getting current map fish"); }
             finally { this._updateFishSemaphore.Release(); }
         }
 
