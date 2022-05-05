@@ -762,14 +762,12 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
         private async Task<Map> RequestMap(int id)
         {
             Logger.Debug($"Requested map id: {id}");
-            try
-            {
+            try {
                 Task<Map> mapTask = this.Gw2ApiManager.Gw2ApiClient.V2.Maps.GetAsync(id);
                 await mapTask;
                 return mapTask.Result;
             }
-            catch (Exception ex)
-            {
+            catch (Exception ex) {
                 Logger.Debug(ex, "Failed to query Guild Wars 2 API.");
                 return null;
             }
@@ -780,14 +778,12 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
         {
             Logger.Debug($"Requested achievement id: {id}");
             // TODO instead of await each call. queue/addtolist each task, Task.WaitAll(queue/list), requeue nulls/failures/errors?
-            try
-            {
+            try {
                 Task<Achievement> achievementTask = this.Gw2ApiManager.Gw2ApiClient.V2.Achievements.GetAsync(id);
                 await achievementTask;
                 return achievementTask.Result;
             }
-            catch (Exception ex)
-            {
+            catch (Exception ex) {
                 Logger.Debug(ex, "Failed to query Guild Wars 2 API.");
                 return null;
             }
@@ -796,14 +792,12 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
         private async Task<Item> RequestItem(int id)
         {
             Logger.Debug($"Requested item id: {id}");
-            try
-            {
+            try {
                 Task<Item> itemTask = this.Gw2ApiManager.Gw2ApiClient.V2.Items.GetAsync(id);
                 await itemTask;
                 return itemTask.Result;
             }
-            catch (Exception ex)
-            {
+            catch (Exception ex) {
                 Logger.Debug(ex, "Failed to query Guild Wars 2 API.");
                 return null;
             }
