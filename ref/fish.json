@@ -65,7 +65,7 @@
     "Time": "Night",
     "Notes": "Specialization Collection: Crushing Weight",
     "Location": "Seitung Province",
-    "Locations": [ 1442, 1419, 1444, 1462, 1465 ],
+    "Locations": [ 1442, 1419, 1444, 1462 ],
     "Achievement": "Seitung Province Fisher",
     "AchievementIds": [ 6336, 6264 ]
   },
@@ -555,7 +555,7 @@
     "Time": "Dusk/Dawn",
     "Notes": "",
     "Location": "New Kaineng City",
-    "Locations": [ 1438, 1465 ],
+    "Locations": [ 1438 ],
     "Achievement": "Kaineng Fisher",
     "AchievementIds": [ 6342, 6192 ]
   },
@@ -577,7 +577,7 @@
     "Rarity": "Legendary",
     "Name": "Oarfish",
     "ItemId": 96196,
-    "FishingHole": "channel Fish",
+    "FishingHole": "Channel Fish",
     "OpenWater": false,
     "Bait": "Shrimplings",
     "Time": "Any",

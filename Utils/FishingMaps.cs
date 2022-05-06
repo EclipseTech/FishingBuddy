@@ -52,8 +52,8 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
         public readonly static List<int> OrrianMaps = new List<int> { 1203, 51, 65, 62 };
         // Desert Fisher 6317 Avid Desert Fisher 6509
         public readonly static List<int> DesertFisher = new List<int> { 6317, 6509 };
-        // Desert Maps: Crystal Oasis 1210, Domain of Kourna 1288, The Desolation 1226, Elon Riverlands 1228, Desert Highlands 1211, Windswept Haven 1214, 1215, 1224, 1232, 1243, 1250
-        public readonly static List<int> DesertMaps = new List<int> { 1210, 1288, 1226, 1228, 1211, 1214, 1215, 1224, 1232, 1243, 1250 };
+        // Desert Maps: Crystal Oasis 1210, Domain of Kourna 1288, The Desolation 1226, Elon Riverlands 1228, Desert Highlands 1211, Domain of Vabbi 1248, Windswept Haven 1214, 1215, 1224, 1232, 1243, 1250
+        public readonly static List<int> DesertMaps = new List<int> { 1210, 1288, 1226, 1228, 1211, 1248, 1214, 1215, 1224, 1232, 1243, 1250 };
         // Desert Isles Fisher 6106 Avid Desert Isles Fisher 6250
         public readonly static List<int> DesertIslesFisher = new List<int> { 6106, 6250 };
         // Desert Isles Maps: Domain of Istan 1263 & Sandswept Isles 1271

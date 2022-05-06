@@ -29,7 +29,6 @@ Settings:<div style="width:512; height:256px">
 * [Feature enhancement requests](https://github.com/EclipseTech/FishingBuddy/issues/new?assignees=&labels=&template=feature_request.md&title=)
   * First check current [issues](https://github.com/EclipseTech/FishingBuddy/issues)
 * If there are missing fish please report it as [bug](https://github.com/EclipseTech/FishingBuddy/issues/new?assignees=&labels=&template=bug_report.md&title=)
-* I don't have access to Thousand Seas Pavillion, so there may be bugs
 
 ## Authors
   - **Eclipse.1807**
@@ -40,3 +39,4 @@ who participated in this project.
 
 ## Acknowledgments
   - Foe Fox.4671 for helping with some images
+  - Freesnow thanks for BlishHUD & Thousand Seas Pavilion Pass to help development

@@ -7,16 +7,11 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
 {
     // https://wiki.guildwars2.com/wiki/Day_and_night
     // Based on https://github.com/manlaan/BlishHud-Clock/
-    class TyriaTime
+    public static class TyriaTime
     {
         private static readonly Logger Logger = Logger.GetLogger(typeof(TyriaTime));
 
         // Tyria times
-        public static int canthaDayLength = 55;
-        public static int canthaNightLength = 55;
-        public static int centralDayLength = 70;
-        public static int centralNightLength = 40;
-        public static int DuskDawnLength = 5;
         public static readonly DateTime canthaDawnStart = new DateTime(2000, 1, 1, 7, 0, 0);
         public static readonly DateTime canthaDayStart = new DateTime(2000, 1, 1, 8, 0, 0);
         public static readonly DateTime canthaDuskStart = new DateTime(2000, 1, 1, 19, 0, 0);
@@ -26,6 +21,11 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
         public static readonly DateTime centralDuskStart = new DateTime(2000, 1, 1, 20, 0, 0);
         public static readonly DateTime centralNightStart = new DateTime(2000, 1, 1, 21, 0, 0);
         // Earth real times (UTC)
+        public static readonly int canthaDayLength = 55;
+        public static readonly int canthaNightLength = 55;
+        public static readonly int centralDayLength = 70;
+        public static readonly int centralNightLength = 40;
+        public static readonly int DuskDawnLength = 5;
         public static readonly DateTime canthaDawnStartUTC = new DateTime(2000, 1, 1, 0, 35, 0);
         public static readonly DateTime canthaDayStartUTC = new DateTime(2000, 1, 1, 0, 40, 0);
         public static readonly DateTime canthaDuskStartUTC = new DateTime(2000, 1, 1, 1, 35, 0);
@@ -109,16 +109,15 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
 
         }
 
-        public static DateTime NextPhaseTime(Map map) => DateTime.UtcNow + TimeTilNextPhase(map);
-
         public static TimeSpan TimeTilNextPhase(Map map)
         {
             DateTime TyriaTime = CalcTyriaTime();
-            DateTime nowish = new DateTime(2000, 1, 1, DateTime.UtcNow.Hour%2, DateTime.UtcNow.Minute, DateTime.UtcNow.Second);
+            DateTime now = DateTime.UtcNow;
+            DateTime nowish = new DateTime(2000, 1, 1, now.Hour%2, now.Minute, now.Second);
 
             DateTime currentPhaseEnd;
 
-            if (map is null || AlwaysDayMaps.Contains(map.Id) || AlwaysNightMaps.Contains(map.Id)) return TimeSpan.Zero;
+            if (map is null || AlwaysDayMaps.Contains(map.Id) || AlwaysNightMaps.Contains(map.Id)) { return TimeSpan.Zero; }
             else if (map.RegionId == FishingMaps.CanthaRegionId)
             {   // Cantha Maps
                 if (TyriaTime >= canthaDawnStart && TyriaTime < canthaDayStart)
@@ -159,7 +158,6 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
                     if (nowish.Hour == 0) nowish = nowish.AddHours(2);
                 }
             }
-            //Logger.Debug($"nowish: {nowish} ({nowish.Hour}) end: {currentPhaseEnd} Diff: {currentPhaseEnd.Subtract(nowish)}");
             return currentPhaseEnd.Subtract(nowish);
         }
     }

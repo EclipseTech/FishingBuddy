@@ -31,7 +31,7 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
         public bool Drag = false;
         // TODO deal with resizing label/font on resize based on time panel size ~12-16 size font
         public ContentService.FontSize Font_Size = ContentService.FontSize.Size14;
-        public int LabelVerticalAlignment = 0;
+        public VerticalAlignment LabelVerticalAlignment = VerticalAlignment.Bottom;
 
         private static BitmapFont _font;
         private Point _dragStart = Point.Zero;
@@ -45,73 +45,65 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
 
         public event EventHandler<ValueChangedEventArgs<string>> TimeOfDayChanged;
 
-        public DateTime NextPhaseTime = DateTime.Now;
-        private readonly TimeSpan updateInterval = TimeSpan.FromMinutes(5);
-        private double timeSinceUpdate;
-
         public Clock()
         {
             this.Location = new Point(50);
-            this.Size = new Point(0);
             this.Visible = true;
             this.Padding = Thickness.Zero;
-
-            this.timeSinceUpdate = this.updateInterval.TotalMilliseconds;
+            _font = GameService.Content.GetFont(ContentService.FontFace.Menomonia, this.Font_Size, ContentService.FontStyle.Regular);
 
             this._dawn = new ClickThroughImage
             {
                 Parent = this,
                 Texture = FishingBuddyModule._imgDawn,
                 Size = new Point(FishingBuddyModule._timeOfDayImgSize.Value),
-                Location = new Point(0, 20),
+                Location = new Point(0, _font.LineHeight),
                 Opacity = 1.0f,
                 BasicTooltipText = "Dawn",
                 Visible = this.TimePhase == "Dawn",
                 Capture = Drag,
             };
-            Resized += delegate { this._dawn.Size = new Point(this.Size.X); };
+            Resized += delegate { this._dawn.Size = new Point(FishingBuddyModule._timeOfDayImgSize.Value); };
 
             this._day = new ClickThroughImage
             {
                 Parent = this,
                 Texture = FishingBuddyModule._imgDay,
                 Size = new Point(FishingBuddyModule._timeOfDayImgSize.Value),
-                Location = new Point(0, 20),
+                Location = new Point(0, _font.LineHeight),
                 Opacity = 1.0f,
                 BasicTooltipText = "Day",
                 Visible = this.TimePhase == "Day",
                 Capture = Drag
             };
-            Resized += delegate { this._day.Size = new Point(this.Size.X); };
+            Resized += delegate { this._day.Size = new Point(FishingBuddyModule._timeOfDayImgSize.Value); };
 
             this._dusk = new ClickThroughImage
             {
                 Parent = this,
                 Texture = FishingBuddyModule._imgDusk,
                 Size = new Point(FishingBuddyModule._timeOfDayImgSize.Value),
-                Location = new Point(0, 20),
+                Location = new Point(0, _font.LineHeight),
                 Opacity = 1.0f,
                 BasicTooltipText = "Dusk",
                 Visible = this.TimePhase == "Dusk",
                 Capture = Drag
             };
-            Resized += delegate { this._dusk.Size = new Point(this.Size.X); };
+            Resized += delegate { this._dusk.Size = new Point(FishingBuddyModule._timeOfDayImgSize.Value); };
 
             this._night = new ClickThroughImage
             {
                 Parent = this,
                 Texture = FishingBuddyModule._imgNight,
                 Size = new Point(FishingBuddyModule._timeOfDayImgSize.Value),
-                Location = new Point(0, 20),
+                Location = new Point(0, _font.LineHeight),
                 Opacity = 1.0f,
                 BasicTooltipText = "Night",
                 Visible = this.TimePhase == "Night",
                 Capture = Drag
             };
-            Resized += delegate { this._night.Size = new Point(this.Size.X); };
+            Resized += delegate { this._night.Size = new Point(FishingBuddyModule._timeOfDayImgSize.Value); };
             this._currentTime = this._day;
-
-            this.CalcTimeTilNextPhase();
         }
 
         protected override CaptureType CapturesInput() => this.Drag ? CaptureType.Mouse : CaptureType.Filter;
@@ -149,7 +141,6 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
         //TODO fix mouse, see: https://discord.com/channels/531175899588984842/534492173362528287/962805066673299457
         public override void UpdateContainer(GameTime gameTime)
         {
-            UpdateCadenceUtil.UpdateWithCadence(this.CalcTimeTilNextPhase, gameTime, this.updateInterval.TotalMilliseconds, ref this.timeSinceUpdate);
             if (this._dragging)
             {
                 this._dawn.Capture = this.Drag;
@@ -181,35 +172,26 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
         {
             if (!this.HideLabel)
             {
-                _font = GameService.Content.GetFont(ContentService.FontFace.Menomonia, this.Font_Size, ContentService.FontStyle.Regular);
-
                 TimeSpan timeTilNextPhase = TyriaTime.TimeTilNextPhase(FishingBuddyModule._currentMap);
-                string timeStr = $"{(int)timeTilNextPhase.TotalMinutes:D2}:{timeTilNextPhase:ss}";
+                string timeStr = timeTilNextPhase.Hours > 0 ? timeTilNextPhase.ToString("h\\:mm\\:ss") : timeTilNextPhase.ToString("mm\\:ss");
                 this.Size = new Point(
-                    Math.Max((int)_font.MeasureString(timeStr).Width, this.Size.X),
-                    (int)_font.MeasureString(timeStr).Height + FishingBuddyModule._timeOfDayImgSize.Value + 40
+                    Math.Max((int)_font.MeasureString(timeStr).Width, FishingBuddyModule._timeOfDayImgSize.Value),
+                    FishingBuddyModule._timeOfDayImgSize.Value + (_font.LineHeight * 2)
                     );
 
                 if (timeTilNextPhase <= TimeSpan.Zero) return;
                 spriteBatch.DrawStringOnCtrl(this,
                     timeStr,
                     _font,
-                    new Rectangle(0, this.LabelVerticalAlignment, this.Width, this.Height),
+                    new Rectangle(0, 0, this.Width, this.Height),
                     Color.White,
                     false,
                     true,
                     1,
                     HorizontalAlignment.Center,
-                    VerticalAlignment.Top
+                    LabelVerticalAlignment
                     );
             }
-        }
-
-        public void CalcTimeTilNextPhase(GameTime gameTime = default)
-        {
-            Logger.Debug($"Calculating time til next phase; currently: {this.TimePhase}");
-            this.NextPhaseTime = TyriaTime.NextPhaseTime(FishingBuddyModule._currentMap);
-            Logger.Debug($"Next phase time: {DateTime.Now}->{this.NextPhaseTime}");
         }
 
         protected virtual void OnTimeOfDayChanged(ValueChangedEventArgs<string> e)
@@ -238,7 +220,6 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
                     this._currentTime.Visible = true;
                     break;
             }
-            this.CalcTimeTilNextPhase();
             TimeOfDayChanged?.Invoke(this, e);
         }
     }
