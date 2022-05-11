@@ -1,16 +1,4 @@
-﻿using Blish_HUD;
-using Blish_HUD.Content;
-using Gw2Sharp.WebApi;
-using Gw2Sharp.WebApi.V2.Models;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.Serialization;
-
-// all fishing: 6330, 6484, 6068, 6263, 6344, 6475, 6179, 6153, 6363, 6227, 6317, 6509, 6106, 6250, 6489, 6339, 6336, 6264, 6342, 6192, 6258, 6466, 6506, 6402, 6224, 6110, 6471, 6393
+﻿// all fishing: 6330, 6484, 6068, 6263, 6344, 6475, 6179, 6153, 6363, 6227, 6317, 6509, 6106, 6250, 6489, 6339, 6336, 6264, 6342, 6192, 6258, 6466, 6506, 6402, 6224, 6110, 6471, 6393
 // https://api.guildwars2.com/v2/achievements?ids=6068,6106,6109,6110,6111,6153,6179,6192,6201,6224,6227,6250,6258,6263,6264,6279,6284,6317,6330,6336,6339,6342,6344,6363,6393,6402,6439,6466,6471,6475,6478,6484,6489,6505,6506,6509
 
 // fish data based on:
@@ -18,9 +6,21 @@ using System.Runtime.Serialization;
 
 namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
 {
+    using Blish_HUD;
+    using Blish_HUD.Content;
+    using Gw2Sharp.WebApi;
+    using Gw2Sharp.WebApi.V2.Models;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Reflection;
+    using System.Runtime.Serialization;
+
     public class Fish
     {
-        private static readonly Logger Logger = Logger.GetLogger(typeof(Fish));
+        internal static readonly Logger Logger = Logger.GetLogger(typeof(Fish));
 
         [Flags]
         [JsonConverter(typeof(StringEnumConverter))]
@@ -66,6 +66,58 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
             SparkflyLarvae,
         }
 
+        // Fishing holes: https://wiki.guildwars2.com/wiki/Fishing#Fishing_holes
+        [JsonConverter(typeof(StringEnumConverter))]
+        public enum FishingHole
+        {
+            None,
+            Any,
+            [EnumMember(Value = "Boreal Fish")]
+            BorealFish,
+            [EnumMember(Value = "Cavern Fish")]
+            CavernFish,
+            [EnumMember(Value = "Channel Fish")]
+            ChannelFish,
+            [EnumMember(Value = "Coastal Fish")]
+            CoastalFish,
+            [EnumMember(Value = "Deep Fishing Hole")]
+            DeepFishingHole,
+            [EnumMember(Value = "Desert Fish")]
+            DesertFish,
+            [EnumMember(Value = "Freshwater Fish")]
+            FreshwaterFish,
+            [EnumMember(Value = "Grotto Fish")]
+            GrottoFish,
+            [EnumMember(Value = "Lake Fish")]
+            LakeFish,
+            [EnumMember(Value = "Lutgardis Trout")]
+            LutgardisTrout,
+            [EnumMember(Value = "Mysterious Waters Fish")]
+            MysteriousWatersFish,
+            [EnumMember(Value = "Noxious Water Fish")]
+            NoxiousWaterFish,
+            [EnumMember(Value = "Offshore Fish")]
+            OffshoreFish,
+            [EnumMember(Value = "Polluted Lake Fish")]
+            PollutedLakeFish,
+            [EnumMember(Value = "Quarry Fish")]
+            QuarryFish,
+            [EnumMember(Value = "Rare Fish")]
+            RareFish,
+            [EnumMember(Value = "River Fish")]
+            RiverFish,
+            [EnumMember(Value = "Saltwater Fish")]
+            SaltwaterFish,
+            [EnumMember(Value = "Special Fishing Hole")]
+            SpecialFishingHole,
+            [EnumMember(Value = "Shore Fish")]
+            ShoreFish,
+            [EnumMember(Value = "Volcanic Fish")]
+            VolcanicFish,
+            [EnumMember(Value = "Wreckage Site")]
+            WreckageSite
+        }
+
         // Fish Item Name
         public string Name { get; set; }
         // Item Id
@@ -73,9 +125,9 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
         // Junk, Basic, Fine, Rare, Masterwork, Exotic, Ascended, Legendary
         [JsonConverter(typeof(StringEnumConverter))]
         public ItemRarity Rarity { get; set; }
-        // Fishing holes: Any, None, Boreal Fish, Cavern Fish, Channel Fish, Coastal Fish, Deep Fishing Hole, Desert Fish, Freshwater Fish, Grotto Fish, Lake Fish, Noxious Water Fish,
-        // Offshore Fish, Polluted Lake Fish, Quarry Fish, Rare Fish, River Fish, Saltwater Fish, Special Fishing Hole, Shore Fish, Volcanic Fish, Wreckage Site
-        public string FishingHole { get; set; }
+        // Fishing Hole
+        [JsonProperty("FishingHole")]
+        public FishingHole Hole { get; set; }
         // https://wiki.guildwars2.com/wiki/Bait
         // Any, Fish Egg, Freshwater Minnow, Glow Worm, Lava Beetle, Leech, Lightning Bug, Mackerel, Nightcrawler, Ramshorn Snail, Sardine, Scorpion, Shrimpling, Sparkfly Nymph, Haiju Minnows
         public FishBait Bait { get; set; }
@@ -108,9 +160,9 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
     {
         public static string GetEnumMemberValue(this Enum value)
         {
-            string ret = value.GetType().GetMember(value.ToString()).FirstOrDefault()?
-                        .GetCustomAttribute<EnumMemberAttribute>(false)?.Value;
-            return ret ?? value.ToString();
+            string enumToString = value.GetType().GetMember(value.ToString()).FirstOrDefault()?
+                        .GetCustomAttribute<EnumMemberAttribute>(false)?.Value ?? value.ToString();
+            return Properties.Strings.ResourceManager.GetString(enumToString, Properties.Strings.Culture);
         }
     }
 }

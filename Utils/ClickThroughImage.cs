@@ -1,7 +1,7 @@
-﻿using Blish_HUD.Controls;
-
-namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
+﻿namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
 {
+    using Blish_HUD.Controls;
+
     class ClickThroughImage : Image
     {
         public bool Capture { get; set; }

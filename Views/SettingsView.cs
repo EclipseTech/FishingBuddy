@@ -1,11 +1,10 @@
-﻿using Blish_HUD.Controls;
-using Blish_HUD.Graphics.UI;
-using Blish_HUD.Settings.UI.Views;
-using Microsoft.Xna.Framework;
-
-
-namespace Eclipse1807.BlishHUD.FishingBuddy.Views
+﻿namespace Eclipse1807.BlishHUD.FishingBuddy.Views
 {
+    using Blish_HUD.Controls;
+    using Blish_HUD.Graphics.UI;
+    using Blish_HUD.Settings.UI.Views;
+    using Microsoft.Xna.Framework;
+
     public class SettingsView : View
     {
         protected override void Build(Container buildPanel)

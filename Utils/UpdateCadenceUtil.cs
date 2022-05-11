@@ -1,11 +1,11 @@
-﻿using Blish_HUD;
-using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-
-namespace Eclipse1807.BlishHUD.FishingBuddy
+﻿namespace Eclipse1807.BlishHUD.FishingBuddy
 {
+    using Blish_HUD;
+    using Microsoft.Xna.Framework;
+    using System;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+
     public static class UpdateCadenceUtil
     {
         private static readonly Logger Logger = Logger.GetLogger(typeof(UpdateCadenceUtil));

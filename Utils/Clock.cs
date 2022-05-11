@@ -1,19 +1,19 @@
-﻿using Blish_HUD;
-using Blish_HUD.Controls;
-using Blish_HUD.Input;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using MonoGame.Extended.BitmapFonts;
-using System;
-
-namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
+﻿namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
 {
+    using Blish_HUD;
+    using Blish_HUD.Controls;
+    using Blish_HUD.Input;
+    using Microsoft.Xna.Framework;
+    using Microsoft.Xna.Framework.Graphics;
+    using MonoGame.Extended.BitmapFonts;
+    using System;
+
     // Based on https://github.com/manlaan/BlishHud-Clock/
     class Clock : Container
     {
         private static readonly Logger Logger = Logger.GetLogger(typeof(Clock));
 
-        private string _timePhase = "";
+        private string _timePhase = string.Empty;
         public string TimePhase
         {
             get { return this._timePhase; }
@@ -59,8 +59,8 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
                 Size = new Point(FishingBuddyModule._timeOfDayImgSize.Value),
                 Location = new Point(0, _font.LineHeight),
                 Opacity = 1.0f,
-                BasicTooltipText = "Dawn",
-                Visible = this.TimePhase == "Dawn",
+                BasicTooltipText = Properties.Strings.Dawn,
+                Visible = this.TimePhase == Properties.Strings.Dawn,
                 Capture = Drag,
             };
             Resized += delegate { this._dawn.Size = new Point(FishingBuddyModule._timeOfDayImgSize.Value); };
@@ -72,8 +72,8 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
                 Size = new Point(FishingBuddyModule._timeOfDayImgSize.Value),
                 Location = new Point(0, _font.LineHeight),
                 Opacity = 1.0f,
-                BasicTooltipText = "Day",
-                Visible = this.TimePhase == "Day",
+                BasicTooltipText = Properties.Strings.Day,
+                Visible = this.TimePhase == Properties.Strings.Day,
                 Capture = Drag
             };
             Resized += delegate { this._day.Size = new Point(FishingBuddyModule._timeOfDayImgSize.Value); };
@@ -85,8 +85,8 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
                 Size = new Point(FishingBuddyModule._timeOfDayImgSize.Value),
                 Location = new Point(0, _font.LineHeight),
                 Opacity = 1.0f,
-                BasicTooltipText = "Dusk",
-                Visible = this.TimePhase == "Dusk",
+                BasicTooltipText = Properties.Strings.Dusk,
+                Visible = this.TimePhase == Properties.Strings.Dusk,
                 Capture = Drag
             };
             Resized += delegate { this._dusk.Size = new Point(FishingBuddyModule._timeOfDayImgSize.Value); };
@@ -98,8 +98,8 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
                 Size = new Point(FishingBuddyModule._timeOfDayImgSize.Value),
                 Location = new Point(0, _font.LineHeight),
                 Opacity = 1.0f,
-                BasicTooltipText = "Night",
-                Visible = this.TimePhase == "Night",
+                BasicTooltipText = Properties.Strings.Night,
+                Visible = this.TimePhase == Properties.Strings.Night,
                 Capture = Drag
             };
             Resized += delegate { this._night.Size = new Point(FishingBuddyModule._timeOfDayImgSize.Value); };
@@ -197,28 +197,29 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
         protected virtual void OnTimeOfDayChanged(ValueChangedEventArgs<string> e)
         {
             this._timePhase = e.NewValue;
-            switch (this.TimePhase)
+            if (this.TimePhase == Properties.Strings.Dawn)
             {
-                case "Dawn":
-                    this._currentTime.Visible = false;
-                    this._currentTime = this._dawn;
-                    this._currentTime.Visible = true;
-                    break;
-                case "Day":
-                    this._currentTime.Visible = false;
-                    this._currentTime = this._day;
-                    this._currentTime.Visible = true;
-                    break;
-                case "Dusk":
-                    this._currentTime.Visible = false;
-                    this._currentTime = this._dusk;
-                    this._currentTime.Visible = true;
-                    break;
-                case "Night":
-                    this._currentTime.Visible = false;
-                    this._currentTime = this._night;
-                    this._currentTime.Visible = true;
-                    break;
+                this._currentTime.Visible = false;
+                this._currentTime = this._dawn;
+                this._currentTime.Visible = true;
+            }
+            else if (this.TimePhase == Properties.Strings.Day)
+            {
+                this._currentTime.Visible = false;
+                this._currentTime = this._day;
+                this._currentTime.Visible = true;
+            }
+            else if (this.TimePhase == Properties.Strings.Dusk)
+            {
+                this._currentTime.Visible = false;
+                this._currentTime = this._dusk;
+                this._currentTime.Visible = true;
+            }
+            else if (this.TimePhase == Properties.Strings.Night)
+            {
+                this._currentTime.Visible = false;
+                this._currentTime = this._night;
+                this._currentTime.Visible = true;
             }
             TimeOfDayChanged?.Invoke(this, e);
         }

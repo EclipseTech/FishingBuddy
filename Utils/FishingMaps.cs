@@ -1,9 +1,8 @@
-﻿using Blish_HUD;
-using System.Collections.Generic;
-
-
-namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
+﻿namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
 {
+    using Blish_HUD;
+    using System.Collections.Generic;
+
     class FishingMaps
     {
         private static readonly Logger Logger = Logger.GetLogger(typeof(FishingMaps));
@@ -40,8 +39,8 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
         public readonly static List<int> KrytanMaps = new List<int> { 73, 17, 24, 50, 873, 23, 15, 1185 };
         // Maguuma Fisher 6344 Avid Maguuma Fisher 6475
         public readonly static List<int> MaguumaFisher = new List<int> { 6344, 6475 };
-        // Maguuma Maps: Sparkfly Fen 53, Mount Maelstrom 39, Caledon Forest 34, Metrica Province 35, Brisban Wildlands 54, Rata Sum 139, Guilded Hollow 1068, 1101, 1107, 1108, 1121, Lost Precipice 1069, 1071, 1076, 1104, 1124
-        public readonly static List<int> MaguumaMaps = new List<int> { 53, 39, 34, 35, 54, 139, 1068, 1101, 1107, 1108, 1121, 1069, 1071, 1076, 1104, 1124 };
+        // Maguuma Maps: Sparkfly Fen 53, Mount Maelstrom 39, Caledon Forest 34, Metrica Province 35, Brisban Wildlands 54, Rata Sum 139, Tangled Depths 1045, Guilded Hollow 1068, 1101, 1107, 1108, 1121, Lost Precipice 1069, 1071, 1076, 1104, 1124
+        public readonly static List<int> MaguumaMaps = new List<int> { 53, 39, 34, 35, 54, 139, 1045, 1068, 1101, 1107, 1108, 1121, 1069, 1071, 1076, 1104, 1124 };
         // Shiverpeaks Fisher 6179 Avid Shiverpeaks Fisher 6153
         public readonly static List<int> ShiverpeaksFisher = new List<int> { 6179, 6153 };
         // Shiverpeaks Maps: Frostgorge Sound 30, Drizzlewood Coast 1371, Thunderhead Peaks 1310, Timberline Falls 29, Lornar's Pass 27, Snowden Drifts 31, Wayfarer Foothills 28, Bitterfrost Frontier 1178
