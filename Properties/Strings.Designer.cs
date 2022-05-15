@@ -88,6 +88,24 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ascended.
+        /// </summary>
+        internal static string Ascended {
+            get {
+                return ResourceManager.GetString("Ascended", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Basic.
+        /// </summary>
+        internal static string Basic {
+            get {
+                return ResourceManager.GetString("Basic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Boreal Fish.
         /// </summary>
         internal static string Boreal_Fish {
@@ -205,6 +223,15 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Direction.
+        /// </summary>
+        internal static string Direction {
+            get {
+                return ResourceManager.GetString("Direction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dusk.
         /// </summary>
         internal static string Dusk {
@@ -219,6 +246,24 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Properties {
         internal static string Dusk_Dawn {
             get {
                 return ResourceManager.GetString("Dusk/Dawn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exotic.
+        /// </summary>
+        internal static string Exotic {
+            get {
+                return ResourceManager.GetString("Exotic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fine.
+        /// </summary>
+        internal static string Fine {
+            get {
+                return ResourceManager.GetString("Fine", resourceCulture);
             }
         }
         
@@ -394,6 +439,24 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Junk.
+        /// </summary>
+        internal static string Junk {
+            get {
+                return ResourceManager.GetString("Junk", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Label Align.
+        /// </summary>
+        internal static string LabelAlign {
+            get {
+                return ResourceManager.GetString("LabelAlign", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Lake Fish.
         /// </summary>
         internal static string Lake_Fish {
@@ -421,6 +484,15 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Legendary.
+        /// </summary>
+        internal static string Legendary {
+            get {
+                return ResourceManager.GetString("Legendary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Lightning Bugs.
         /// </summary>
         internal static string Lightning_Bugs {
@@ -444,6 +516,15 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Properties {
         internal static string Mackerel {
             get {
                 return ResourceManager.GetString("Mackerel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Masterwork.
+        /// </summary>
+        internal static string Masterwork {
+            get {
+                return ResourceManager.GetString("Masterwork", resourceCulture);
             }
         }
         
@@ -574,6 +655,15 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Rare.
+        /// </summary>
+        internal static string Rare {
+            get {
+                return ResourceManager.GetString("Rare", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Rare Fish.
         /// </summary>
         internal static string Rare_Fish {
@@ -610,6 +700,33 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Release for 1500 karma.
+        /// </summary>
+        internal static string Release_for_1500_karma {
+            get {
+                return ResourceManager.GetString("Release for 1500 karma", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Release for 2500 karma.
+        /// </summary>
+        internal static string Release_for_2500_karma {
+            get {
+                return ResourceManager.GetString("Release for 2500 karma", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Release for 350 karma.
+        /// </summary>
+        internal static string Release_for_350_karma {
+            get {
+                return ResourceManager.GetString("Release for 350 karma", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to River Fish.
         /// </summary>
         internal static string River_Fish {
@@ -642,15 +759,6 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Properties {
         internal static string Scorpions {
             get {
                 return ResourceManager.GetString("Scorpions", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Direction.
-        /// </summary>
-        internal static string SettingsDirection {
-            get {
-                return ResourceManager.GetString("SettingsDirection", resourceCulture);
             }
         }
         
@@ -790,6 +898,87 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Specialization Collection: Crushing Weight.
+        /// </summary>
+        internal static string Specialization_Collection__Crushing_Weight {
+            get {
+                return ResourceManager.GetString("Specialization Collection: Crushing Weight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Specialization Collection: Dichotomy.
+        /// </summary>
+        internal static string Specialization_Collection__Dichotomy {
+            get {
+                return ResourceManager.GetString("Specialization Collection: Dichotomy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Specialization Collection: Gravity.
+        /// </summary>
+        internal static string Specialization_Collection__Gravity {
+            get {
+                return ResourceManager.GetString("Specialization Collection: Gravity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Specialization Collection: Percussive Maintenance.
+        /// </summary>
+        internal static string Specialization_Collection__Percussive_Maintenance {
+            get {
+                return ResourceManager.GetString("Specialization Collection: Percussive Maintenance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Specialization Collection: Possession.
+        /// </summary>
+        internal static string Specialization_Collection__Possession {
+            get {
+                return ResourceManager.GetString("Specialization Collection: Possession", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Specialization Collection: Prima Donna.
+        /// </summary>
+        internal static string Specialization_Collection__Prima_Donna {
+            get {
+                return ResourceManager.GetString("Specialization Collection: Prima Donna", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Specialization Collection: Purifier.
+        /// </summary>
+        internal static string Specialization_Collection__Purifier {
+            get {
+                return ResourceManager.GetString("Specialization Collection: Purifier", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Specialization Collection: Quietus.
+        /// </summary>
+        internal static string Specialization_Collection__Quietus {
+            get {
+                return ResourceManager.GetString("Specialization Collection: Quietus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Specialization Collection: The Keenest Cut.
+        /// </summary>
+        internal static string Specialization_Collection__The_Keenest_Cut {
+            get {
+                return ResourceManager.GetString("Specialization Collection: The Keenest Cut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Time of Day.
         /// </summary>
         internal static string TimeOfDay {
@@ -912,6 +1101,42 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Properties {
         internal static string Top_right {
             get {
                 return ResourceManager.GetString("Top-right", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unknown.
+        /// </summary>
+        internal static string Unknown {
+            get {
+                return ResourceManager.GetString("Unknown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Used as bait.
+        /// </summary>
+        internal static string Used_as_bait {
+            get {
+                return ResourceManager.GetString("Used as bait", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Used for Daijun Bay renown heart.
+        /// </summary>
+        internal static string Used_for_Daijun_Bay_renown_heart {
+            get {
+                return ResourceManager.GetString("Used for Daijun Bay renown heart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Used for Shinota Shore renown heart.
+        /// </summary>
+        internal static string Used_for_Shinota_Shore_renown_heart {
+            get {
+                return ResourceManager.GetString("Used for Shinota Shore renown heart", resourceCulture);
             }
         }
         

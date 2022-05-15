@@ -114,7 +114,7 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
             _fishImgSize = settings.DefineSetting("FishImgWidth", 30, () => Properties.Strings.FishPanelSize, () => string.Empty);
             _showRarityBorder = settings.DefineSetting("ShowRarityBorder", true, () => Properties.Strings.SettingsRarity, () => Properties.Strings.RarityDescription);
             _fishPanelOrientation = settings.DefineSetting("FishPanelOrientation", _fishPanelOrientations.First(), () => Properties.Strings.Orientation, () => Properties.Strings.OrientationDescription);
-            _fishPanelDirection = settings.DefineSetting("FishPanelDirection", _fishPanelDirections.First(), () => Properties.Strings.SettingsDirection, () => Properties.Strings.SettingsDirectionDescription);
+            _fishPanelDirection = settings.DefineSetting("FishPanelDirection", _fishPanelDirections.First(), () => Properties.Strings.Direction, () => Properties.Strings.SettingsDirectionDescription);
             _ignoreCaughtFish.SettingChanged += this.OnUpdateFishSettings;
             _includeSaltwater.SettingChanged += this.OnUpdateFishSettings;
             _includeWorldClass.SettingChanged += this.OnUpdateFishSettings;
@@ -486,7 +486,7 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
             string time = $"{Properties.Strings.FishTimeOfDay}: {fish.Time.GetEnumMemberValue()}";
             string hole = $"{Properties.Strings.FishFishingHole}: {fish.Hole.GetEnumMemberValue()}{(fish.OpenWater ? $", {Properties.Strings.OpenWater}" : string.Empty)}";
             string achieve = $"{Properties.Strings.Achievement}: {fish.Achievement}";
-            string rarity = $"{Properties.Strings.Rarity}: {fish.Rarity}";
+            string rarity = $"{Properties.Strings.Rarity}: {Properties.Strings.ResourceManager.GetString(fish.Rarity.ToString(), Properties.Strings.Culture)}";
             string hiddenReason = string.Empty;
             if (this._useAPIToken)
             {
@@ -494,7 +494,7 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
                 else if (!fish.Visible) hiddenReason = $"{Properties.Strings.Hidden}: {Properties.Strings.TimeOfDay}";
                 else if (fish.Caught) hiddenReason = $"{Properties.Strings.Hidden}: {Properties.Strings.HiddenCaught}";
             }
-            string notes = !string.IsNullOrWhiteSpace(fish.Notes) ? $"{Properties.Strings.Notes}: {fish.Notes}" : string.Empty;
+            string notes = !string.IsNullOrWhiteSpace(fish.Notes) ? $"{Properties.Strings.Notes}: {Properties.Strings.ResourceManager.GetString(fish.Notes, Properties.Strings.Culture)}" : string.Empty;
             string tooltip = _fishPanelTooltipDisplay.Value;
             // Standard replacements
             tooltip = tooltip.Replace("@1", name);
@@ -511,8 +511,8 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
             tooltip = tooltip.Replace("#3", fish.Time.GetEnumMemberValue());
             tooltip = tooltip.Replace("#4", $"{fish.Hole.GetEnumMemberValue()}{(fish.OpenWater ? $", {Properties.Strings.OpenWater}" : string.Empty)}");
             tooltip = tooltip.Replace("#5", fish.Achievement);
-            tooltip = tooltip.Replace("#6", fish.Rarity.ToString());
-            tooltip = tooltip.Replace("#8", fish.Notes);
+            tooltip = tooltip.Replace("#6", Properties.Strings.ResourceManager.GetString(fish.Rarity.ToString(), Properties.Strings.Culture));
+            tooltip = tooltip.Replace("#8", Properties.Strings.ResourceManager.GetString(fish.Notes, Properties.Strings.Culture));
             // Newline string replacement
             tooltip = tooltip.Replace("\\n", "\n");
             // Clean up double newlines

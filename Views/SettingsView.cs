@@ -52,7 +52,7 @@
                 AutoSizeHeight = false,
                 WrapText = false,
                 Parent = parentPanel,
-                Text = "Orientation: ",
+                Text = $"{Properties.Strings.Orientation}: ",
             };
             Dropdown settingFishPanelOrientation_Dropdown = new Dropdown()
             {
@@ -62,7 +62,7 @@
             };
             foreach (string s in FishingBuddyModule._fishPanelOrientations)
             {
-                settingFishPanelOrientation_Dropdown.Items.Add(s);
+                settingFishPanelOrientation_Dropdown.Items.Add(Properties.Strings.ResourceManager.GetString(s, Properties.Strings.Culture));
             }
             settingFishPanelOrientation_Dropdown.SelectedItem = FishingBuddyModule._fishPanelOrientation.Value;
             settingFishPanelOrientation_Dropdown.ValueChanged += delegate
@@ -104,7 +104,7 @@
                 AutoSizeHeight = false,
                 WrapText = false,
                 Parent = parentPanel,
-                Text = "Direction: ",
+                Text = $"{Properties.Strings.Direction}: ",
             };
             Dropdown settingFishPanelDirection_Dropdown = new Dropdown()
             {
@@ -114,7 +114,7 @@
             };
             foreach (string s in FishingBuddyModule._fishPanelDirections)
             {
-                settingFishPanelDirection_Dropdown.Items.Add(s);
+                settingFishPanelDirection_Dropdown.Items.Add(Properties.Strings.ResourceManager.GetString(s, Properties.Strings.Culture));
             }
             settingFishPanelDirection_Dropdown.SelectedItem = FishingBuddyModule._fishPanelDirection.Value;
             settingFishPanelDirection_Dropdown.ValueChanged += delegate
@@ -174,7 +174,7 @@
                 AutoSizeHeight = false,
                 WrapText = false,
                 Parent = parentPanel,
-                Text = "Label Align: ",
+                Text = $"{Properties.Strings.LabelAlign}: ",
             };
             Dropdown settingimeLabelAlign_Dropdown = new Dropdown()
             {

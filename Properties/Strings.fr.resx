@@ -165,6 +165,9 @@
   <data name="Desert Fish" xml:space="preserve">
     <value>Poisson du désert</value>
   </data>
+  <data name="Direction" xml:space="preserve">
+    <value>Direction</value>
+  </data>
   <data name="Dusk" xml:space="preserve">
     <value>Crépuscule</value>
   </data>
@@ -311,9 +314,6 @@
   </data>
   <data name="Scorpions" xml:space="preserve">
     <value>Scorpions</value>
-  </data>
-  <data name="SettingsDirection" xml:space="preserve">
-    <value>Direction</value>
   </data>
   <data name="SettingsDirectionDescription" xml:space="preserve">
     <value>Direction du panneau de poisson</value>

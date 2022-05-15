@@ -126,6 +126,12 @@
   <data name="Any" xml:space="preserve">
     <value>Any</value>
   </data>
+  <data name="Ascended" xml:space="preserve">
+    <value>Ascended</value>
+  </data>
+  <data name="Basic" xml:space="preserve">
+    <value>Basic</value>
+  </data>
   <data name="Boreal Fish" xml:space="preserve">
     <value>Boreal Fish</value>
   </data>
@@ -165,11 +171,20 @@
   <data name="Desert Fish" xml:space="preserve">
     <value>Desert Fish</value>
   </data>
+  <data name="Direction" xml:space="preserve">
+    <value>Direction</value>
+  </data>
   <data name="Dusk" xml:space="preserve">
     <value>Dusk</value>
   </data>
   <data name="Dusk/Dawn" xml:space="preserve">
     <value>Dusk/Dawn</value>
+  </data>
+  <data name="Exotic" xml:space="preserve">
+    <value>Exotic</value>
+  </data>
+  <data name="Fine" xml:space="preserve">
+    <value>Fine</value>
   </data>
   <data name="Fish Eggs" xml:space="preserve">
     <value>Fish Eggs</value>
@@ -228,6 +243,12 @@
   <data name="Horizontal" xml:space="preserve">
     <value>Horizontal</value>
   </data>
+  <data name="Junk" xml:space="preserve">
+    <value>Junk</value>
+  </data>
+  <data name="LabelAlign" xml:space="preserve">
+    <value>Label Align</value>
+  </data>
   <data name="Lake Fish" xml:space="preserve">
     <value>Lake Fish</value>
   </data>
@@ -237,6 +258,9 @@
   <data name="Leeches" xml:space="preserve">
     <value>Leeches</value>
   </data>
+  <data name="Legendary" xml:space="preserve">
+    <value>Legendary</value>
+  </data>
   <data name="Lightning Bugs" xml:space="preserve">
     <value>Lightning Bugs</value>
   </data>
@@ -245,6 +269,9 @@
   </data>
   <data name="Mackerel" xml:space="preserve">
     <value>Mackerel</value>
+  </data>
+  <data name="Masterwork" xml:space="preserve">
+    <value>Masterwork</value>
   </data>
   <data name="Minnows" xml:space="preserve">
     <value>Minnows</value>
@@ -288,6 +315,9 @@
   <data name="Ramshorn Snails" xml:space="preserve">
     <value>Ramshorn Snails</value>
   </data>
+  <data name="Rare" xml:space="preserve">
+    <value>Rare</value>
+  </data>
   <data name="Rare Fish" xml:space="preserve">
     <value>Rare Fish</value>
   </data>
@@ -300,6 +330,15 @@
   <data name="ReasonForHiding" xml:space="preserve">
     <value>Reason for Hiding</value>
   </data>
+  <data name="Release for 1500 karma" xml:space="preserve">
+    <value>Release for 1500 karma</value>
+  </data>
+  <data name="Release for 2500 karma" xml:space="preserve">
+    <value>Release for 2500 karma</value>
+  </data>
+  <data name="Release for 350 karma" xml:space="preserve">
+    <value>Release for 350 karma</value>
+  </data>
   <data name="River Fish" xml:space="preserve">
     <value>River Fish</value>
   </data>
@@ -311,9 +350,6 @@
   </data>
   <data name="Scorpions" xml:space="preserve">
     <value>Scorpions</value>
-  </data>
-  <data name="SettingsDirection" xml:space="preserve">
-    <value>Direction</value>
   </data>
   <data name="SettingsDirectionDescription" xml:space="preserve">
     <value>Fish panel direction</value>
@@ -360,6 +396,33 @@
   <data name="Special Fishing Hole" xml:space="preserve">
     <value>Special Fishing Hole</value>
   </data>
+  <data name="Specialization Collection: Crushing Weight" xml:space="preserve">
+    <value>Specialization Collection: Crushing Weight</value>
+  </data>
+  <data name="Specialization Collection: Dichotomy" xml:space="preserve">
+    <value>Specialization Collection: Dichotomy</value>
+  </data>
+  <data name="Specialization Collection: Gravity" xml:space="preserve">
+    <value>Specialization Collection: Gravity</value>
+  </data>
+  <data name="Specialization Collection: Percussive Maintenance" xml:space="preserve">
+    <value>Specialization Collection: Percussive Maintenance</value>
+  </data>
+  <data name="Specialization Collection: Possession" xml:space="preserve">
+    <value>Specialization Collection: Possession</value>
+  </data>
+  <data name="Specialization Collection: Prima Donna" xml:space="preserve">
+    <value>Specialization Collection: Prima Donna</value>
+  </data>
+  <data name="Specialization Collection: Purifier" xml:space="preserve">
+    <value>Specialization Collection: Purifier</value>
+  </data>
+  <data name="Specialization Collection: Quietus" xml:space="preserve">
+    <value>Specialization Collection: Quietus</value>
+  </data>
+  <data name="Specialization Collection: The Keenest Cut" xml:space="preserve">
+    <value>Specialization Collection: The Keenest Cut</value>
+  </data>
   <data name="TimeOfDay" xml:space="preserve">
     <value>Time of Day</value>
   </data>
@@ -401,6 +464,18 @@
   </data>
   <data name="Top-right" xml:space="preserve">
     <value>Top-right</value>
+  </data>
+  <data name="Unknown" xml:space="preserve">
+    <value>Unknown</value>
+  </data>
+  <data name="Used as bait" xml:space="preserve">
+    <value>Used as bait</value>
+  </data>
+  <data name="Used for Daijun Bay renown heart" xml:space="preserve">
+    <value>Used for Daijun Bay renown heart</value>
+  </data>
+  <data name="Used for Shinota Shore renown heart" xml:space="preserve">
+    <value>Used for Shinota Shore renown heart</value>
   </data>
   <data name="Vertical" xml:space="preserve">
     <value>Vertical</value>
