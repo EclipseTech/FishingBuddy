@@ -126,6 +126,12 @@
   <data name="Any" xml:space="preserve">
     <value>Quelconque</value>
   </data>
+    <data name="Ascended" xml:space="preserve">
+    <value>Élevé</value>
+  </data>
+  <data name="Basic" xml:space="preserve">
+    <value>Simple</value>
+  </data>
   <data name="Boreal Fish" xml:space="preserve">
     <value>Poisson boréal</value>
   </data>
@@ -174,6 +180,12 @@
   <data name="Dusk/Dawn" xml:space="preserve">
     <value>Crépuscule/Aube</value>
   </data>
+    <data name="Exotic" xml:space="preserve">
+    <value>Exotique</value>
+  </data>
+  <data name="Fine" xml:space="preserve">
+    <value>Raffiné</value>
+  </data>
   <data name="Fish Eggs" xml:space="preserve">
     <value>Œuf de poisson</value>
   </data>
@@ -187,7 +199,7 @@
     <value>Nom</value>
   </data>
   <data name="FishPanelDrag" xml:space="preserve">
-    <value>Déplacer les poissons</value>
+    <value>Déplacer poissons</value>
   </data>
   <data name="FishPanelLocation" xml:space="preserve">
     <value>Emplacement du panneau de poisson</value>
@@ -196,7 +208,7 @@
     <value>Taille des poissons</value>
   </data>
   <data name="FishPanelTooltipDescription" xml:space="preserve">
-    <value>@number uses default string, #number allows for more customization\n</value>
+    <value>@nombre utilise le texte par défaut, #nombre permet plus de personnalisation\n</value>
   </data>
   <data name="FishTimeOfDay" xml:space="preserve">
     <value>Heure</value>
@@ -205,7 +217,7 @@
     <value>Notes</value>
   </data>
   <data name="Freshwater Fish" xml:space="preserve">
-    <value>Poisson d’eau douce</value>
+    <value>Poisson d\'eau douce</value>
   </data>
   <data name="Glow Worms" xml:space="preserve">
     <value>Vers luisants</value>
@@ -231,6 +243,12 @@
   <data name="Horizontal" xml:space="preserve">
     <value>Horizontal</value>
   </data>
+    <data name="Junk" xml:space="preserve">
+    <value>Inutile</value>
+  </data>
+  <data name="LabelAlign" xml:space="preserve">
+    <value>Alignement du texte</value>
+  </data>
   <data name="Lake Fish" xml:space="preserve">
     <value>Poisson lacustre</value>
   </data>
@@ -239,6 +257,9 @@
   </data>
   <data name="Leeches" xml:space="preserve">
     <value>Sangsues</value>
+  </data>
+  <data name="Legendary" xml:space="preserve">
+    <value>Légendaire</value>
   </data>
   <data name="Lightning Bugs" xml:space="preserve">
     <value>Insectes luisants</value>
@@ -249,8 +270,11 @@
   <data name="Mackerel" xml:space="preserve">
     <value>Maquereaux</value>
   </data>
+  <data name="Masterwork" xml:space="preserve">
+    <value>Chef-d'œuvre</value>
+  </data>
   <data name="Minnows" xml:space="preserve">
-    <value>Vairons d’eau douce</value>
+    <value>Vairons d\'eau douce</value>
   </data>
   <data name="Mysterious Waters Fish" xml:space="preserve">
     <value>Poisson des eaux mystérieuses</value>
@@ -291,6 +315,9 @@
   <data name="Ramshorn Snails" xml:space="preserve">
     <value>Escargots bélier</value>
   </data>
+  <data name="Rare" xml:space="preserve">
+    <value>Rare</value>
+  </data>
   <data name="Rare Fish" xml:space="preserve">
     <value>Poisson rare</value>
   </data>
@@ -302,6 +329,15 @@
   </data>
   <data name="ReasonForHiding" xml:space="preserve">
     <value>Raison du masquage</value>
+  </data>
+  <data name="Release for 1500 karma" xml:space="preserve">
+    <value>Libérer contre 1500 points de karma</value>
+  </data>
+  <data name="Release for 2500 karma" xml:space="preserve">
+    <value>Libérer contre 2500 points de karma</value>
+  </data>
+  <data name="Release for 350 karma" xml:space="preserve">
+    <value>Libérer contre 350 points de karma</value>
   </data>
   <data name="River Fish" xml:space="preserve">
     <value>Poisson de rivière</value>
@@ -319,31 +355,31 @@
     <value>Direction du panneau de poisson</value>
   </data>
   <data name="SettingsDisplaySaltwater" xml:space="preserve">
-    <value>Afficher eaux salées</value>
+    <value>Afficher marin</value>
   </data>
   <data name="SettingsDisplaySaltwaterDescription" xml:space="preserve">
     <value>Inclure les poissons des eaux salées</value>
   </data>
   <data name="SettingsDisplayUncatchable" xml:space="preserve">
-    <value>Afficher les inattrapables</value>
+    <value>Afficher inattrapables</value>
   </data>
   <data name="SettingsDisplayUncatchableDescription" xml:space="preserve">
     <value>Afficher les poissons qui ne peuvent pas être attrapés à ce moment de la journée</value>
   </data>
   <data name="SettingsDisplayWorldClass" xml:space="preserve">
-    <value>Afficher classe internationale</value>
+    <value>Afficher internationale</value>
   </data>
   <data name="SettingsDisplayWorldClassDescription" xml:space="preserve">
-    <value>Inclure les poissons de classe internationaleh</value>
+    <value>Inclure les poissons de classe internationale</value>
   </data>
   <data name="SettingsIgnoreCaught" xml:space="preserve">
     <value>Ignorer attrapés</value>
   </data>
   <data name="SettingsIgnoreCaughtDescription" xml:space="preserve">
-    <value>Ignorer les poissons déjà comptés pour la réalisation d’un succès</value>
+    <value>Ignorer les poissons déjà comptés pour la réalisation d\'un succès</value>
   </data>
   <data name="SettingsRarity" xml:space="preserve">
-    <value>Afficher la rareté</value>
+    <value>Afficher rareté</value>
   </data>
   <data name="Shore Fish" xml:space="preserve">
     <value>Poisson du large</value>
@@ -360,17 +396,44 @@
   <data name="Special Fishing Hole" xml:space="preserve">
     <value>Coin de pêche spécial</value>
   </data>
+  <data name="Specialization Collection: Crushing Weight" xml:space="preserve">
+    <value>Collection de spécialisation: Fardeau écrasant</value>
+  </data>
+  <data name="Specialization Collection: Dichotomy" xml:space="preserve">
+    <value>Collection de spécialisation: Dichotomie</value>
+  </data>
+  <data name="Specialization Collection: Gravity" xml:space="preserve">
+    <value>Collection de spécialisation: Gravité</value>
+  </data>
+  <data name="Specialization Collection: Percussive Maintenance" xml:space="preserve">
+    <value>Collection de spécialisation: Maintenance percutante</value>
+  </data>
+  <data name="Specialization Collection: Possession" xml:space="preserve">
+    <value>Collection de spécialisation: Possession</value>
+  </data>
+  <data name="Specialization Collection: Prima Donna" xml:space="preserve">
+    <value>Collection de spécialisation: Prima Donna</value>
+  </data>
+  <data name="Specialization Collection: Purifier" xml:space="preserve">
+    <value>Collection de spécialisation: Purificatrice</value>
+  </data>
+  <data name="Specialization Collection: Quietus" xml:space="preserve">
+    <value>Collection de spécialisation: Quietus</value>
+  </data>
+  <data name="Specialization Collection: The Keenest Cut" xml:space="preserve">
+    <value>Collection de spécialisation: Sillon profond</value>
+  </data>
   <data name="TimeOfDay" xml:space="preserve">
     <value>Heure</value>
   </data>
   <data name="TimeOfDayHide" xml:space="preserve">
-    <value>Cacher le cycle</value>
+    <value>Cacher cycle</value>
   </data>
   <data name="TimeOfDayHideDescription" xml:space="preserve">
-    <value>Cacher l’affichage du cycle</value>
+    <value>Cacher l\'affichage du cycle</value>
   </data>
   <data name="TimeOfDayHideLabel" xml:space="preserve">
-    <value>Cacher le texte du cycle</value>
+    <value>Cacher durée cycle</value>
   </data>
   <data name="TimeOfDayHideLabelDescription" xml:space="preserve">
     <value>Cacher/Afficher le temps restant avant la fin du cycle</value>
@@ -382,10 +445,10 @@
     <value>Alignement du texte du cycle</value>
   </data>
   <data name="TimeOfDayPanelDrag" xml:space="preserve">
-    <value>Déplacer le cycle</value>
+    <value>Déplacer cycle</value>
   </data>
   <data name="TimeOfDayPanelDragDescription" xml:space="preserve">
-    <value>Déplacer l’affichage du cycle de la journée</value>
+    <value>Déplacer l\'affichage du cycle de la journée</value>
   </data>
   <data name="TimeOfDayPanelLoc" xml:space="preserve">
     <value>Emplacement des détails du cycle</value>
@@ -394,13 +457,25 @@
     <value>Taille du cycle</value>
   </data>
   <data name="TooltipDisplay" xml:space="preserve">
-    <value>Affichage de l’info-bulle</value>
+    <value>Affichage de l\'info-bulle</value>
   </data>
   <data name="Top-left" xml:space="preserve">
     <value>En haut à gauche</value>
   </data>
   <data name="Top-right" xml:space="preserve">
     <value>En haut à droite</value>
+  </data>
+  <data name="Unknown" xml:space="preserve">
+    <value>Inconnu</value>
+  </data>
+  <data name="Used as bait" xml:space="preserve">
+    <value>Utiliser en tant qu’appât</value>
+  </data>
+  <data name="Used for Daijun Bay renown heart" xml:space="preserve">
+    <value>Utiliser pour le cœur de renommée de la baie de Daijun</value>
+  </data>
+  <data name="Used for Shinota Shore renown heart" xml:space="preserve">
+    <value>Utiliser pour le cœur de renommée du rivage de Shinota</value>
   </data>
   <data name="Vertical" xml:space="preserve">
     <value>Vertical</value>
@@ -409,6 +484,6 @@
     <value>Poisson volcanique</value>
   </data>
   <data name="Wreckage Site" xml:space="preserve">
-    <value>Site de l'épave</value>
+    <value>Site de l\'épave</value>
   </data>
 </root>
