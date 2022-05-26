@@ -217,7 +217,7 @@
     <value>Notes</value>
   </data>
   <data name="Freshwater Fish" xml:space="preserve">
-    <value>Poisson d\'eau douce</value>
+    <value>Poisson d'eau douce</value>
   </data>
   <data name="Glow Worms" xml:space="preserve">
     <value>Vers luisants</value>
@@ -274,7 +274,7 @@
     <value>Chef-d'œuvre</value>
   </data>
   <data name="Minnows" xml:space="preserve">
-    <value>Vairons d\'eau douce</value>
+    <value>Vairons d'eau douce</value>
   </data>
   <data name="Mysterious Waters Fish" xml:space="preserve">
     <value>Poisson des eaux mystérieuses</value>
@@ -376,7 +376,7 @@
     <value>Ignorer attrapés</value>
   </data>
   <data name="SettingsIgnoreCaughtDescription" xml:space="preserve">
-    <value>Ignorer les poissons déjà comptés pour la réalisation d\'un succès</value>
+    <value>Ignorer les poissons déjà comptés pour la réalisation d'un succès</value>
   </data>
   <data name="SettingsRarity" xml:space="preserve">
     <value>Afficher rareté</value>
@@ -430,7 +430,7 @@
     <value>Cacher cycle</value>
   </data>
   <data name="TimeOfDayHideDescription" xml:space="preserve">
-    <value>Cacher l\'affichage du cycle</value>
+    <value>Cacher l'affichage du cycle</value>
   </data>
   <data name="TimeOfDayHideLabel" xml:space="preserve">
     <value>Cacher durée cycle</value>
@@ -448,7 +448,7 @@
     <value>Déplacer cycle</value>
   </data>
   <data name="TimeOfDayPanelDragDescription" xml:space="preserve">
-    <value>Déplacer l\'affichage du cycle de la journée</value>
+    <value>Déplacer l'affichage du cycle de la journée</value>
   </data>
   <data name="TimeOfDayPanelLoc" xml:space="preserve">
     <value>Emplacement des détails du cycle</value>
@@ -457,7 +457,7 @@
     <value>Taille du cycle</value>
   </data>
   <data name="TooltipDisplay" xml:space="preserve">
-    <value>Affichage de l\'info-bulle</value>
+    <value>Affichage de l'info-bulle</value>
   </data>
   <data name="Top-left" xml:space="preserve">
     <value>En haut à gauche</value>
@@ -484,6 +484,6 @@
     <value>Poisson volcanique</value>
   </data>
   <data name="Wreckage Site" xml:space="preserve">
-    <value>Site de l\'épave</value>
+    <value>Site de l'épave</value>
   </data>
 </root>
