@@ -682,7 +682,7 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
                     {
                         Achievement currentAccountAchievement = await this.RequestAchievement(accountAchievement.Id);
                         if (currentAccountAchievement is null) { Logger.Debug($"Requested achievement by id is null, account achievement id: {accountAchievement.Id}"); continue; }
-                        if (currentAccountAchievement.Bits is null) { Logger.Warn($"Requested achievement bits are null, account achievement id: {accountAchievement.Id}"); continue; }
+                        if (currentAccountAchievement.Bits is null) { Logger.Debug($"Requested achievement bits are null, account achievement id: {accountAchievement.Id}"); continue; }
                         foreach (AchievementBit bit in currentAccountAchievement.Bits)
                         {
                             if (bit is null) { Logger.Debug($"Bit in {currentAccountAchievement.Id} is null"); continue; }
@@ -712,20 +712,20 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
                 if (!_displayUncatchableFish.Value) this.catchableFish = this.catchableFish.Where(phish => phish.Visible).ToList();
                 Logger.Debug("Shown fish in current map count: " + this.catchableFish.Count());
             }
-            catch (Exception ex) { Logger.Warn(ex, $"Unknown exception getting current map ({_currentMap.Name} {_currentMap.Id}) fish"); }
+            catch (Exception ex) { Logger.Debug(ex, $"Unknown exception getting current map ({_currentMap.Name} {_currentMap.Id}) fish"); }
             finally { this._updateFishSemaphore.Release(); }
         }
 
         private async void AddCatchableFish(int fishItemId, Achievement achievement, bool caught)
         {
             Item fish = await this.RequestItem(fishItemId);
-            if (fish == null) { Logger.Warn($"Skipping fish due to API issue. id: '{fishItemId}'"); return; }
+            if (fish == null) { Logger.Debug($"Skipping fish due to API issue. id: '{fishItemId}'"); return; }
             Logger.Debug($"Found Fish '{fish.Name}' id: '{fish.Id}'");
             // Get first fish in all fish list that matches name
             var fishIdMatch = this._allFishList.Where(phish => phish.ItemId == fish.Id);
 
             Fish ghoti = fishIdMatch.Count() != 0 ? fishIdMatch.First() : null;
-            if (ghoti is null) { Logger.Warn($"Missing fish from all fish list: name: '{fish.Name}' id: '{fish.Id}'"); return; }
+            if (ghoti is null) { Logger.Debug($"Missing fish from all fish list: name: '{fish.Name}' id: '{fish.Id}'"); return; }
             ghoti.Caught = caught;//accountAchievement.Bits != null && accountAchievement.Bits.Contains(bitsCounter);
             // Filter by time of day if fish's time of day == tyria's time of day. Dawn & Dusk count as Any
             ghoti.Visible = ghoti.Time == Fish.TimeOfDay.Any ||
