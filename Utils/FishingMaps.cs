@@ -25,6 +25,7 @@
             foreach (int mapId in EchovaldWildsMaps) this.MapAchievements.Add(mapId, EchovaldWildsFisher);
             foreach (int mapId in DragonsEndMaps) this.MapAchievements.Add(mapId, DragonsEndFisher);
             foreach (int mapId in ThousandSeasPavilion) this.MapAchievements.Add(mapId, ThousandSeasPavilionFisher);
+            foreach (int mapId in GyalaDelve) this.MapAchievements.Add(mapId, GyalaDelveFisher);
         }
 
         // All from fishing achievement category 317 https://api.guildwars2.com/v2/achievements/categories/317
@@ -84,6 +85,9 @@
         // Thousand Seas Pavilion 1465 Day 12:00 noon https://wiki.guildwars2.com/wiki/Mysterious_Waters_Fish contains Seitung Province & Kaineng daytime non-Ascended and non-Legendary fish
         public readonly static List<int> ThousandSeasPavilionFisher = new List<int> { 6336, 6264, 6342, 6192 };
         public readonly static List<int> ThousandSeasPavilion = new List<int> { 1465 };
+        // Gyala Delve cavern fish
+        public readonly static List<int> GyalaDelveFisher = new List<int> { 6506, 6402 };
+        public readonly static List<int> GyalaDelve = new List<int> { 1490 };
 
         // World Class Fisher 6224 Avid World Class Fisher 6110
         public readonly static List<int> WorldClassFisher = new List<int> { 6224, 6110 };

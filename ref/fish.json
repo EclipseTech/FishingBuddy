@@ -793,6 +793,7 @@
     "Time": "Day",
     "Notes": "",
     "Location": "Dragon's End",
+    "Locations": [ 1422 ],
     "Achievement": "Dragon's End Fisher",
     "AchievementIds": [ 6506, 6402 ]
   },
@@ -806,6 +807,7 @@
     "Time": "Any",
     "Notes": "",
     "Location": "Dragon's End",
+    "Locations": [ 1422 ],
     "Achievement": "Dragon's End Fisher",
     "AchievementIds": [ 6506, 6402 ]
   },
@@ -819,6 +821,7 @@
     "Time": "Any",
     "Notes": "",
     "Location": "Dragon's End",
+    "Locations": [ 1422 ],
     "Achievement": "Dragon's End Fisher",
     "AchievementIds": [ 6506, 6402 ]
   },
@@ -832,6 +835,7 @@
     "Time": "Night",
     "Notes": "",
     "Location": "Dragon's End",
+    "Locations": [ 1422 ],
     "Achievement": "Dragon's End Fisher",
     "AchievementIds": [ 6506, 6402 ]
   },
@@ -845,6 +849,7 @@
     "Time": "Any",
     "Notes": "Specialization Collection: Prima Donna",
     "Location": "Dragon's End",
+    "Locations": [ 1422 ],
     "Achievement": "Dragon's End Fisher",
     "AchievementIds": [ 6506, 6402 ]
   },
@@ -858,6 +863,7 @@
     "Time": "Day",
     "Notes": "",
     "Location": "Dragon's End",
+    "Locations": [ 1422 ],
     "Achievement": "Dragon's End Fisher",
     "AchievementIds": [ 6506, 6402 ]
   },
@@ -871,6 +877,7 @@
     "Time": "Night",
     "Notes": "",
     "Location": "Dragon's End",
+    "Locations": [ 1422 ],
     "Achievement": "Dragon's End Fisher",
     "AchievementIds": [ 6506, 6402 ]
   },
@@ -884,6 +891,7 @@
     "Time": "Any",
     "Notes": "",
     "Location": "Dragon's End",
+    "Locations": [ 1422 ],
     "Achievement": "Dragon's End Fisher",
     "AchievementIds": [ 6506, 6402 ]
   },
@@ -897,6 +905,7 @@
     "Time": "Any",
     "Notes": "",
     "Location": "Dragon's End",
+    "Locations": [ 1422 ],
     "Achievement": "Dragon's End Fisher",
     "AchievementIds": [ 6506, 6402 ]
   },
@@ -910,6 +919,7 @@
     "Time": "Any",
     "Notes": "",
     "Location": "Dragon's End",
+    "Locations": [ 1422, 1490 ],
     "Achievement": "Dragon's End Fisher",
     "AchievementIds": [ 6506, 6402 ]
   },
@@ -923,6 +933,7 @@
     "Time": "Any",
     "Notes": "",
     "Location": "Dragon's End",
+    "Locations": [ 1422, 1490 ],
     "Achievement": "Dragon's End Fisher",
     "AchievementIds": [ 6506, 6402 ]
   },
@@ -936,6 +947,7 @@
     "Time": "Day",
     "Notes": "Specialization Collection: Gravity",
     "Location": "Dragon's End",
+    "Locations": [ 1422, 1490 ],
     "Achievement": "Dragon's End Fisher",
     "AchievementIds": [ 6506, 6402 ]
   },
@@ -949,6 +961,7 @@
     "Time": "Night",
     "Notes": "",
     "Location": "Dragon's End",
+    "Locations": [ 1422, 1490 ],
     "Achievement": "Dragon's End Fisher",
     "AchievementIds": [ 6506, 6402 ]
   },
@@ -962,6 +975,7 @@
     "Time": "Any",
     "Notes": "",
     "Location": "Dragon's End",
+    "Locations": [ 1422, 1490 ],
     "Achievement": "Dragon's End Fisher",
     "AchievementIds": [ 6506, 6402 ]
   },

@@ -129,6 +129,15 @@
   <data name="Ascended" xml:space="preserve">
     <value>Ascended</value>
   </data>
+  <data name="BaitPanelDrag" xml:space="preserve">
+    <value>Drag Bait</value>
+  </data>
+  <data name="BaitPanelLocation" xml:space="preserve">
+    <value>Bait Panel Location</value>
+  </data>
+  <data name="BaitPanelSize" xml:space="preserve">
+    <value>Bait Size</value>
+  </data>
   <data name="Basic" xml:space="preserve">
     <value>Basic</value>
   </data>

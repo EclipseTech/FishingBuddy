@@ -14,8 +14,6 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
     using Newtonsoft.Json.Converters;
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Reflection;
     using System.Runtime.Serialization;
 
     public class Fish
@@ -37,33 +35,6 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
             [EnumMember(Value = "Dusk/Dawn")]
             DuskDawn = Dusk | Dawn,
             Any = Dawn | Day | Dusk | Night,
-        }
-
-        [JsonConverter(typeof(StringEnumConverter))]
-        public enum FishBait
-        {
-            Any,
-            [EnumMember(Value = "Fish Eggs")]
-            FishEggs,
-            [EnumMember(Value = "Glow Worms")]
-            GlowWorms,
-            [EnumMember(Value = "Haiju Minnows")]
-            HaijuMinnows,
-            [EnumMember(Value = "Lava Beetles")]
-            LavaBeetles,
-            Leeches,
-            [EnumMember(Value = "Lightning Bugs")]
-            LightningBugs,
-            Mackerel,
-            Minnows,
-            Nightcrawlers,
-            [EnumMember(Value = "Ramshorn Snails")]
-            RamshornSnails,
-            Sardines,
-            Scorpions,
-            Shrimplings,
-            [EnumMember(Value = "Sparkfly Larvae")]
-            SparkflyLarvae,
         }
 
         // Fishing holes: https://wiki.guildwars2.com/wiki/Fishing#Fishing_holes
@@ -152,17 +123,46 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
         public bool Visible { get; set; } = true;
         public bool Caught { get; set; } = false;
         public AsyncTexture2D IconImg { get; set; }
+        //TODO save item code to clipboard on modifier+click
         public string ChatLink { get; set; }
-        //TODO can save item code to clipboard on modifier+click
-    }
 
-    public static class Extension
-    {
-        public static string GetEnumMemberValue(this Enum value)
-        {
-            string enumToString = value.GetType().GetMember(value.ToString()).FirstOrDefault()?
-                        .GetCustomAttribute<EnumMemberAttribute>(false)?.Value ?? value.ToString();
-            return Properties.Strings.ResourceManager.GetString(enumToString, Properties.Strings.Culture);
+        public static string BuildFishTooltip(Fish fish) {
+            string name = $"{Properties.Strings.FishName}: {fish.Name}";
+            string bait = $"{Properties.Strings.FishFavoredBait}: {fish.Bait.GetEnumMemberValue()}";
+            string time = $"{Properties.Strings.FishTimeOfDay}: {fish.Time.GetEnumMemberValue()}";
+            string hole = $"{Properties.Strings.FishFishingHole}: {fish.Hole.GetEnumMemberValue()}{(fish.OpenWater ? $", {Properties.Strings.OpenWater}" : string.Empty)}";
+            string achieve = $"{Properties.Strings.Achievement}: {fish.Achievement}";
+            string rarity = $"{Properties.Strings.Rarity}: {Properties.Strings.ResourceManager.GetString(fish.Rarity.ToString(), Properties.Strings.Culture)}";
+            string hiddenReason = string.Empty;
+            if (FishingBuddyModule._useAPIToken) {
+                if (!fish.Visible && fish.Caught) hiddenReason = $"{Properties.Strings.Hidden}: {Properties.Strings.TimeOfDay}, {Properties.Strings.HiddenCaught}";
+                else if (!fish.Visible) hiddenReason = $"{Properties.Strings.Hidden}: {Properties.Strings.TimeOfDay}";
+                else if (fish.Caught) hiddenReason = $"{Properties.Strings.Hidden}: {Properties.Strings.HiddenCaught}";
+            }
+            string notes = !string.IsNullOrWhiteSpace(fish.Notes) ? $"{Properties.Strings.Notes}: {Properties.Strings.ResourceManager.GetString(fish.Notes, Properties.Strings.Culture)}" : string.Empty;
+            string tooltip = FishingBuddyModule._fishPanelTooltipDisplay.Value;
+            // Standard replacements
+            tooltip = tooltip.Replace("@1", name);
+            tooltip = tooltip.Replace("@2", bait);
+            tooltip = tooltip.Replace("@3", time);
+            tooltip = tooltip.Replace("@4", hole);
+            tooltip = tooltip.Replace("@5", achieve);
+            tooltip = tooltip.Replace("@6", rarity);
+            tooltip = tooltip.Replace("@7", hiddenReason);
+            tooltip = tooltip.Replace("@8", notes);
+            // Create your own tooltip (not documented)
+            tooltip = tooltip.Replace("#1", fish.Name);
+            tooltip = tooltip.Replace("#2", fish.Bait.GetEnumMemberValue());
+            tooltip = tooltip.Replace("#3", fish.Time.GetEnumMemberValue());
+            tooltip = tooltip.Replace("#4", $"{fish.Hole.GetEnumMemberValue()}{(fish.OpenWater ? $", {Properties.Strings.OpenWater}" : string.Empty)}");
+            tooltip = tooltip.Replace("#5", fish.Achievement);
+            tooltip = tooltip.Replace("#6", Properties.Strings.ResourceManager.GetString(fish.Rarity.ToString(), Properties.Strings.Culture));
+            tooltip = tooltip.Replace("#8", Properties.Strings.ResourceManager.GetString(fish.Notes, Properties.Strings.Culture));
+            // Newline string replacement
+            tooltip = tooltip.Replace("\\n", "\n");
+            // Clean up double newlines
+            tooltip = tooltip.Replace("\n\n", "\n");
+            return tooltip.Trim();
         }
     }
 }

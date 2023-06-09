@@ -140,11 +140,27 @@
             };
             settingFishTooltip_Container.Show(settingFishTooltip_View);
 
+            IView settingBaitDrag_View = SettingView.FromType(FishingBuddyModule._dragBaitPanel, buildPanel.Width);
+            ViewContainer settingBaitDrag_Container = new ViewContainer() {
+                WidthSizingMode = SizingMode.Fill,
+                Location = new Point(10, settingFishTooltip_Container.Bottom + 5),
+                Parent = parentPanel
+            };
+            settingBaitDrag_Container.Show(settingBaitDrag_View);
+
+            IView settingBaitSize_View = SettingView.FromType(FishingBuddyModule._baitImgSize, buildPanel.Width);
+            ViewContainer settingBaitSize_Container = new ViewContainer() {
+                WidthSizingMode = SizingMode.Standard,
+                Location = new Point(10, settingBaitDrag_Container.Bottom + 8),
+                Parent = parentPanel
+            };
+            settingBaitSize_Container.Show(settingBaitSize_View);
+
             IView settingClockDrag_View = SettingView.FromType(FishingBuddyModule._dragTimeOfDayClock, buildPanel.Width);
             ViewContainer settingClock_Container = new ViewContainer()
             {
                 WidthSizingMode = SizingMode.Fill,
-                Location = new Point(10, settingFishTooltip_Container.Bottom + 8),
+                Location = new Point(10, settingBaitSize_Container.Bottom + 5),
                 Parent = parentPanel
             };
             settingClock_Container.Show(settingClockDrag_View);

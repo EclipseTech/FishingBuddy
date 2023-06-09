@@ -19,7 +19,7 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Strings {
@@ -93,6 +93,33 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Properties {
         internal static string Ascended {
             get {
                 return ResourceManager.GetString("Ascended", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Drag Bait.
+        /// </summary>
+        internal static string BaitPanelDrag {
+            get {
+                return ResourceManager.GetString("BaitPanelDrag", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bait Panel Location.
+        /// </summary>
+        internal static string BaitPanelLocation {
+            get {
+                return ResourceManager.GetString("BaitPanelLocation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bait Size.
+        /// </summary>
+        internal static string BaitPanelSize {
+            get {
+                return ResourceManager.GetString("BaitPanelSize", resourceCulture);
             }
         }
         
