@@ -337,6 +337,7 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
             _baitPanelLoc.SettingChanged -= this.OnUpdateSettings;
             _dragBaitPanel.SettingChanged -= this.OnUpdateSettings;
             _baitImgSize.SettingChanged -= this.OnUpdateSettings;
+            _baitPanel?.Dispose();
             // Time of Day Settings
             _timeOfDayPanelLoc.SettingChanged -= this.OnUpdateClockLocation;
             _dragTimeOfDayClock.SettingChanged -= this.OnUpdateClockSettings;

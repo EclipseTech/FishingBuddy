@@ -279,6 +279,9 @@
     <None Include="ref\_instructions.txt" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Properties\Strings.de.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Strings.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Strings.Designer.cs</LastGenOutput>
