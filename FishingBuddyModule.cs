@@ -128,6 +128,7 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
         // 5 minutes API update interval
         private readonly double INTERVAL_UPDATE_FISH = 5 * 60 * 1000;
         private double _lastUpdateFish = 0;
+        private bool _fishAndBaitAreManuallyHidden = false;
 
         #region Service Managers
         internal Gw2ApiManager Gw2ApiManager => this.ModuleParameters.Gw2ApiManager;
@@ -273,6 +274,8 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
                 LabelVerticalAlignment = (VerticalAlignment)Enum.Parse(typeof(VerticalAlignment), _settingClockAlign.Value),
             };
 
+            this._timeOfDayClock.RightMouseButtonPressed += this.OnClockRightClick;
+
             GameService.Gw2Mumble.CurrentMap.MapChanged += this.OnMapChanged;
             this.DrawIcons();
 
@@ -289,19 +292,28 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
             // Update Account Achievements periodically
             UpdateCadenceUtil.UpdateAsyncWithCadence(this.GetCurrentMapFishingInfo, gameTime, this.INTERVAL_UPDATE_FISH, ref this._lastUpdateFish);
 
-            if (this.UiIsAvailable && !this.HidingInCombat)
+            var showUi = this.UiIsAvailable && !this.HidingInCombat;
+
+            if (showUi)
             {
                 this.GetCurrentMapTime();
                 if (!_hideTimeOfDay.Value) this._timeOfDayClock.Show();
-                _fishPanel.Show();
-                _baitPanel.Show();
             }
             else
             {
                 this._timeOfDayClock.Hide();
+            }
+
+            if (showUi && !this._fishAndBaitAreManuallyHidden)
+            {
+                _fishPanel.Show();
+                _baitPanel.Show();
+            } else
+            {
                 _fishPanel.Hide();
                 _baitPanel.Hide();
             }
+
             if (this._draggingFishPanel)
             {
                 Point fishPanelMoveOffset = InputService.Input.Mouse.Position - this._dragFishPanelStart;
@@ -349,8 +361,11 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
             // Common settings
             _hideInCombat.SettingChanged -= this.OnUpdateFishSettings;
 
+            _timeOfDayClock.RightMouseButtonPressed -= this.OnClockRightClick;
+
             GameService.Gw2Mumble.CurrentMap.MapChanged -= this.OnMapChanged;
-            this._timeOfDayClock.TimeOfDayChanged -= this.OnTimeOfDayChanged;
+            if (this._timeOfDayClock != null)
+                this._timeOfDayClock.TimeOfDayChanged -= this.OnTimeOfDayChanged;
 
             this.Gw2ApiManager.SubtokenUpdated -= this.OnApiSubTokenUpdated;
 
@@ -423,6 +438,11 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
         // TODO move this to Clock.cs
         private void OnUpdateClockSize(object sender = null, ValueChangedEventArgs<int> e = null)
             => this._timeOfDayClock.Size = new Point(_timeOfDayImgSize.Value);
+
+        private void OnClockRightClick(object sender, Blish_HUD.Input.MouseEventArgs e)
+        {
+            _fishAndBaitAreManuallyHidden = !_fishAndBaitAreManuallyHidden;
+        }
 
         // TODO move this to Fish.cs
         protected void DrawIcons()
