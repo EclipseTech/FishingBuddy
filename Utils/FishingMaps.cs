@@ -26,6 +26,8 @@
             foreach (int mapId in DragonsEndMaps) this.MapAchievements.Add(mapId, DragonsEndFisher);
             foreach (int mapId in ThousandSeasPavilion) this.MapAchievements.Add(mapId, ThousandSeasPavilionFisher);
             foreach (int mapId in GyalaDelve) this.MapAchievements.Add(mapId, GyalaDelveFisher);
+            foreach (int mapId in SecretsOfTheObscureMaps) this.MapAchievements.Add(mapId, HornofMaguumaFisher);
+            foreach (int mapId in JanthirMaps) this.MapAchievements.Add(mapId, JanthirFisher);
         }
 
         // All from fishing achievement category 317 https://api.guildwars2.com/v2/achievements/categories/317
@@ -94,8 +96,18 @@
         // Saltwater Fisher 6471 Avid Saltwater Fisher 6393
         public readonly static List<int> SaltwaterFisher = new List<int> { 6471, 6393 };
         // https://wiki.guildwars2.com/wiki/API:2/account/achievements
-        public readonly static List<int> FISHER_ACHIEVEMENT_IDS = new List<int> { 6330, 6484, 6068, 6263, 6344, 6475, 6179, 6153, 6363, 6227, 6317, 6509, 6106, 6250, 6489, 6339, 6336, 6264, 6342, 6192, 6258, 6466, 6506, 6402, 6224, 6110, 6471, 6393 };
-        public readonly static List<int> BASE_FISHER_ACHIEVEMENT_IDS = new List<int> { 6330, 6068, 6344, 6179, 6363, 6317, 6106, 6489, 6336, 6342, 6258, 6506, 6224, 6471 };
-        public readonly static List<int> AVID_FISHER_ACHIEVEMENT_IDS = new List<int> { 6484, 6263, 6475, 6153, 6227, 6509, 6250, 6339, 6264, 6192, 6466, 6402, 6110, 6393 };
+        public readonly static List<int> FISHER_ACHIEVEMENT_IDS = new List<int> { 6330, 6484, 6068, 6263, 6344, 6475, 6179, 6153, 6363, 6227, 6317, 6509, 6106, 6250, 6489, 6339, 6336, 6264, 6342, 6192, 6258, 6466, 6506, 6402, 6224, 6110, 6471, 6393, 7114, 8168, 7804, 8246 };
+        public readonly static List<int> BASE_FISHER_ACHIEVEMENT_IDS = new List<int> { 6330, 6068, 6344, 6179, 6363, 6317, 6106, 6489, 6336, 6342, 6258, 6506, 6224, 6471, 7114, 8168 };
+        public readonly static List<int> AVID_FISHER_ACHIEVEMENT_IDS = new List<int> { 6484, 6263, 6475, 6153, 6227, 6509, 6250, 6339, 6264, 6192, 6466, 6402, 6110, 6393, 7804, 8246 };
+
+        // Horn of Maguma SOTO Maps: Skywatch Archipelago 1510, Amnytas 1517, Inner Nayos 1526
+        public readonly static List<int> SecretsOfTheObscureMaps = new List<int> { 1510, 1517, 1526 };
+        // Horn of Maguuma Fisher 7114 Avid Horn of Maguuma Fisher 7804
+        public readonly static List<int> HornofMaguumaFisher = new List<int> { 7114, 7804 };
+
+        // Janthir Wilds Maps: Lowland Shore 1550, Janthir Syntri 1554
+        public readonly static List<int> JanthirMaps = new List<int> { 1550, 1554 };
+        // Janthir Fisher 8168 Avid Janthir Fisher 8246
+        public readonly static List<int> JanthirFisher = new List<int> { 8168, 8246 };
     }
 }
