@@ -2818,7 +2818,7 @@
     "Location": "Ember Bay",
     "Locations": [ 1175 ],
     "Achievement": "Ring of Fire Fisher",
-    "AchievementIds": [ 6489, 6339 ],
+    "AchievementIds": [ 6489, 6339 ]
   },
   {
     "Rarity": "Fine",
@@ -2832,7 +2832,7 @@
     "Location": "Ember Bay",
     "Locations": [ 1175 ],
     "Achievement": "Ring of Fire Fisher",
-    "AchievementIds": [ 6489, 6339 ],
+    "AchievementIds": [ 6489, 6339 ]
   },
   {
     "Rarity": "Masterwork",
@@ -2846,7 +2846,7 @@
     "Location": "Ember Bay",
     "Locations": [ 1175 ],
     "Achievement": "Ring of Fire Fisher",
-    "AchievementIds": [ 6489, 6339 ],
+    "AchievementIds": [ 6489, 6339 ]
   },
   {
     "Rarity": "Rare",
@@ -2860,7 +2860,7 @@
     "Location": "Ember Bay",
     "Locations": [ 1175 ],
     "Achievement": "Ring of Fire Fisher",
-    "AchievementIds": [ 6489, 6339 ],
+    "AchievementIds": [ 6489, 6339 ]
   },
   {
     "Rarity": "Exotic",
@@ -2874,7 +2874,7 @@
     "Locations": [ 1175 ],
     "Location": "Ember Bay",
     "Achievement": "Ring of Fire Fisher",
-    "AchievementIds": [ 6489, 6339 ],
+    "AchievementIds": [ 6489, 6339 ]
   },
   {
     "Rarity": "Ascended",
@@ -2888,7 +2888,7 @@
     "Location": "Ember Bay",
     "Locations": [ 1175 ],
     "Achievement": "Ring of Fire Fisher",
-    "AchievementIds": [ 6489, 6339 ],
+    "AchievementIds": [ 6489, 6339 ]
   },
   {
     "Rarity": "Legendary",
@@ -2902,7 +2902,7 @@
     "Location": "Ember Bay",
     "Locations": [ 1175 ],
     "Achievement": "Ring of Fire Fisher",
-    "AchievementIds": [ 6489, 6339 ],
+    "AchievementIds": [ 6489, 6339 ]
   },
   {
     "Rarity": "Rare",
@@ -3724,7 +3724,7 @@
     "Rarity": "Exotic",
     "Name": "Jokopu",
     "ItemId": 100399,
-    "FishingHole": "Fractured Deset Fish",
+    "FishingHole": "Fractured Desert Fish",
     "OpenWater": false,
     "Bait": "Any",
     "Time": "Day",
