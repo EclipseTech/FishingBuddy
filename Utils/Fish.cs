@@ -86,7 +86,31 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
             [EnumMember(Value = "Volcanic Fish")]
             VolcanicFish,
             [EnumMember(Value = "Wreckage Site")]
-            WreckageSite
+            WreckageSite,
+            [EnumMember(Value = "Fractured Lake Fish")]
+            FracturedLakeFish,
+            [EnumMember(Value = "Fractured Freshwater Fish")]
+            FracturedFreshwaterFish,
+            [EnumMember(Value = "Fractured Desert Fish")]
+            FracturedDesertFish,
+            [EnumMember(Value = "Fractured Channel Fish")]
+            FracturedChannelFish,
+            [EnumMember(Value = "Astral Fish, Spire Fish")]
+            AstralFishSpireFish,
+            [EnumMember(Value = "Astral Fish")]
+            AstralFish,
+            [EnumMember(Value = "Spire Fish")]
+            SpireFish,
+            [EnumMember(Value = "Dream Fish")]
+            DreamFish,
+            [EnumMember(Value = "Nayosian Fish")]
+            NayosianFish,
+            [EnumMember(Value = "Freshwater / Brackish Water")]
+            FreshwaterBrackishWater,
+            [EnumMember(Value = "Saltwater / Brackish Water")]
+            SaltwaterBrackishWater,
+            [EnumMember(Value = "Saltwater")]
+            Saltwater
         }
 
         // Fish Item Name

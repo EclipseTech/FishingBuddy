@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
-  <!-- 
-    Microsoft ResX Schema 
-    
+  <!--
+    Microsoft ResX Schema
+
     Version 2.0
-    
-    The primary goals of this format is to allow a simple XML format 
-    that is mostly human readable. The generation and parsing of the 
-    various data types are done through the TypeConverter classes 
+
+    The primary goals of this format is to allow a simple XML format
+    that is mostly human readable. The generation and parsing of the
+    various data types are done through the TypeConverter classes
     associated with the data types.
-    
+
     Example:
-    
+
     ... ado.net/XML headers & schema ...
     <resheader name="resmimetype">text/microsoft-resx</resheader>
     <resheader name="version">2.0</resheader>
@@ -26,36 +26,36 @@
         <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
         <comment>This is a comment</comment>
     </data>
-                
-    There are any number of "resheader" rows that contain simple 
+
+    There are any number of "resheader" rows that contain simple
     name/value pairs.
-    
-    Each data row contains a name, and value. The row also contains a 
-    type or mimetype. Type corresponds to a .NET class that support 
-    text/value conversion through the TypeConverter architecture. 
-    Classes that don't support this are serialized and stored with the 
+
+    Each data row contains a name, and value. The row also contains a
+    type or mimetype. Type corresponds to a .NET class that support
+    text/value conversion through the TypeConverter architecture.
+    Classes that don't support this are serialized and stored with the
     mimetype set.
-    
-    The mimetype is used for serialized objects, and tells the 
-    ResXResourceReader how to depersist the object. This is currently not 
+
+    The mimetype is used for serialized objects, and tells the
+    ResXResourceReader how to depersist the object. This is currently not
     extensible. For a given mimetype the value must be set accordingly:
-    
-    Note - application/x-microsoft.net.object.binary.base64 is the format 
-    that the ResXResourceWriter will generate, however the reader can 
+
+    Note - application/x-microsoft.net.object.binary.base64 is the format
+    that the ResXResourceWriter will generate, however the reader can
     read any of the formats listed below.
-    
+
     mimetype: application/x-microsoft.net.object.binary.base64
-    value   : The object must be serialized with 
+    value   : The object must be serialized with
             : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
             : and then encoded with base64 encoding.
-    
+
     mimetype: application/x-microsoft.net.object.soap.base64
-    value   : The object must be serialized with 
+    value   : The object must be serialized with
             : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
             : and then encoded with base64 encoding.
 
     mimetype: application/x-microsoft.net.object.bytearray.base64
-    value   : The object must be serialized into a byte array 
+    value   : The object must be serialized into a byte array
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
@@ -129,6 +129,9 @@
   <data name="Ascended" xml:space="preserve">
     <value>Ascended</value>
   </data>
+  <data name="Astral Fish" xml:space="preserve">
+    <value>Astral Fish</value>
+  </data>
   <data name="BaitPanelDrag" xml:space="preserve">
     <value>Drag Bait</value>
   </data>
@@ -189,6 +192,9 @@
   <data name="Dusk/Dawn" xml:space="preserve">
     <value>Dusk/Dawn</value>
   </data>
+  <data name="Dream Fish" xml:space="preserve">
+    <value>Dream Fish</value>
+  </data>
   <data name="Exotic" xml:space="preserve">
     <value>Exotic</value>
   </data>
@@ -225,8 +231,20 @@
   <data name="FishyNotes" xml:space="preserve">
     <value>Fishy Notes</value>
   </data>
+  <data name="Fractured Channel Fish" xml:space="preserve">
+    <value>Fractured Channel Fish</value>
+  </data>
+  <data name="Fractured Desert Fish" xml:space="preserve">
+    <value>Fractured Desert Fish</value>
+  </data>
+  <data name="Fractured Freshwater Fish" xml:space="preserve">
+    <value>Fractured Freshwater Fish</value>
+  </data>
   <data name="Freshwater Fish" xml:space="preserve">
     <value>Freshwater Fish</value>
+  </data>
+  <data name="Freshwater / Brackish Water" xml:space="preserve">
+    <value>Freshwater / Brackish Water</value>
   </data>
   <data name="Glow Worms" xml:space="preserve">
     <value>Glow Worms</value>
@@ -303,6 +321,9 @@
   <data name="Noxious Water Fish" xml:space="preserve">
     <value>Noxious Water Fish</value>
   </data>
+  <data name="Nayosian Fish" xml:space="preserve">
+    <value>Nayosian Fish</value>
+  </data>
   <data name="Offshore Fish" xml:space="preserve">
     <value>Offshore Fish</value>
   </data>
@@ -351,8 +372,14 @@
   <data name="River Fish" xml:space="preserve">
     <value>River Fish</value>
   </data>
+  <data name="Saltwater" xml:space="preserve">
+    <value>Saltwater</value>
+  </data>
   <data name="Saltwater Fish" xml:space="preserve">
     <value>Saltwater Fish</value>
+  </data>
+  <data name="Saltwater / Brackish Water" xml:space="preserve">
+    <value>Saltwater / Brackish Water</value>
   </data>
   <data name="Sardines" xml:space="preserve">
     <value>Sardines</value>
@@ -431,6 +458,9 @@
   </data>
   <data name="Specialization Collection: The Keenest Cut" xml:space="preserve">
     <value>Specialization Collection: The Keenest Cut</value>
+  </data>
+  <data name="Spire Fish" xml:space="preserve">
+    <value>Spire Fish</value>
   </data>
   <data name="TimeOfDay" xml:space="preserve">
     <value>Time of Day</value>
