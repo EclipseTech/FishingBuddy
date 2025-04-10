@@ -824,27 +824,30 @@ namespace Eclipse1807.BlishHUD.FishingBuddy
 
         private async void AddCatchableFish(int fishItemId, Achievement achievement, bool caught)
         {
-            Item fish = await this.RequestItem(fishItemId);
-            if (fish == null) { Logger.Debug($"Skipping fish due to API issue. id: '{fishItemId}'"); return; }
-            Logger.Debug($"Found Fish '{fish.Name}' id: '{fish.Id}'");
-            // Get first fish in all fish list that matches name
-            var fishIdMatch = this._allFishList.Where(phish => phish.ItemId == fish.Id);
+            try {
+                Item fish = await this.RequestItem(fishItemId);
+                if (fish == null) { Logger.Debug($"Skipping fish due to API issue. id: '{fishItemId}'"); return; }
+                Logger.Debug($"Found Fish '{fish.Name}' id: '{fish.Id}'");
+                // Get first fish in all fish list that matches name
+                var fishIdMatch = this._allFishList.Where(phish => phish.ItemId == fish.Id);
 
-            Fish ghoti = fishIdMatch.Count() != 0 ? fishIdMatch.First() : null;
-            if (ghoti is null) { Logger.Debug($"Missing fish from all fish list: name: '{fish.Name}' id: '{fish.Id}'"); return; }
-            ghoti.Caught = caught;//accountAchievement.Bits != null && accountAchievement.Bits.Contains(bitsCounter);
-            // Filter by time of day if fish's time of day == tyria's time of day. Dawn & Dusk count as Any
-            ghoti.Visible = ghoti.Time == Fish.TimeOfDay.Any ||
-                this._timeOfDayClock.TimePhase.Equals(Properties.Strings.Dawn) || this._timeOfDayClock.TimePhase.Equals(Properties.Strings.Dusk) ||
-                Equals(ghoti.Time.ToString(), this._timeOfDayClock.TimePhase);
-            // TODO AutoMapper merge here instead of all these sets? https://github.com/AutoMapper/AutoMapper
-            ghoti.Name = fish.Name; ghoti.Icon = fish.Icon; ghoti.ItemId = fish.Id; ghoti.Achievement = achievement.Name; ghoti.AchievementId = achievement.Id;
-            ghoti.Rarity = fish.Rarity; ghoti.ChatLink = fish.ChatLink; ghoti.IconImg = this.RequestItemIcon(fish);
+                Fish ghoti = fishIdMatch.Count() != 0 ? fishIdMatch.First() : null;
+                if (ghoti is null) { Logger.Debug($"Missing fish from all fish list: name: '{fish.Name}' id: '{fish.Id}'"); return; }
+                ghoti.Caught = caught;//accountAchievement.Bits != null && accountAchievement.Bits.Contains(bitsCounter);
+                // Filter by time of day if fish's time of day == tyria's time of day. Dawn & Dusk count as Any
+                ghoti.Visible = ghoti.Time == Fish.TimeOfDay.Any ||
+                    this._timeOfDayClock.TimePhase.Equals(Properties.Strings.Dawn) || this._timeOfDayClock.TimePhase.Equals(Properties.Strings.Dusk) ||
+                    Equals(ghoti.Time.ToString(), this._timeOfDayClock.TimePhase);
+                // TODO AutoMapper merge here instead of all these sets? https://github.com/AutoMapper/AutoMapper
+                ghoti.Name = fish.Name; ghoti.Icon = fish.Icon; ghoti.ItemId = fish.Id; ghoti.Achievement = achievement.Name; ghoti.AchievementId = achievement.Id;
+                ghoti.Rarity = fish.Rarity; ghoti.ChatLink = fish.ChatLink; ghoti.IconImg = this.RequestItemIcon(fish);
 
-            // Only add if no special cases or fits in special case
-            if (ghoti.Locations is null || ghoti.Locations.Contains(_currentMap.Id))
-            { this.catchableFish.Add(ghoti); }
-            else { Logger.Debug($"Skipping {fish.Name} {fish.Id}, not available in current map."); }
+                // Only add if no special cases or fits in special case
+                if (ghoti.Locations is null || ghoti.Locations.Contains(_currentMap.Id)) { this.catchableFish.Add(ghoti); }
+                else { Logger.Debug($"Skipping {fish.Name} {fish.Id}, not available in current map."); }
+            } catch (Exception ex) {
+                Logger.Debug(ex, $"Unknown exception in AddCatchableFish. fishItemId: {fishItemId}, Achievement: {achievement.Name} {achievement.Id}");
+            }
         }
 
         // based on https://github.com/agaertner/Blish-HUD-Modules-Releases/blob/main/Regions%20Of%20Tyria%20Module/RegionsOfTyriaModule.cs
