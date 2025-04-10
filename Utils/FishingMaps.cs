@@ -28,7 +28,11 @@
             foreach (int mapId in GyalaDelve) this.MapAchievements.Add(mapId, GyalaDelveFisher);
             foreach (int mapId in SecretsOfTheObscureMaps) this.MapAchievements.Add(mapId, HornofMaguumaFisher);
             foreach (int mapId in JanthirMaps) this.MapAchievements.Add(mapId, JanthirFisher);
+            foreach (int mapId in MistburnedBarrensMaps) this.MapAchievements.Add(mapId, MistburnedBarrensFisher);
+            foreach (int mapId in HearthsGlow) this.MapAchievements.Add(mapId, HearthsGlowFisher);
         }
+
+        //TODO: Add Labyrinthine Cliffs https://wiki.guildwars2.com/wiki/Labyrinthine_Cliffs#Crafting_resource
 
         // All from fishing achievement category 317 https://api.guildwars2.com/v2/achievements/categories/317
         public readonly static int FISHING_ACHIEVEMENT_CATEGORY_ID = 317;
@@ -109,5 +113,15 @@
         public readonly static List<int> JanthirMaps = new List<int> { 1550, 1554 };
         // Janthir Fisher 8168 Avid Janthir Fisher 8246
         public readonly static List<int> JanthirFisher = new List<int> { 8168, 8246 };
+        // Mistburned Barrens Maps: Mistburned Barrens 1575
+        public readonly static List<int> MistburnedBarrensMaps = new List<int> { 1575 };
+        // Mistburned Barrens Fisher 8554
+        public readonly static List<int> MistburnedBarrensFisher = new List<int> { 8554 };
+        // Hearth's Glow 1558 https://wiki.guildwars2.com/wiki/Hearth%27s_Glow (has special cases)
+        //   Contains Maguuma Freshwater Fish, Freshwater Janthir Fish, Lowland Freshwater Fish
+        //TODO: This is not all the fish that can be caught here; modify fish.json to contain locations
+        //        or add fish to fishing holes and fishing holes to maps
+        public readonly static List<int> HearthsGlowFisher = new List<int> { 8168, 8246 };
+        public readonly static List<int> HearthsGlow = new List<int> { 1558 };
     }
 }

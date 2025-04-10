@@ -37,6 +37,7 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
             Any = Dawn | Day | Dusk | Night,
         }
 
+        //TODO: Convert to Class & add "Recommended fishing power"
         // Fishing holes: https://wiki.guildwars2.com/wiki/Fishing#Fishing_holes
         [JsonConverter(typeof(StringEnumConverter))]
         public enum FishingHole
@@ -55,7 +56,7 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
             DeepFishingHole,
             [EnumMember(Value = "Desert Fish")]
             DesertFish,
-            [EnumMember(Value = "Freshwater Fish")]
+            [EnumMember(Value = "Freshwater Fish")] // Recommended fishing power: 500
             FreshwaterFish,
             [EnumMember(Value = "Grotto Fish")]
             GrottoFish,
@@ -110,7 +111,11 @@ namespace Eclipse1807.BlishHUD.FishingBuddy.Utils
             [EnumMember(Value = "Saltwater / Brackish Water")]
             SaltwaterBrackishWater,
             [EnumMember(Value = "Saltwater")]
-            Saltwater
+            Saltwater,
+            [EnumMember(Value = "Barrens Freshwater Fish")]
+            BarrensFreshwaterFish,
+            [EnumMember(Value = "Bloodstone-Infused Pond Fish")]
+            BloodstoneInfusedPondFish
         }
 
         // Fish Item Name
