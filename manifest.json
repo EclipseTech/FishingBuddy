@@ -1,6 +1,6 @@
 {
   "name": "Fishing Buddy",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "namespace": "Eclipse1807.BlishHUD.FishingBuddy",
   "package": "FishingBuddy.dll",
   "manifest_version": 1,
