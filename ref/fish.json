@@ -2757,7 +2757,7 @@
     "FishingHole": "Volcanic Fish",
     "OpenWater": false,
     "Bait": "Any",
-    "Time": "Night",
+    "Time": "Any",
     "Notes": "",
     "Location": "Draconis Mons",
     "Locations": [ 1195 ],
